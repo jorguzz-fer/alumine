@@ -115,7 +115,125 @@
         const saved = loadSavedData();
 
         const defaultData = {
-            elements: [],
+            elements: [
+                // === ALUMINE (Holding - topo) ===
+                {
+                    type: "rectangle", id: "alumine-box",
+                    x: 350, y: 80, width: 240, height: 80, angle: 0,
+                    strokeColor: "#1e1e1e", backgroundColor: "#3498db",
+                    fillStyle: "solid", strokeWidth: 2, strokeStyle: "solid",
+                    roughness: 0, opacity: 100,
+                    roundness: { type: 3 },
+                    seed: 100001, groupIds: [],
+                    version: 1, versionNonce: 100001, isDeleted: false,
+                    boundElements: [
+                        { id: "text-alumine", type: "text" },
+                        { id: "arrow-to-saude", type: "arrow" },
+                        { id: "arrow-to-business", type: "arrow" }
+                    ],
+                },
+                {
+                    type: "text", id: "text-alumine",
+                    x: 360, y: 90, width: 220, height: 60, angle: 0,
+                    strokeColor: "#ffffff", backgroundColor: "transparent",
+                    fillStyle: "solid", strokeWidth: 1, strokeStyle: "solid",
+                    roughness: 0, opacity: 100,
+                    fontSize: 20, fontFamily: 1,
+                    text: "ALUMINE\nEducação", originalText: "ALUMINE\nEducação",
+                    textAlign: "center", verticalAlign: "middle",
+                    containerId: "alumine-box", autoResize: true,
+                    seed: 100002, groupIds: [],
+                    version: 1, versionNonce: 100002, isDeleted: false,
+                },
+
+                // === ALUMINE SAÚDE (esquerda) ===
+                {
+                    type: "rectangle", id: "saude-box",
+                    x: 120, y: 280, width: 240, height: 80, angle: 0,
+                    strokeColor: "#1e1e1e", backgroundColor: "#27ae60",
+                    fillStyle: "solid", strokeWidth: 2, strokeStyle: "solid",
+                    roughness: 0, opacity: 100,
+                    roundness: { type: 3 },
+                    seed: 200001, groupIds: [],
+                    version: 1, versionNonce: 200001, isDeleted: false,
+                    boundElements: [
+                        { id: "text-saude", type: "text" },
+                        { id: "arrow-to-saude", type: "arrow" }
+                    ],
+                },
+                {
+                    type: "text", id: "text-saude",
+                    x: 130, y: 290, width: 220, height: 60, angle: 0,
+                    strokeColor: "#ffffff", backgroundColor: "transparent",
+                    fillStyle: "solid", strokeWidth: 1, strokeStyle: "solid",
+                    roughness: 0, opacity: 100,
+                    fontSize: 18, fontFamily: 1,
+                    text: "Alumine Saúde\nHealth Education", originalText: "Alumine Saúde\nHealth Education",
+                    textAlign: "center", verticalAlign: "middle",
+                    containerId: "saude-box", autoResize: true,
+                    seed: 200002, groupIds: [],
+                    version: 1, versionNonce: 200002, isDeleted: false,
+                },
+
+                // === ALUMINE BUSINESS SCHOOL (direita) ===
+                {
+                    type: "rectangle", id: "business-box",
+                    x: 560, y: 280, width: 260, height: 80, angle: 0,
+                    strokeColor: "#1e1e1e", backgroundColor: "#764ba2",
+                    fillStyle: "solid", strokeWidth: 2, strokeStyle: "solid",
+                    roughness: 0, opacity: 100,
+                    roundness: { type: 3 },
+                    seed: 300001, groupIds: [],
+                    version: 1, versionNonce: 300001, isDeleted: false,
+                    boundElements: [
+                        { id: "text-business", type: "text" },
+                        { id: "arrow-to-business", type: "arrow" }
+                    ],
+                },
+                {
+                    type: "text", id: "text-business",
+                    x: 570, y: 290, width: 240, height: 60, angle: 0,
+                    strokeColor: "#ffffff", backgroundColor: "transparent",
+                    fillStyle: "solid", strokeWidth: 1, strokeStyle: "solid",
+                    roughness: 0, opacity: 100,
+                    fontSize: 18, fontFamily: 1,
+                    text: "Alumine Business\nSchool", originalText: "Alumine Business\nSchool",
+                    textAlign: "center", verticalAlign: "middle",
+                    containerId: "business-box", autoResize: true,
+                    seed: 300002, groupIds: [],
+                    version: 1, versionNonce: 300002, isDeleted: false,
+                },
+
+                // === SETA: Alumine -> Saúde ===
+                {
+                    type: "arrow", id: "arrow-to-saude",
+                    x: 400, y: 160, width: 160, height: 120, angle: 0,
+                    strokeColor: "#1e1e1e", backgroundColor: "transparent",
+                    fillStyle: "solid", strokeWidth: 2, strokeStyle: "solid",
+                    roughness: 0, opacity: 100,
+                    points: [[0, 0], [-160, 120]],
+                    startBinding: { elementId: "alumine-box", focus: -0.3, gap: 8 },
+                    endBinding: { elementId: "saude-box", focus: 0.3, gap: 8 },
+                    startArrowhead: null, endArrowhead: "arrow",
+                    seed: 400001, groupIds: [],
+                    version: 1, versionNonce: 400001, isDeleted: false,
+                },
+
+                // === SETA: Alumine -> Business School ===
+                {
+                    type: "arrow", id: "arrow-to-business",
+                    x: 540, y: 160, width: 150, height: 120, angle: 0,
+                    strokeColor: "#1e1e1e", backgroundColor: "transparent",
+                    fillStyle: "solid", strokeWidth: 2, strokeStyle: "solid",
+                    roughness: 0, opacity: 100,
+                    points: [[0, 0], [150, 120]],
+                    startBinding: { elementId: "alumine-box", focus: 0.3, gap: 8 },
+                    endBinding: { elementId: "business-box", focus: -0.3, gap: 8 },
+                    startArrowhead: null, endArrowhead: "arrow",
+                    seed: 500001, groupIds: [],
+                    version: 1, versionNonce: 500001, isDeleted: false,
+                },
+            ],
             appState: {
                 viewBackgroundColor: "#f8f9fa",
             },
