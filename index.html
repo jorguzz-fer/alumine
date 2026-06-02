@@ -1,223 +1,25 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dr. Kleber Ferreira — Webinar 26.05.2026 · 12h</title>
-  <meta name="description" content="Sessão fechada para empresários que precisam parar de operar reagindo e começar a operar conduzindo. 26 de maio de 2026, às 12h." />
-  <link rel="preconnect" href="https://rsms.me/" />
-  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>GrowthMinds · Mentoria Estratégica para Clínicas Veterinárias — Alumine</title>
+<meta name="description" content="Mentoria de intervenção estratégica para donos de clínicas e hospitais veterinários que já faturam — mas percebem que crescer está gerando mais pressão do que retorno." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css" />
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="palette-vet">
+<div id="root"></div>
 
-  <!-- GLOBAL NAV -->
-  <header class="global-nav" role="banner">
-    <div class="global-nav__inner">
-      <a href="#top" class="global-nav__brand" aria-label="Dr. Kleber Ferreira">
-        <img src="assets/logo.png" alt="Dr. Kleber Ferreira" class="global-nav__logo" />
-      </a>
-      <a
-        href="https://wa.me/5511930001873?text=Ol%C3%A1%2C%20quero%20entrar%20no%20grupo%20do%20webinar"
-        class="btn btn--primary btn--nav"
-        target="_blank"
-        rel="noopener"
-      >
-        Entrar no grupo →
-      </a>
-    </div>
-  </header>
-
-  <main id="top">
-
-    <!-- HERO -->
-    <section class="tile tile--parchment hero">
-      <div class="tile__container hero__stack">
-        <p class="eyebrow">Webinar · 26 de maio de 2026 · 12h</p>
-        <h1 class="hero__headline">
-          Sua empresa cresceu, parou,<br />
-          e o problema <br>não está nas vendas.
-        </h1>
-        <p class="hero__lead">
-          No webinar vou mostrar onde, exatamente, a operação trava o próprio crescimento com soluções reais que repito sistematicamente em empresas com o mesmo perfil e que vou destrinchar na sessão.
-        </p>
-        <div class="cta-row">
-          <a
-            href="https://wa.me/5511930001873?text=Ol%C3%A1%2C%20quero%20entrar%20no%20grupo%20do%20webinar"
-            class="btn btn--primary"
-            target="_blank"
-            rel="noopener"
-          >
-            Quero entrar no grupo de acesso ao webinar →
-          </a>
-          <a href="#cases" class="btn btn--ghost">Ver cases reais</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- CASES (DARK) -->
-    <section id="cases" class="tile tile--dark cases">
-      <div class="tile__container">
-        <p class="eyebrow eyebrow--on-dark">Cases reais</p>
-        <h2 class="section-headline section-headline--on-dark">
-          Resultado que aparece no balanço, não em slide.
-        </h2>
-
-        <div class="cases__grid">
-          <article class="case-card">
-            <p class="case-card__number">Case A</p>
-            <p class="case-card__metric">+10%</p>
-            <p class="case-card__caption">margem líquida em 90 dias</p>
-            <h3 class="case-card__title">Margem que retorna sem aumentar venda.</h3>
-            <p class="case-card__body">
-              Com ajuste de pricing e mix de produto, recuperamos +10% de margem líquida em 90 dias — sem novo investimento e sem corte de equipe.
-            </p>
-          </article>
-
-          <article class="case-card">
-            <p class="case-card__number">Case B</p>
-            <p class="case-card__metric">+27%</p>
-            <p class="case-card__caption">faturamento com CAPEX zero</p>
-            <h3 class="case-card__title">Receita nova a partir do que já existe.</h3>
-            <p class="case-card__body">
-              Reorganizando portfólio, criamos uma nova linha de produto usando a estrutura instalada. Faturamento subiu 27% sem nenhum investimento adicional.
-            </p>
-          </article>
-
-          <article class="case-card">
-            <p class="case-card__number">Case C</p>
-            <p class="case-card__metric">−18%</p>
-            <p class="case-card__caption">OPEX sem perder serviço</p>
-            <h3 class="case-card__title">Eficiência que aparece no resultado.</h3>
-            <p class="case-card__body">
-              Revisando o modelo operacional, reduzimos OPEX em 18% mantendo o mesmo nível de serviço. O que parecia "padrão de mercado" era apenas hábito mal auditado.
-            </p>
-          </article>
-        </div>
-
-        <div class="section-cta">
-          <a
-            href="https://wa.me/5511930001873?text=Ol%C3%A1%2C%20quero%20entrar%20no%20grupo%20do%20webinar"
-            class="btn btn--primary"
-            target="_blank"
-            rel="noopener"
-          >
-            Quero esses resultados na minha empresa →
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section class="tile tile--light about">
-      <div class="tile__container about__grid">
-        <div class="about__intro">
-          <p class="eyebrow">Sobre quem conduz</p>
-          <h2 class="section-headline">
-            Dr. Kleber Ferreira.<br />
-            <span class="section-headline--muted">Comecei do zero. Construí por método.</span>
-          </h2>
-        </div>
-
-        <div class="about__copy">
-          <p>
-            Depois de quase 18 anos construindo negócios, minhas empresas faturam mais de <strong>R$ 200 milhões em valor gerado</strong> para clientes e para mim.
-          </p>
-          <p>
-            Não foi por sorte. Foi por método. Implementei em mim mesmo o modelo que hoje você aprenderá. Cada erro que cometi, cada estrutura que criei, cada escala que atravessei — tudo virou sistema.
-          </p>
-          <p>
-            Hoje meu trabalho é acelerar sua curva de aprendizado. Você não precisa cometer os 100 erros que eu cometi. Você pode aprender do modelo que funcionou.
-          </p>
-          <p class="about__validation">
-            Reconhecido pelo <strong>DNA USP</strong> e apoiado por <strong>FAPESP</strong>, <strong>CNPq</strong> e <strong>SEBRAE</strong> — organizações que validam metodologia e resultado real, não promessas.
-          </p>
-
-          <div class="section-cta section-cta--left">
-            <a
-              href="https://wa.me/5511930001873?text=Ol%C3%A1%2C%20quero%20entrar%20no%20grupo%20do%20webinar"
-              class="btn btn--primary"
-              target="_blank"
-              rel="noopener"
-            >
-              Quero aprender o método →
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SCARCITY / FORMAT -->
-    <section class="tile tile--dark-2 scarcity">
-      <div class="tile__container scarcity__stack">
-        <p class="eyebrow eyebrow--on-dark">Formato</p>
-        <h2 class="section-headline section-headline--on-dark">
-          Sessão fechada. Sem reprise pública.
-        </h2>
-        <p class="scarcity__lead">
-          Voltada para empresários que precisam parar de operar reagindo e começar a operar conduzindo.
-        </p>
-
-        <ul class="scarcity__meta">
-          <li>
-            <span class="scarcity__meta-label">Data</span>
-            <span class="scarcity__meta-value">26 de maio de 2026</span>
-          </li>
-          <li>
-            <span class="scarcity__meta-label">Horário</span>
-            <span class="scarcity__meta-value">12h (horário de Brasília)</span>
-          </li>
-          <li>
-            <span class="scarcity__meta-label">Acesso</span>
-            <span class="scarcity__meta-value">Grupo fechado de WhatsApp</span>
-          </li>
-        </ul>
-
-        <div class="section-cta">
-          <a
-            href="https://wa.me/5511930001873?text=Ol%C3%A1%2C%20quero%20entrar%20no%20grupo%20do%20webinar"
-            class="btn btn--primary"
-            target="_blank"
-            rel="noopener"
-          >
-            Garantir minha vaga no grupo →
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- FINAL CTA -->
-    <section class="tile tile--light final-cta">
-      <div class="tile__container final-cta__stack">
-        <h2 class="hero__headline">
-          Pare de operar reagindo.<br />
-          Comece a operar conduzindo.
-        </h2>
-        <a
-          href="https://wa.me/5511930001873?text=Ol%C3%A1%2C%20quero%20entrar%20no%20grupo%20do%20webinar"
-          class="btn btn--primary btn--large"
-          target="_blank"
-          rel="noopener"
-        >
-          Quero entrar no grupo de acesso ao webinar →
-        </a>
-        <p class="fine-print">
-          Ao confirmar, você será direcionado(a) ao WhatsApp para entrar no grupo de acesso. Sessão fechada · 26.05.2026 · 12h.
-        </p>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <p class="footer__legal">
-        © 2026 Dr. Kleber Ferreira. Todos os direitos reservados.
-      </p>
-    </div>
-  </footer>
-
-  <script src="script.js" defer></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="app.jsx"></script>
 </body>
 </html>
