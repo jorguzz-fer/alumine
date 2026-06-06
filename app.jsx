@@ -598,6 +598,10 @@ function Objections() {
             </div>
           )}
         </div>
+
+        <div className="cta-block" style={{ marginTop: 40, alignItems: "center" }}>
+          <CtaButton label="Quero melhorar meu resultado" large />
+        </div>
       </div>
     </section>);
 
