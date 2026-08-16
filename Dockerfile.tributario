@@ -1,0 +1,6 @@
+# Dedicated image for tributario.alumine.com.br
+# Serves reforma-tributaria.html as the site root (index).
+FROM nginx:alpine
+COPY . /usr/share/nginx/html
+COPY nginx-tributario.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
