@@ -181,6 +181,20 @@
     line-height: 1.55;
     color: var(--ink-3);
   }
+
+  /* ── Logo Alumine em dobro (apenas nesta página) ── */
+  /* mix-blend-mode: screen remove o fundo preto do .jpg sobre a barra escura */
+  .nav-brand img { height: 56px; mix-blend-mode: screen; }
+  .footer-brand img { height: 48px; mix-blend-mode: screen; }
+
+  /* Logo maior aperta a barra: evita quebra de linha e ajusta o espaçamento.
+     O rótulo de programa na nav é redundante com o eyebrow do hero e não cabe
+     junto do logo dobrado (a barra tem largura máx. fixa), então é ocultado. */
+  .nav-links { gap: 24px; }
+  .nav-links a { white-space: nowrap; }
+  .nav-cta { white-space: nowrap; }
+  .nav-brand .nav-program,
+  .nav-brand .nav-divider { display: none; }
 </style>
 </head>
 <body class="palette-vet">
