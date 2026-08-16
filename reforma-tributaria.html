@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Reforma Tributária para o Setor Veterinário — Certificação Alumine</title>
+<meta name="description" content="Tudo sobre a Reforma Tributária para o setor veterinário. Domine o IVA dual (CBS/IBS), split payment e créditos tributários na prática. Certificação online com 60h e especialistas de mercado." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css" />
+
+<style>
+  /* ── Page-specific: hero without portrait + enrollment card ── */
+  .hero-inner.no-portrait { grid-template-columns: 1.1fr 0.9fr; }
+  @media (max-width: 900px) { .hero-inner.no-portrait { grid-template-columns: 1fr; } }
+
+  .enroll-card {
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+    border: 1px solid var(--line-copper);
+    border-radius: var(--radius-lg);
+    padding: clamp(28px, 3vw, 40px);
+    position: relative;
+    box-shadow: var(--sh-card), 0 0 60px rgba(95,160,120,0.08);
+    z-index: 2;
+  }
+  .enroll-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: var(--radius-lg);
+    background: var(--grad-brand);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.35;
+  }
+  .enroll-card .tier {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 18px;
+  }
+  .enroll-card .price-from {
+    font-size: 14px;
+    color: var(--ink-3);
+    text-decoration: line-through;
+  }
+  .enroll-card .price-main {
+    font-family: var(--font-display);
+    font-size: clamp(38px, 4.4vw, 54px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink-1);
+    margin: 6px 0 4px;
+  }
+  .enroll-card .price-main .amount {
+    background: var(--grad-brand-flat);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .enroll-card .price-cash {
+    font-size: 14px;
+    color: var(--ink-2);
+    margin-bottom: 24px;
+  }
+  .enroll-card .price-cash b { color: var(--ink-1); font-weight: 500; }
+  .enroll-card .mini-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 24px 0 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+  .enroll-card .mini-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  .enroll-card .mini-list .dotc {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--grad-brand-flat);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .enroll-card .mini-list .dotc svg { width: 9px; height: 9px; }
+
+  /* ── Formato grid ── */
+  .format-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  @media (max-width: 800px) { .format-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .format-grid { grid-template-columns: 1fr; } }
+  .format-item {
+    background: var(--bg-1);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: background 0.25s ease;
+  }
+  .format-item:hover { background: var(--bg-2); }
+  .format-item .fval {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 3vw, 40px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink-1);
+  }
+  .format-item .fval .accent {
+    background: var(--grad-brand-flat);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .format-item .flabel {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-top: 4px;
+  }
+  .format-item .fdesc {
+    font-size: 14px;
+    color: var(--ink-3);
+    line-height: 1.5;
+  }
+
+  /* ── Para quem é ── */
+  .audience-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 700px) { .audience-grid { grid-template-columns: 1fr; } }
+  .audience-item {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px 30px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    transition: border-color 0.25s ease;
+  }
+  .audience-item:hover { border-color: var(--line-copper); }
+  .audience-item .anum {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1;
+    background: var(--grad-brand-flat);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    flex-shrink: 0;
+  }
+  .audience-item h3 {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink-1);
+    margin-bottom: 6px;
+  }
+  .audience-item p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-3);
+  }
+</style>
+</head>
+<body class="palette-vet">
+
+<!-- ─── NAV ─────────────────────────────────────────────── -->
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <img src="assets/alumine-logo.jpg" alt="Alumine" />
+      <span class="nav-divider"></span>
+      <span class="nav-program">Certificação <b>REFORMA TRIBUTÁRIA VET</b></span>
+    </div>
+    <nav class="nav-links">
+      <a href="#programa">O programa</a>
+      <a href="#modulos">Módulos</a>
+      <a href="#formato">Formato</a>
+      <a href="#para-quem">Para quem é</a>
+      <a href="#investimento">Investimento</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#investimento" class="nav-cta">
+      Garantir vaga
+      <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</header>
+
+<main>
+  <!-- ─── HERO ─────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-inner no-portrait">
+      <div class="hero-text">
+        <div class="hero-eyebrow-row">
+          <span class="eyebrow">Certificação Digital · Setor Veterinário</span>
+          <span class="hero-program-badge">Turmas 2026</span>
+        </div>
+        <h1>
+          Tudo sobre a <em>Reforma Tributária</em>
+          <span class="accent-line">para o Setor Veterinário.</span>
+        </h1>
+        <p class="hero-sub">
+          Domine a Reforma Tributária na prática e proteja a saúde financeira da sua clínica.
+          Entre no sistema de 2026 com segurança fiscal e vantagem competitiva — do IVA dual ao
+          split payment, aplicado à realidade de clínicas e hospitais veterinários.
+        </p>
+        <div class="cta-block">
+          <a href="#investimento" class="btn btn-primary btn-large">
+            <span>Garantir minha vaga</span>
+            <svg width="16" height="16" viewBox="0 0 14 14" fill="none" class="arrow"><path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="cta-micro">
+            <span>Online e ao vivo</span>
+            <span class="dot"></span>
+            <span>Aulas gravadas</span>
+            <span class="dot"></span>
+            <span>Certificado incluso</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enrollment card (substitui o retrato) -->
+      <aside class="enroll-card">
+        <div class="tier">Investimento · Certificação completa</div>
+        <div class="price-from">De R$ 4.431,00 por</div>
+        <div class="price-main"><span class="amount">12x R$ 310,17</span></div>
+        <div class="price-cash">sem juros · ou <b>R$ 3.722,04</b> à vista</div>
+        <ul class="mini-list">
+          <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> 05 módulos · 60 horas de conteúdo</li>
+          <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Aulas ao vivo + gravadas para sempre</li>
+          <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Especialistas de mercado</li>
+          <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Tira-dúvidas e ferramentas práticas</li>
+        </ul>
+        <a href="#investimento" class="btn btn-primary" style="width:100%;">
+          <span>Quero me certificar</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="arrow"><path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </aside>
+    </div>
+
+    <div class="container">
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="val"><span class="accent">2026</span></div>
+          <div class="label">Início da vigência</div>
+        </div>
+        <div class="hero-stat">
+          <div class="val">05<span class="accent"> módulos</span></div>
+          <div class="label">Do básico ao avançado</div>
+        </div>
+        <div class="hero-stat">
+          <div class="val"><span class="accent">60h</span></div>
+          <div class="label">De aula com especialistas</div>
+        </div>
+        <div class="hero-stat">
+          <div class="val"><span class="accent">63%</span></div>
+          <div class="label">Das empresas sem gente qualificada*</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PROGRAMA / ABERTURA ──────────────────────────── -->
+  <section class="section proposta" id="programa">
+    <div class="container">
+      <div class="proposta-grid">
+        <div class="label-col">
+          <span class="eyebrow">O programa</span>
+          <h2 class="h-display h-3" style="margin-top:20px;">
+            O novo sistema chega em 2026. Sua clínica está preparada?
+          </h2>
+        </div>
+        <div>
+          <p>
+            A Reforma Tributária muda a forma como <span class="em">clínicas, hospitais e empresas do setor veterinário</span> pagam impostos.
+          </p>
+          <p>
+            <span class="dim">Consultas, cirurgias, exames, venda de medicamentos e rações</span> — cada frente passa a ser tributada por um novo modelo, o IVA dual (CBS e IBS).
+          </p>
+          <p>
+            Neste programa você aprende, <span class="em">passo a passo</span>, como aplicar a Reforma na rotina do seu negócio: do cálculo dos tributos ao aproveitamento de créditos, sem juridiquês.
+          </p>
+          <p>
+            Mentorias com especialistas, cases reais do setor e foco 100% prático.
+            <span class="em">Tire dúvidas, interaja e aprenda o que fazer na prática.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── DOR / IDENTIFICAÇÃO ──────────────────────────── -->
+  <section class="section pain" id="diagnostico">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Identificação</span>
+        <h2 class="h-display h-2">
+          Você reconhece <em class="italic-serif brand-grad">algum desses cenários?</em>
+        </h2>
+      </div>
+
+      <div class="pain-list">
+        <div class="pain-item">
+          <span class="num">— 01</span>
+          <p>Você não sabe como o IVA dual <span class="key">vai impactar o caixa da sua clínica</span> a partir de 2026.</p>
+        </div>
+        <div class="pain-item">
+          <span class="num">— 02</span>
+          <p>Vende produtos e presta serviços, mas <span class="key">não sabe como cada um será tributado</span> no novo modelo.</p>
+        </div>
+        <div class="pain-item">
+          <span class="num">— 03</span>
+          <p>Teme <span class="key">perder créditos tributários</span> por não saber aproveitá-los corretamente.</p>
+        </div>
+        <div class="pain-item">
+          <span class="num">— 04</span>
+          <p>Seu contador fala em "Reforma", mas ninguém <span class="key">traduz o que muda na prática</span> da clínica.</p>
+        </div>
+        <div class="pain-item">
+          <span class="num">— 05</span>
+          <p>Não sabe dizer se a sua clínica vai <span class="key">pagar mais ou menos imposto</span> no novo sistema.</p>
+        </div>
+        <div class="pain-item">
+          <span class="num">— 06</span>
+          <p>Sente que vai ser <span class="key">pego de surpresa</span> pela transição que vai de 2026 até 2033.</p>
+        </div>
+      </div>
+
+      <div class="pain-verdict">
+        <span class="badge">Verdict</span>
+        <p>
+          Se você identificou mais de dois desses pontos, o risco não é teórico. <strong>É financeiro.<br />E começa em 2026.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── MÓDULOS / MÉTODO ─────────────────────────────── -->
+  <section class="section solution" id="modulos">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">A formação</span>
+        <h2 class="h-display h-2" style="max-width:22ch;">
+          Não é um curso genérico de tributação. É <em class="italic-serif brand-grad">Reforma aplicada ao setor veterinário.</em>
+        </h2>
+      </div>
+
+      <div class="solution-grid">
+        <div class="copy">
+          <p>
+            Criamos um programa completo porque <strong>63% das empresas relatam dificuldade em encontrar profissionais preparados</strong> para conduzir a transição da Reforma <em>(Deloitte, 2025)</em>.
+          </p>
+          <p>
+            E no setor veterinário — que combina <strong>serviços, comércio e regras fiscais específicas</strong> — o desafio é ainda maior.
+          </p>
+          <p>
+            Por isso, você aprende do básico ao avançado, com <em>cases reais</em>, exercícios e simulações aplicadas à rotina de clínicas e hospitais.
+          </p>
+          <p style="margin-top:28px;">
+            <em>Não em teoria solta.</em><br />
+            <strong>Em prática, ferramentas e critério para decidir com segurança.</strong>
+          </p>
+        </div>
+
+        <div class="method-card">
+          <div class="ttl">Estrutura · 05 módulos</div>
+          <ol class="method-steps">
+            <li class="method-step">
+              <span class="step-num">01</span>
+              <div>
+                <div class="step-title">Fundamentos da Reforma Tributária</div>
+                <div class="step-desc">O que muda, por que muda e o cronograma de transição de 2026 a 2033.</div>
+              </div>
+            </li>
+            <li class="method-step">
+              <span class="step-num">02</span>
+              <div>
+                <div class="step-title">IVA dual: CBS e IBS na prática</div>
+                <div class="step-desc">Como calcular e gerir os novos tributos sobre produtos e serviços veterinários.</div>
+              </div>
+            </li>
+            <li class="method-step">
+              <span class="step-num">03</span>
+              <div>
+                <div class="step-title">Créditos e otimização fiscal</div>
+                <div class="step-desc">Como identificar oportunidades e aproveitar créditos tributários de forma legal.</div>
+              </div>
+            </li>
+            <li class="method-step">
+              <span class="step-num">04</span>
+              <div>
+                <div class="step-title">Split payment e automação fiscal</div>
+                <div class="step-desc">Mecanismos práticos de recolhimento e ferramentas para o dia a dia da clínica.</div>
+              </div>
+            </li>
+            <li class="method-step">
+              <span class="step-num">05</span>
+              <div>
+                <div class="step-title">Transição, compliance e simulações</div>
+                <div class="step-desc">Conduzir a mudança com segurança, reduzir riscos e simular cenários reais.</div>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── DIFERENCIAIS / AO FINAL ──────────────────────── -->
+  <section class="section benefits">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Ao final, você será capaz de</span>
+        <h2 class="h-display h-2" style="max-width:24ch;">
+          Sair da dúvida e assumir o <em class="italic-serif brand-grad">controle fiscal</em> da sua clínica.
+        </h2>
+        <p class="lead">Estes são os resultados práticos que você leva ao concluir a certificação.</p>
+      </div>
+
+      <div class="benefits-list">
+        <div class="benefit">
+          <div class="benefit-hdr"><span class="benefit-num">01</span><h3 class="benefit-title">Aplicar o IVA dual</h3></div>
+          <p class="benefit-desc">Calcular e gerir a tributação de produtos e serviços veterinários no modelo de CBS e IBS, incluindo o split payment.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-hdr"><span class="benefit-num">02</span><h3 class="benefit-title">Aproveitar créditos tributários</h3></div>
+          <p class="benefit-desc">Identificar riscos e oportunidades fiscais, otimizar tributos e aproveitar créditos de forma legal e segura.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-hdr"><span class="benefit-num">03</span><h3 class="benefit-title">Conduzir a transição</h3></div>
+          <p class="benefit-desc">Apoiar a clínica ou empresa na migração ao novo sistema, garantindo compliance e redução de riscos.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-hdr"><span class="benefit-num">04</span><h3 class="benefit-title">Implementar na rotina</h3></div>
+          <p class="benefit-desc">Colocar em prática o split payment e as automações fiscais no dia a dia do faturamento da clínica.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-hdr"><span class="benefit-num">05</span><h3 class="benefit-title">Simular cenários</h3></div>
+          <p class="benefit-desc">Realizar simulações e tomar decisões seguras ao longo de toda a transição, até 2033.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-hdr"><span class="benefit-num">06</span><h3 class="benefit-title">Tornar-se referência</h3></div>
+          <p class="benefit-desc">Posicionar-se como autoridade em tributação do setor veterinário — para o próprio negócio ou como consultor.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FORMATO ──────────────────────────────────────── -->
+  <section class="section proof" id="formato">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Formato</span>
+        <h2 class="h-display h-2" style="max-width:20ch;">
+          Uma formação completa, <em class="italic-serif brand-grad">prática e no seu ritmo.</em>
+        </h2>
+      </div>
+
+      <div class="format-grid">
+        <div class="format-item">
+          <div class="fval"><span class="accent">Online</span></div>
+          <div class="flabel">100% a distância</div>
+          <div class="fdesc">Aulas gravadas e disponíveis para assistir quando e quantas vezes quiser.</div>
+        </div>
+        <div class="format-item">
+          <div class="fval">05</div>
+          <div class="flabel">Módulos</div>
+          <div class="fdesc">Conteúdos exclusivos e organizados do básico ao avançado.</div>
+        </div>
+        <div class="format-item">
+          <div class="fval">60<span class="accent">h</span></div>
+          <div class="flabel">Carga horária</div>
+          <div class="fdesc">De aula com especialistas de mercado em Reforma Tributária.</div>
+        </div>
+        <div class="format-item">
+          <div class="fval"><span class="accent">Ao vivo</span></div>
+          <div class="flabel">Live sessions</div>
+          <div class="fdesc">Aulas semanais ao vivo para acompanhar de perto e tirar dúvidas.</div>
+        </div>
+        <div class="format-item">
+          <div class="fval"><span class="accent">Apoio</span></div>
+          <div class="flabel">Tira-dúvidas</div>
+          <div class="fdesc">Interação direta com especialistas ao longo de todo o programa.</div>
+        </div>
+        <div class="format-item">
+          <div class="fval"><span class="accent">Prático</span></div>
+          <div class="flabel">Dia a dia</div>
+          <div class="fdesc">Dicas, modelos e ferramentas para aplicar imediatamente na clínica.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PARA QUEM É ──────────────────────────────────── -->
+  <section class="section objections" id="para-quem">
+    <div class="container narrow">
+      <div class="section-head">
+        <span class="eyebrow">Para quem é</span>
+        <h2 class="h-display h-2" style="max-width:22ch;">
+          Feito para quem <em class="italic-serif brand-grad">não pode ser pego de surpresa.</em>
+        </h2>
+      </div>
+
+      <div class="audience-grid">
+        <div class="audience-item">
+          <span class="anum">01</span>
+          <div>
+            <h3>Médicos(as) veterinários(as)</h3>
+            <p>Profissionais com clínica ou consultório próprio que precisam entender o impacto no negócio.</p>
+          </div>
+        </div>
+        <div class="audience-item">
+          <span class="anum">02</span>
+          <div>
+            <h3>Gestores e administradores</h3>
+            <p>Responsáveis por clínicas e hospitais veterinários que tomam decisões financeiras e fiscais.</p>
+          </div>
+        </div>
+        <div class="audience-item">
+          <span class="anum">03</span>
+          <div>
+            <h3>Empreendedores do setor</h3>
+            <p>Pet shops, distribuidoras, franquias e demais empresas da cadeia veterinária.</p>
+          </div>
+        </div>
+        <div class="audience-item">
+          <span class="anum">04</span>
+          <div>
+            <h3>Contadores e consultores</h3>
+            <p>Profissionais que atendem o segmento veterinário e querem se especializar na Reforma.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── INVESTIMENTO / OFERTA ────────────────────────── -->
+  <section class="section offer" id="investimento">
+    <div class="container">
+      <div class="section-head" style="text-align:center; align-items:center;">
+        <span class="eyebrow no-dash" style="align-self:center;">Próximas turmas e investimento</span>
+        <h2 class="h-display h-2" style="text-align:center;">
+          Garanta sua <em class="italic-serif brand-grad">vaga.</em>
+        </h2>
+        <p class="lead" style="text-align:center; margin:0 auto;">
+          Certificação completa em Reforma Tributária para o setor veterinário. Turmas 2026.
+        </p>
+      </div>
+
+      <div class="offer-card">
+        <div class="offer-head">
+          <h3 class="offer-name">
+            <span class="tier">Certificação Digital · Reforma Tributária Vet</span>
+            Programa completo
+          </h3>
+          <span class="offer-tag">Turmas 2026</span>
+        </div>
+
+        <div class="offer-grid">
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">05 módulos do básico ao avançado</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">60 horas de aula com especialistas</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Aulas ao vivo semanais</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Aulas gravadas para o aluno</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Foco no IVA dual (CBS e IBS)</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Split payment e automação fiscal</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Créditos e otimização tributária</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Simulações e cases reais do setor</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Tira-dúvidas com especialistas</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Ferramentas para aplicar no dia a dia</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Certificado de conclusão</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Acesso à comunidade de alunos</span><span class="meta">Incluso</span></div>
+        </div>
+
+        <div class="offer-pricing">
+          <div>
+            <div class="offer-price-label">Investimento</div>
+            <div class="offer-price-value">
+              <span class="from">De R$ 4.431,00 por</span>
+              <span class="amount">12x R$ 310,17</span>
+            </div>
+            <div class="offer-price-note">sem juros · ou R$ 3.722,04 à vista</div>
+          </div>
+          <div class="cta-block" style="align-items:flex-end;">
+            <a href="https://wa.me/5511930001873?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Certifica%C3%A7%C3%A3o%20em%20Reforma%20Tribut%C3%A1ria%20para%20o%20Setor%20Veterin%C3%A1rio." target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-large">
+              <span>Quero garantir minha vaga</span>
+              <svg width="16" height="16" viewBox="0 0 14 14" fill="none" class="arrow"><path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div class="cta-micro">
+              <span>Vagas limitadas por turma</span>
+              <span class="dot"></span>
+              <span>Parcelamento em 12x</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="offer-compare">
+          <span class="ic">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5L9.8 5.8L14.5 6.3L11 9.5L12 14L8 11.6L4 14L5 9.5L1.5 6.3L6.2 5.8L8 1.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+          </span>
+          <p>
+            Uma única decisão fiscal errada na transição pode custar muito mais do que a certificação.
+            <strong>Aprender a aplicar a Reforma corretamente</strong> é o que separa a clínica que economiza da que paga imposto a mais a partir de 2026.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FAQ ──────────────────────────────────────────── -->
+  <section class="section faq" id="faq">
+    <div class="container narrow">
+      <div class="section-head">
+        <span class="eyebrow">Perguntas frequentes</span>
+        <h2 class="h-display h-2" style="max-width:18ch;">
+          Tudo que <em class="italic-serif brand-grad">você quer saber.</em>
+        </h2>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item open">
+          <button class="faq-q"><span>Preciso ter conhecimento prévio em tributação?</span><span class="ic" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">Não. O programa começa pelos fundamentos e evolui do básico ao avançado. É pensado tanto para quem nunca estudou tributação quanto para quem já atua na área e quer se especializar na Reforma aplicada ao setor veterinário.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>As aulas são ao vivo ou gravadas?</span><span class="ic" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">Ambos. Há live sessions semanais ao vivo para acompanhamento e tira-dúvidas, e todas as aulas ficam gravadas e disponíveis para o aluno assistir quando e quantas vezes quiser.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Quanto tempo dura o curso e qual a carga horária?</span><span class="ic" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">São 05 módulos que somam 60 horas de conteúdo com especialistas de mercado, organizados do básico ao avançado. Você avança no seu ritmo pelas aulas gravadas e acompanha as lives semanais.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>O curso é específico para o setor veterinário?</span><span class="ic" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">Sim. Embora você aprenda toda a base da Reforma Tributária, os exemplos, cases e simulações são aplicados à realidade de clínicas, hospitais e empresas da cadeia veterinária — de consultas e cirurgias à venda de medicamentos e rações.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Vou receber certificado?</span><span class="ic" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">Sim. Ao concluir o programa você recebe o certificado de conclusão da Certificação Digital em Reforma Tributária para o Setor Veterinário.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Quais são as formas de pagamento?</span><span class="ic" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">O investimento é de R$ 4.431,00, com condição especial de 12x de R$ 310,17 sem juros, ou R$ 3.722,04 à vista. As condições detalhadas e formas de pagamento são apresentadas no momento da inscrição.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Por que aprender isso agora?</span><span class="ic" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">Porque a vigência começa em 2026 e a transição vai até 2033. Quem entende as regras desde o início toma decisões melhores, evita pagar imposto a mais e ganha vantagem competitiva. Chegar preparado é mais barato do que corrigir depois.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Como faço a minha inscrição?</span><span class="ic" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">Basta clicar em qualquer botão de "Garantir minha vaga" nesta página. Você fala diretamente com a nossa equipe para tirar dúvidas e concluir a matrícula na turma de 2026.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA FINAL ────────────────────────────────────── -->
+  <section class="section final-cta">
+    <div class="container final-cta-inner">
+      <span class="eyebrow no-dash" style="margin-bottom:24px;">O próximo passo</span>
+      <h2>
+        A Reforma vai acontecer com ou sem <span class="accent">você preparado.</span><br />
+        A diferença está em <span class="accent">chegar na frente.</span>
+      </h2>
+      <p>
+        Torne-se referência em tributação do setor veterinário e entre no sistema de 2026 com
+        segurança fiscal e vantagem competitiva. As vagas das turmas de 2026 são limitadas.
+      </p>
+      <div class="ctas">
+        <a href="https://wa.me/5511930001873?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Certifica%C3%A7%C3%A3o%20em%20Reforma%20Tribut%C3%A1ria%20para%20o%20Setor%20Veterin%C3%A1rio." target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-large">
+          <span>Quero garantir minha vaga</span>
+          <svg width="16" height="16" viewBox="0 0 14 14" fill="none" class="arrow"><path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="cta-micro">
+          <span>Turmas 2026</span>
+          <span class="dot"></span>
+          <span>Vagas limitadas</span>
+          <span class="dot"></span>
+          <span>Parcelamento em 12x</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PS ───────────────────────────────────────────── -->
+  <section class="section ps">
+    <div class="container narrow">
+      <div class="ps-inner">
+        <div class="ps-label">P.S.</div>
+        <div class="ps-body">
+          <p>
+            Esta certificação não é sobre decorar leis. É sobre <strong>aplicar a Reforma Tributária na prática</strong> e sair do outro lado com uma clínica mais segura, mais eficiente e menos exposta a riscos fiscais.
+          </p>
+          <p>
+            Se você chegou até aqui, já sabe que a mudança vem. A diferença entre quem se antecipa e quem corre atrás está na decisão de começar agora.
+          </p>
+          <p>Vagas das turmas de 2026 são limitadas. Garanta a sua antes do encerramento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ─── FOOTER ───────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/alumine-logo.jpg" alt="Alumine" />
+      <span class="nav-divider"></span>
+      <span class="nav-program">Certificação <b>Reforma Tributária Vet</b></span>
+    </div>
+    <div class="footer-meta">
+      <span>© Alumine · 2026</span>
+      <span>WhatsApp · (11) 93000-1873</span>
+      <span>Certificação Digital · Setor Veterinário</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // FAQ accordion (reuses .faq-item.open styling from styles.css)
+  document.querySelectorAll('.faq-q').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var item = btn.closest('.faq-item');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function (i) { i.classList.remove('open'); });
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
