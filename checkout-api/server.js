@@ -24,7 +24,14 @@ const {
   CHARGE_DESCRIPTION = "Vet Pricing — aula ao vivo (14/09, 20h)",
 } = process.env;
 
-const PRICE_NUMBER = Number(PRICE);
+// Interpreta o preço de forma robusta: aceita "397", "397,00", "R$ 397",
+// valores com texto colado, etc. Na dúvida, cai no padrão 397.
+function parsePrice(v) {
+  const raw = String(v ?? "").replace(",", ".").replace(/[^\d.]/g, "");
+  const n = Number(raw);
+  return Number.isFinite(n) && n > 0 ? n : 397;
+}
+const PRICE_NUMBER = parsePrice(PRICE);
 const DUE_DAYS_NUMBER = Number(DUE_DAYS);
 
 // Limpa lixo colado junto do valor da env (ex.: comentário "... (produção).").
@@ -103,6 +110,7 @@ app.get("/health", (_req, res) => {
     keyLength: key.length,
     keyPrefixOk: key.startsWith("$aact_"),
     base: ASAAS_BASE,
+    price: PRICE_NUMBER,
   });
 });
 
