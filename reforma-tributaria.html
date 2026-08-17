@@ -8,11 +8,19 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
 <link rel="stylesheet" href="styles.css" />
 
 <style>
+  /* ── Fonte de display menos serifada (apenas nesta página) ──
+     Troca Instrument Serif por Instrument Sans (mesma família, sem serifa).
+     Peso um pouco maior nos títulos para manter presença no sans. */
+  :root { --font-display: "Instrument Sans", "Geist", -apple-system, sans-serif; }
+  .h-display, .hero h1 { font-weight: 600; letter-spacing: -0.03em; }
+  .italic-serif, .hero h1 em { font-weight: 600; }
+  .proposta-grid p, .pain-item p, .faq-q, .obj-quote { font-weight: 500; }
+
   /* ── Page-specific: hero without portrait + enrollment card ── */
   .hero-inner.no-portrait { grid-template-columns: 1.1fr 0.9fr; }
   @media (max-width: 900px) { .hero-inner.no-portrait { grid-template-columns: 1fr; } }
