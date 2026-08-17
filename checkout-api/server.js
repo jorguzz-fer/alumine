@@ -108,6 +108,8 @@ app.get("/health", (_req, res) => {
 
 // ── Checkout ─────────────────────────────────────────────────────────
 app.post("/checkout", async (req, res) => {
+  const t0 = Date.now();
+  console.log("[checkout] hit", { origin: req.headers.origin, billingType: req.body?.billingType });
   try {
     if (!ASAAS_API_KEY) {
       return res.status(500).json({ error: "Servidor sem ASAAS_API_KEY configurada." });
@@ -133,9 +135,10 @@ app.post("/checkout", async (req, res) => {
       method: "POST",
       body: JSON.stringify({ name, email, mobilePhone: phone, cpfCnpj }),
     });
+    console.log("[checkout] customer", customer.status, customer.ok ? customer.data?.id : JSON.stringify(customer.data));
     if (!customer.ok) {
       const msg = customer.data?.errors?.[0]?.description || "Falha ao criar o cliente no Asaas.";
-      return res.status(502).json({ error: msg });
+      return res.status(502).json({ error: msg, step: "customer", asaasStatus: customer.status });
     }
 
     // 2) Cria a cobrança
@@ -150,11 +153,13 @@ app.post("/checkout", async (req, res) => {
         externalReference: "vet-pricing",
       }),
     });
+    console.log("[checkout] payment", payment.status, payment.ok ? payment.data?.id : JSON.stringify(payment.data));
     if (!payment.ok) {
       const msg = payment.data?.errors?.[0]?.description || "Falha ao criar a cobrança no Asaas.";
-      return res.status(502).json({ error: msg });
+      return res.status(502).json({ error: msg, step: "payment", asaasStatus: payment.status });
     }
 
+    console.log("[checkout] ok", payment.data?.id, `${Date.now() - t0}ms`);
     // invoiceUrl = página de pagamento hospedada pelo Asaas (PIX/Cartão/Boleto).
     return res.json({
       invoiceUrl: payment.data.invoiceUrl,
@@ -162,10 +167,14 @@ app.post("/checkout", async (req, res) => {
       status: payment.data.status,
     });
   } catch (err) {
-    console.error("checkout error:", err?.message || err);
+    console.error("[checkout] error:", err?.stack || err?.message || err);
     return res.status(500).json({ error: "Erro interno ao processar o checkout." });
   }
 });
+
+// Loga rejeições/erros não tratados para aparecerem no Log do Coolify.
+process.on("unhandledRejection", (r) => console.error("[unhandledRejection]", r));
+process.on("uncaughtException", (e) => console.error("[uncaughtException]", e?.stack || e));
 
 app.listen(PORT, () => {
   console.log(`Vet Pricing checkout API on :${PORT} — Asaas base ${ASAAS_BASE}`);
