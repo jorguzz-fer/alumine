@@ -3,16 +3,24 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Reforma Tributária e Precificação para o Setor Veterinário — Certificação Alumine</title>
-<meta name="description" content="Reforma Tributária e Precificação para o setor veterinário. Aprenda o IVA dual (CBS/IBS), split payment e créditos — e a precificar corretamente para aumentar a margem e não ser engolido pela nova carga. Certificação online com 60h e especialistas." />
+<title>Vet Pricing — Precificação e Nova Tributação para o Setor Veterinário</title>
+<meta name="description" content="Vet Pricing: aula ao vivo de 3h no Zoom sobre a nova tributação, o split payment e como precificar para o seu negócio veterinário continuar saudável. 14 de setembro, 20h. Com Dr. Kleber Ferreira, Thiago Liberman e Angelita. R$ 397." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
 <link rel="stylesheet" href="styles.css" />
 
 <style>
+  /* ── Fonte de display menos serifada (apenas nesta página) ──
+     Troca Instrument Serif por Instrument Sans (mesma família, sem serifa).
+     Peso um pouco maior nos títulos para manter presença no sans. */
+  :root { --font-display: "Instrument Sans", "Geist", -apple-system, sans-serif; }
+  .h-display, .hero h1 { font-weight: 600; letter-spacing: -0.03em; }
+  .italic-serif, .hero h1 em { font-weight: 600; }
+  .proposta-grid p, .pain-item p, .faq-q, .obj-quote { font-weight: 500; }
+
   /* ── Page-specific: hero without portrait + enrollment card ── */
   .hero-inner.no-portrait { grid-template-columns: 1.1fr 0.9fr; }
   @media (max-width: 900px) { .hero-inner.no-portrait { grid-template-columns: 1fr; } }
@@ -47,14 +55,9 @@
     color: var(--copper);
     margin-bottom: 18px;
   }
-  .enroll-card .price-from {
-    font-size: 14px;
-    color: var(--ink-3);
-    text-decoration: line-through;
-  }
   .enroll-card .price-main {
     font-family: var(--font-display);
-    font-size: clamp(38px, 4.4vw, 54px);
+    font-size: clamp(44px, 5vw, 62px);
     line-height: 1.05;
     letter-spacing: -0.025em;
     color: var(--ink-1);
@@ -95,6 +98,23 @@
     flex-shrink: 0;
   }
   .enroll-card .mini-list .dotc svg { width: 9px; height: 9px; }
+
+  /* ── Event date line (badge) ── */
+  .event-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--copper);
+    border: 1px solid var(--line-copper);
+    border-radius: 999px;
+    padding: 9px 16px;
+    background: rgba(95,160,120,0.05);
+  }
+  .event-line svg { width: 14px; height: 14px; }
+  .enroll-card .event-line { display: flex; justify-content: center; margin-bottom: 20px; }
 
   /* ── Formato grid ── */
   .format-grid {
@@ -182,6 +202,42 @@
     color: var(--ink-3);
   }
 
+  /* ── Treinadores ── */
+  .trainers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 800px) { .trainers-grid { grid-template-columns: 1fr; } }
+  .trainer-card {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 34px 32px;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+  }
+  .trainer-card:hover { border-color: var(--line-copper); transform: translateY(-2px); }
+  .trainer-card .role {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 16px;
+  }
+  .trainer-card .who {
+    font-family: var(--font-display);
+    font-size: 27px;
+    line-height: 1.1;
+    color: var(--ink-1);
+    margin-bottom: 12px;
+  }
+  .trainer-card p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-3);
+  }
+
   /* ── Logo Alumine em dobro (apenas nesta página) ── */
   /* mix-blend-mode: screen remove o fundo preto do .jpg sobre a barra escura */
   .nav-brand img { height: 56px; mix-blend-mode: screen; }
@@ -205,17 +261,17 @@
     <div class="nav-brand">
       <img src="assets/alumine-logo.jpg" alt="Alumine" />
       <span class="nav-divider"></span>
-      <span class="nav-program">Certificação <b>TRIBUTAÇÃO + PRECIFICAÇÃO VET</b></span>
+      <span class="nav-program">Programa <b>VET PRICING</b></span>
     </div>
     <nav class="nav-links">
-      <a href="#programa">O programa</a>
-      <a href="#modulos">Módulos</a>
-      <a href="#formato">Formato</a>
+      <a href="#evento">O evento</a>
+      <a href="#conteudo">Conteúdo</a>
+      <a href="#treinadores">Treinadores</a>
       <a href="#para-quem">Para quem é</a>
-      <a href="#investimento">Investimento</a>
+      <a href="#inscricao">Inscrição</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <a href="#investimento" class="nav-cta">
+    <a href="#inscricao" class="nav-cta">
       Garantir vaga
       <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
@@ -228,47 +284,50 @@
     <div class="hero-inner no-portrait">
       <div class="hero-text">
         <div class="hero-eyebrow-row">
-          <span class="eyebrow">Certificação Digital · Tributação + Precificação</span>
-          <span class="hero-program-badge">Turmas 2026</span>
+          <span class="eyebrow">Vet Pricing · Aula ao vivo</span>
+          <span class="hero-program-badge">Setor Veterinário</span>
         </div>
         <h1>
-          Reforma Tributária <em>e Precificação</em>
-          <span class="accent-line">para o Setor Veterinário.</span>
+          A nova tributação vai <em>descontar o seu imposto na fonte.</em>
+          <span class="accent-line">Aprenda a precificar antes que ela engula a sua clínica.</span>
         </h1>
         <p class="hero-sub">
-          A nova tributação vai apertar a margem do setor. Aprenda a aplicar a Reforma
-          <b>e a precificar corretamente</b> os serviços e produtos da sua clínica — para
-          aumentar a margem e não ser engolido pelo novo sistema que começa em 2026.
+          Com o <b>split payment</b>, o imposto passa a ser descontado direto no momento em que o
+          cliente paga. Sem precificação correta, o caixa da sua clínica não sobrevive a 2027.
+          O <b>Vet Pricing</b> é a aula ao vivo que te prepara — em 3 horas, direto ao ponto.
         </p>
         <div class="cta-block">
-          <a href="#investimento" class="btn btn-primary btn-large">
+          <a href="#inscricao" class="btn btn-primary btn-large">
             <span>Garantir minha vaga</span>
             <svg width="16" height="16" viewBox="0 0 14 14" fill="none" class="arrow"><path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <div class="cta-micro">
-            <span>Online e ao vivo</span>
+            <span>14 de setembro · 20h</span>
             <span class="dot"></span>
-            <span>Aulas gravadas</span>
+            <span>Ao vivo no Zoom</span>
             <span class="dot"></span>
-            <span>Certificado incluso</span>
+            <span>Vagas limitadas</span>
           </div>
         </div>
       </div>
 
       <!-- Enrollment card (substitui o retrato) -->
       <aside class="enroll-card">
-        <div class="tier">Investimento · Certificação completa</div>
-        <div class="price-from">De R$ 4.431,00 por</div>
-        <div class="price-main"><span class="amount">12x R$ 310,17</span></div>
-        <div class="price-cash">sem juros · ou <b>R$ 3.722,04</b> à vista</div>
+        <div class="event-line">
+          <svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="2.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1.5 5.5H12.5M4.5 1.5V3.5M9.5 1.5V3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          14 SET · 20h · ao vivo no Zoom
+        </div>
+        <div class="tier">Vet Pricing · Investimento</div>
+        <div class="price-main"><span class="amount">R$ 397</span></div>
+        <div class="price-cash"><b>PIX</b> · <b>Cartão</b> · <b>Boleto</b></div>
         <ul class="mini-list">
-          <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Tributação + Precificação na prática</li>
-          <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> 05 módulos · 60 horas de conteúdo</li>
-          <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Aulas ao vivo + gravadas para sempre</li>
-          <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Tira-dúvidas e ferramentas práticas</li>
+          <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> 3 horas de aula ao vivo</li>
+          <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Calculadora de impostos inclusa</li>
+          <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Com Kleber, Thiago e Angelita</li>
+          <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Tira-dúvidas ao vivo</li>
         </ul>
-        <a href="#investimento" class="btn btn-primary" style="width:100%;">
-          <span>Quero me certificar</span>
+        <a href="#inscricao" class="btn btn-primary" style="width:100%;">
+          <span>Quero participar</span>
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="arrow"><path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </aside>
@@ -277,48 +336,47 @@
     <div class="container">
       <div class="hero-stats">
         <div class="hero-stat">
-          <div class="val"><span class="accent">2026</span></div>
-          <div class="label">Início da vigência</div>
+          <div class="val"><span class="accent">14</span> SET</div>
+          <div class="label">Data da aula ao vivo</div>
         </div>
         <div class="hero-stat">
-          <div class="val">05<span class="accent"> módulos</span></div>
-          <div class="label">Do básico ao avançado</div>
+          <div class="val"><span class="accent">20h</span></div>
+          <div class="label">Horário de início</div>
         </div>
         <div class="hero-stat">
-          <div class="val"><span class="accent">60h</span></div>
-          <div class="label">De aula com especialistas</div>
+          <div class="val"><span class="accent">3h</span></div>
+          <div class="label">De conteúdo ao vivo</div>
         </div>
         <div class="hero-stat">
-          <div class="val"><span class="accent">63%</span></div>
-          <div class="label">Das empresas sem gente qualificada*</div>
+          <div class="val"><span class="accent">Zoom</span></div>
+          <div class="label">100% online e ao vivo</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ─── PROGRAMA / ABERTURA ──────────────────────────── -->
-  <section class="section proposta" id="programa">
+  <!-- ─── O EVENTO / ABERTURA ──────────────────────────── -->
+  <section class="section proposta" id="evento">
     <div class="container">
       <div class="proposta-grid">
         <div class="label-col">
-          <span class="eyebrow">O programa</span>
+          <span class="eyebrow">O evento</span>
           <h2 class="h-display h-3" style="margin-top:20px;">
-            A nova tributação chega em 2026 — e ela mira direto na sua margem.
+            O imposto vai ser descontado na fonte. Sua clínica está pronta?
           </h2>
         </div>
         <div>
           <p>
-            A Reforma Tributária muda a forma como <span class="em">clínicas, hospitais e empresas do setor veterinário</span> pagam impostos — e mexe direto no seu lucro.
+            Com o <span class="em">split payment</span>, o imposto passa a ser retido no ato do pagamento — no momento em que o seu cliente paga a consulta, a cirurgia ou o produto.
           </p>
           <p>
-            <span class="dim">Consultas, cirurgias, exames, venda de medicamentos e rações</span> — cada frente passa a ser tributada pelo novo modelo (IVA dual, CBS e IBS). Se o preço não acompanhar, <span class="em">a margem encolhe.</span>
+            <span class="dim">E se o cliente desistir?</span> O dinheiro do imposto só é restituído pelo governo <span class="em">depois de 30 dias.</span> Para muita clínica, isso é um problema sério de caixa.
           </p>
           <p>
-            Por isso este programa une as duas frentes: <span class="em">entender a Reforma e precificar corretamente</span> — para aumentar a margem e não ser engolido pela nova carga.
+            A maioria do setor veterinário <span class="dim">ainda não sabe disso</span> — e acha que está tudo bem. Não está. Quem não ajustar o preço agora tem alta probabilidade de sofrer em 2027.
           </p>
           <p>
-            Mentorias com especialistas, cases reais do setor e foco 100% prático.
-            <span class="em">Tire dúvidas, interaja e aprenda o que fazer na prática.</span>
+            O <span class="em">Vet Pricing</span> reúne três especialistas em uma aula ao vivo para te mostrar, na prática, como precificar e proteger o seu negócio nesse novo cenário.
           </p>
         </div>
       </div>
@@ -338,7 +396,7 @@
       <div class="pain-list">
         <div class="pain-item">
           <span class="num">— 01</span>
-          <p>Você não sabe como a nova tributação <span class="key">vai apertar a margem da sua clínica</span> a partir de 2026.</p>
+          <p>Você ainda <span class="key">não sabe que o imposto será descontado na fonte</span>, no ato do pagamento do cliente.</p>
         </div>
         <div class="pain-item">
           <span class="num">— 02</span>
@@ -346,94 +404,87 @@
         </div>
         <div class="pain-item">
           <span class="num">— 03</span>
-          <p>Vende produtos e presta serviços, mas <span class="key">não sabe como cada um será tributado</span> no novo modelo.</p>
+          <p>Se um cliente desistir, o valor do imposto <span class="key">só volta depois de 30 dias</span> — e o seu caixa sente na hora.</p>
         </div>
         <div class="pain-item">
           <span class="num">— 04</span>
-          <p>Tem receio de que a nova carga <span class="key">engula o seu lucro</span> e você não consiga repassar no preço.</p>
+          <p>Não sabe se <span class="key">todos os sócios são da área</span> — e isso pode afetar o seu crédito tributário.</p>
         </div>
         <div class="pain-item">
           <span class="num">— 05</span>
-          <p>Teme <span class="key">perder créditos tributários</span> por não saber aproveitá-los corretamente.</p>
+          <p>Tem receio de que a nova carga <span class="key">engula o seu lucro</span> e você não consiga repassar no preço.</p>
         </div>
         <div class="pain-item">
           <span class="num">— 06</span>
-          <p>Sente que vai ser <span class="key">pego de surpresa</span> pela transição que vai de 2026 até 2033.</p>
+          <p>Acha que <span class="key">"está tudo bem"</span> — mas a mudança começa a valer e você pode ser pego de surpresa.</p>
         </div>
       </div>
 
       <div class="pain-verdict">
         <span class="badge">Verdict</span>
         <p>
-          Se você identificou mais de dois desses pontos, o risco é claro: <strong>margem apertada.<br />E começa em 2026.</strong>
+          Quem não ajustar o preço agora tem alta chance de ter <strong>problema de caixa em 2027.</strong>
         </p>
       </div>
     </div>
   </section>
 
-  <!-- ─── MÓDULOS / MÉTODO ─────────────────────────────── -->
-  <section class="section solution" id="modulos">
+  <!-- ─── CONTEÚDO DA AULA ─────────────────────────────── -->
+  <section class="section solution" id="conteudo">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow">A formação</span>
+        <span class="eyebrow">O que você vai aprender</span>
         <h2 class="h-display h-2" style="max-width:24ch;">
-          Não é só tributação. É <em class="italic-serif brand-grad">Reforma e Precificação aplicadas ao setor veterinário.</em>
+          3 especialistas, uma aula ao vivo, <em class="italic-serif brand-grad">direto ao ponto.</em>
         </h2>
       </div>
 
       <div class="solution-grid">
         <div class="copy">
           <p>
-            Criamos um programa completo porque <strong>63% das empresas relatam dificuldade em encontrar profissionais preparados</strong> para conduzir a transição da Reforma <em>(Deloitte, 2025)</em>.
+            Nada de teoria solta. O Vet Pricing vai da <strong>mudança da tributação e do split payment</strong> à <strong>precificação na prática</strong> — cobrindo custo, imposto e margem.
           </p>
           <p>
-            E no setor veterinário — que combina <strong>serviços, comércio e regras fiscais específicas</strong> — o desafio é ainda maior.
+            Você vai ver <em>duas formas de fazer o cálculo</em>: a maneira manual, "na unha", e a maneira prática, usando a <strong>calculadora de impostos da Alumine</strong>, incluída para os participantes.
           </p>
           <p>
-            Por isso, você aprende do básico ao avançado, com <em>cases reais</em> e simulações — inclusive <strong>como formar preço e proteger a margem</strong> no novo cenário.
+            E, no fim, como olhar o seu negócio de forma estratégica frente ao mercado — para crescer com margem em 2027.
           </p>
           <p style="margin-top:28px;">
-            <em>Não em teoria solta.</em><br />
-            <strong>Em prática, ferramentas e critério para decidir com segurança.</strong>
+            <em>Ao vivo, com tira-dúvidas.</em><br />
+            <strong>Você sai da aula sabendo o que fazer na sua clínica.</strong>
           </p>
         </div>
 
         <div class="method-card">
-          <div class="ttl">Estrutura · 05 módulos</div>
+          <div class="ttl">Agenda · aula ao vivo</div>
           <ol class="method-steps">
             <li class="method-step">
               <span class="step-num">01</span>
               <div>
-                <div class="step-title">Fundamentos da Reforma Tributária</div>
-                <div class="step-desc">O que muda, por que muda e o cronograma de transição de 2026 a 2033.</div>
+                <div class="step-title">A nova tributação e o split payment</div>
+                <div class="step-desc">O que muda de verdade, como o imposto passa a ser descontado na fonte e o impacto no seu caixa. Com Angelita (contabilidade).</div>
               </div>
             </li>
             <li class="method-step">
               <span class="step-num">02</span>
               <div>
-                <div class="step-title">IVA dual: CBS e IBS na prática</div>
-                <div class="step-desc">Como calcular e gerir os novos tributos sobre produtos e serviços veterinários.</div>
+                <div class="step-title">Precificação e formação de preço</div>
+                <div class="step-desc">Como montar o preço cobrindo custo, imposto e margem — na unha e com a calculadora. Com Thiago Liberman.</div>
               </div>
             </li>
             <li class="method-step">
               <span class="step-num">03</span>
               <div>
-                <div class="step-title">Precificação e margem no novo cenário</div>
-                <div class="step-desc">Como formar preço cobrindo custos e a nova carga — para aumentar a margem sem perder competitividade.</div>
+                <div class="step-title">Estratégia de negócio e mercado</div>
+                <div class="step-desc">Como avaliar o seu negócio frente ao mercado e crescer com margem no novo cenário. Com Dr. Kleber Ferreira.</div>
               </div>
             </li>
             <li class="method-step">
               <span class="step-num">04</span>
               <div>
-                <div class="step-title">Créditos, split payment e automação</div>
-                <div class="step-desc">Aproveitar créditos legalmente, aplicar o split payment e automatizar a rotina fiscal da clínica.</div>
-              </div>
-            </li>
-            <li class="method-step">
-              <span class="step-num">05</span>
-              <div>
-                <div class="step-title">Transição, compliance e simulações</div>
-                <div class="step-desc">Conduzir a mudança com segurança, reduzir riscos e simular cenários reais.</div>
+                <div class="step-title">Na prática: a calculadora Alumine</div>
+                <div class="step-desc">Demonstração ao vivo da ferramenta que faz a precificação por você, com os seus números.</div>
               </div>
             </li>
           </ol>
@@ -442,86 +493,117 @@
     </div>
   </section>
 
-  <!-- ─── DIFERENCIAIS / AO FINAL ──────────────────────── -->
+  <!-- ─── O QUE VOCÊ SAI SABENDO ───────────────────────── -->
   <section class="section benefits">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow">Ao final, você será capaz de</span>
+        <span class="eyebrow">O que você sai sabendo</span>
         <h2 class="h-display h-2" style="max-width:24ch;">
-          Sair da dúvida e assumir o <em class="italic-serif brand-grad">controle da sua margem.</em>
+          Da dúvida ao <em class="italic-serif brand-grad">controle da sua margem</em> — em uma noite.
         </h2>
-        <p class="lead">Estes são os resultados práticos que você leva ao concluir a certificação.</p>
+        <p class="lead">Estes são os resultados práticos que você leva ao participar do Vet Pricing.</p>
       </div>
 
       <div class="benefits-list">
         <div class="benefit">
-          <div class="benefit-hdr"><span class="benefit-num">01</span><h3 class="benefit-title">Aplicar o IVA dual</h3></div>
-          <p class="benefit-desc">Calcular e gerir a tributação de produtos e serviços veterinários no modelo de CBS e IBS, incluindo o split payment.</p>
+          <div class="benefit-hdr"><span class="benefit-num">01</span><h3 class="benefit-title">Entender o split payment</h3></div>
+          <p class="benefit-desc">Saber exatamente como o imposto passa a ser descontado na fonte e o que isso faz com o seu caixa.</p>
         </div>
         <div class="benefit">
           <div class="benefit-hdr"><span class="benefit-num">02</span><h3 class="benefit-title">Precificar com margem</h3></div>
-          <p class="benefit-desc">Formar preços que cobrem custos e a nova tributação, protegendo e aumentando a sua margem sem perder competitividade.</p>
+          <p class="benefit-desc">Formar preços que cobrem custo, imposto e ainda garantem lucro — sem perder competitividade.</p>
         </div>
         <div class="benefit">
-          <div class="benefit-hdr"><span class="benefit-num">03</span><h3 class="benefit-title">Aproveitar créditos tributários</h3></div>
-          <p class="benefit-desc">Identificar riscos e oportunidades fiscais, otimizar tributos e aproveitar créditos de forma legal e segura.</p>
+          <div class="benefit-hdr"><span class="benefit-num">03</span><h3 class="benefit-title">Usar a calculadora</h3></div>
+          <p class="benefit-desc">Aplicar a calculadora de impostos da Alumine para precificar rápido, com os números da sua clínica.</p>
         </div>
         <div class="benefit">
-          <div class="benefit-hdr"><span class="benefit-num">04</span><h3 class="benefit-title">Implementar na rotina</h3></div>
-          <p class="benefit-desc">Colocar em prática o split payment e as automações fiscais no dia a dia do faturamento da clínica.</p>
+          <div class="benefit-hdr"><span class="benefit-num">04</span><h3 class="benefit-title">Cuidar do crédito e dos sócios</h3></div>
+          <p class="benefit-desc">Entender a vantagem de crédito do setor e por que a composição societária pode virar um problema.</p>
         </div>
         <div class="benefit">
-          <div class="benefit-hdr"><span class="benefit-num">05</span><h3 class="benefit-title">Simular e decidir</h3></div>
-          <p class="benefit-desc">Rodar simulações de preço e carga tributária e tomar decisões seguras ao longo da transição, até 2033.</p>
+          <div class="benefit-hdr"><span class="benefit-num">05</span><h3 class="benefit-title">Proteger o caixa em 2027</h3></div>
+          <p class="benefit-desc">Antecipar os ajustes de preço e evitar o aperto de caixa que a nova tributação vai causar.</p>
         </div>
         <div class="benefit">
-          <div class="benefit-hdr"><span class="benefit-num">06</span><h3 class="benefit-title">Tornar-se referência</h3></div>
-          <p class="benefit-desc">Posicionar-se como autoridade em tributação e precificação do setor veterinário — para o próprio negócio ou como consultor.</p>
+          <div class="benefit-hdr"><span class="benefit-num">06</span><h3 class="benefit-title">Decidir com estratégia</h3></div>
+          <p class="benefit-desc">Olhar o negócio frente ao mercado e tomar decisões de preço e crescimento com critério.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TREINADORES ──────────────────────────────────── -->
+  <section class="section proof" id="treinadores">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Quem conduz</span>
+        <h2 class="h-display h-2" style="max-width:20ch;">
+          Três especialistas, <em class="italic-serif brand-grad">uma visão completa.</em>
+        </h2>
+        <p class="lead">Contabilidade, precificação e estratégia — as três frentes que definem a saúde do seu negócio no novo cenário.</p>
+      </div>
+
+      <div class="trainers-grid">
+        <div class="trainer-card">
+          <div class="role">Estratégia de negócio</div>
+          <div class="who">Dr. Kleber Ferreira</div>
+          <p>Gestor à frente de operações que somam R$ 20M+/ano no setor. Traz a leitura de mercado e a estratégia para crescer com margem.</p>
+        </div>
+        <div class="trainer-card">
+          <div class="role">Precificação e ferramentas</div>
+          <div class="who">Thiago Liberman</div>
+          <p>Responsável pela precificação e pela calculadora de impostos da Alumine. Mostra, na prática, como formar preço com segurança.</p>
+        </div>
+        <div class="trainer-card">
+          <div class="role">Contabilidade e tributação</div>
+          <div class="who">Angelita</div>
+          <p>Especialista em contabilidade e na aplicação da nova tributação. Traduz o split payment e os créditos para a realidade da clínica.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ─── FORMATO ──────────────────────────────────────── -->
-  <section class="section proof" id="formato">
+  <section class="section proof" id="formato" style="border-top:0;">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">Formato</span>
         <h2 class="h-display h-2" style="max-width:20ch;">
-          Uma formação completa, <em class="italic-serif brand-grad">prática e no seu ritmo.</em>
+          Ao vivo, prático e <em class="italic-serif brand-grad">no dia marcado.</em>
         </h2>
       </div>
 
       <div class="format-grid">
         <div class="format-item">
-          <div class="fval"><span class="accent">Online</span></div>
-          <div class="flabel">100% a distância</div>
-          <div class="fdesc">Aulas gravadas e disponíveis para assistir quando e quantas vezes quiser.</div>
+          <div class="fval"><span class="accent">14 SET</span></div>
+          <div class="flabel">Data</div>
+          <div class="fdesc">Aula ao vivo, marcada. Reserve a data na sua agenda.</div>
         </div>
         <div class="format-item">
-          <div class="fval">05</div>
-          <div class="flabel">Módulos</div>
-          <div class="fdesc">Conteúdos exclusivos e organizados do básico ao avançado.</div>
+          <div class="fval">20<span class="accent">h</span></div>
+          <div class="flabel">Início</div>
+          <div class="fdesc">À noite, para caber na rotina de quem atende durante o dia.</div>
         </div>
         <div class="format-item">
-          <div class="fval">60<span class="accent">h</span></div>
-          <div class="flabel">Carga horária</div>
-          <div class="fdesc">De aula com especialistas em Reforma Tributária e precificação.</div>
+          <div class="fval">3<span class="accent">h</span></div>
+          <div class="flabel">Duração</div>
+          <div class="fdesc">Conteúdo direto ao ponto, com tira-dúvidas ao vivo.</div>
         </div>
         <div class="format-item">
-          <div class="fval"><span class="accent">Ao vivo</span></div>
-          <div class="flabel">Live sessions</div>
-          <div class="fdesc">Aulas semanais ao vivo para acompanhar de perto e tirar dúvidas.</div>
+          <div class="fval"><span class="accent">Zoom</span></div>
+          <div class="flabel">Onde</div>
+          <div class="fdesc">100% online e ao vivo. Participe de onde estiver.</div>
         </div>
         <div class="format-item">
-          <div class="fval"><span class="accent">Apoio</span></div>
-          <div class="flabel">Tira-dúvidas</div>
-          <div class="fdesc">Interação direta com especialistas ao longo de todo o programa.</div>
+          <div class="fval"><span class="accent">Calc.</span></div>
+          <div class="flabel">Ferramenta</div>
+          <div class="fdesc">Calculadora de impostos da Alumine inclusa para os participantes.</div>
         </div>
         <div class="format-item">
-          <div class="fval"><span class="accent">Prático</span></div>
-          <div class="flabel">Dia a dia</div>
-          <div class="fdesc">Dicas, modelos e ferramentas para aplicar imediatamente na clínica.</div>
+          <div class="fval"><span class="accent">03</span></div>
+          <div class="flabel">Especialistas</div>
+          <div class="fdesc">Contabilidade, precificação e estratégia na mesma sala.</div>
         </div>
       </div>
     </div>
@@ -533,7 +615,7 @@
       <div class="section-head">
         <span class="eyebrow">Para quem é</span>
         <h2 class="h-display h-2" style="max-width:22ch;">
-          Feito para quem <em class="italic-serif brand-grad">não pode ser pego de surpresa.</em>
+          Feito para quem <em class="italic-serif brand-grad">vive do setor veterinário.</em>
         </h2>
       </div>
 
@@ -542,14 +624,14 @@
           <span class="anum">01</span>
           <div>
             <h3>Médicos(as) veterinários(as)</h3>
-            <p>Profissionais com clínica ou consultório próprio que precisam entender o impacto no negócio.</p>
+            <p>Com clínica ou consultório próprio, que precisam entender o impacto no caixa e na margem.</p>
           </div>
         </div>
         <div class="audience-item">
           <span class="anum">02</span>
           <div>
             <h3>Gestores e administradores</h3>
-            <p>Responsáveis por clínicas e hospitais veterinários que tomam decisões financeiras e fiscais.</p>
+            <p>Responsáveis por clínicas e hospitais veterinários que tomam decisões de preço e finanças.</p>
           </div>
         </div>
         <div class="audience-item">
@@ -562,71 +644,64 @@
         <div class="audience-item">
           <span class="anum">04</span>
           <div>
-            <h3>Contadores e consultores</h3>
-            <p>Profissionais que atendem o segmento veterinário e querem se especializar na Reforma.</p>
+            <h3>Sócios de clínicas</h3>
+            <p>Quem tem sociedade e precisa saber como a composição societária afeta o crédito tributário.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ─── INVESTIMENTO / OFERTA ────────────────────────── -->
-  <section class="section offer" id="investimento">
+  <!-- ─── INSCRIÇÃO / OFERTA ───────────────────────────── -->
+  <section class="section offer" id="inscricao">
     <div class="container">
       <div class="section-head" style="text-align:center; align-items:center;">
-        <span class="eyebrow no-dash" style="align-self:center;">Próximas turmas e investimento</span>
+        <span class="eyebrow no-dash" style="align-self:center;">Inscrição</span>
         <h2 class="h-display h-2" style="text-align:center;">
           Garanta sua <em class="italic-serif brand-grad">vaga.</em>
         </h2>
         <p class="lead" style="text-align:center; margin:0 auto;">
-          Certificação completa em Reforma Tributária e Precificação para o setor veterinário. Turmas 2026.
+          Vet Pricing · aula ao vivo em 14 de setembro, às 20h, no Zoom.
         </p>
       </div>
 
       <div class="offer-card">
         <div class="offer-head">
           <h3 class="offer-name">
-            <span class="tier">Certificação Digital · Tributação + Precificação Vet</span>
-            Programa completo
+            <span class="tier">Vet Pricing · Aula ao vivo no Zoom</span>
+            Sua vaga garantida
           </h3>
-          <span class="offer-tag">Turmas 2026</span>
+          <span class="offer-tag">14 SET · 20h</span>
         </div>
 
         <div class="offer-grid">
-          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">05 módulos do básico ao avançado</span><span class="meta">Incluso</span></div>
-          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">60 horas de aula com especialistas</span><span class="meta">Incluso</span></div>
-          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Aulas ao vivo semanais</span><span class="meta">Incluso</span></div>
-          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Aulas gravadas para o aluno</span><span class="meta">Incluso</span></div>
-          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Foco no IVA dual (CBS e IBS)</span><span class="meta">Incluso</span></div>
-          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Precificação e formação de preço</span><span class="meta">Incluso</span></div>
-          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Estratégias para proteger e aumentar a margem</span><span class="meta">Incluso</span></div>
-          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Split payment e automação fiscal</span><span class="meta">Incluso</span></div>
-          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Créditos e otimização tributária</span><span class="meta">Incluso</span></div>
-          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Simulações e cases reais do setor</span><span class="meta">Incluso</span></div>
-          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Tira-dúvidas com especialistas</span><span class="meta">Incluso</span></div>
-          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Ferramentas para aplicar no dia a dia</span><span class="meta">Incluso</span></div>
-          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Certificado de conclusão</span><span class="meta">Incluso</span></div>
-          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Acesso à comunidade de alunos</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">3 horas de aula ao vivo no Zoom</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Calculadora de impostos da Alumine</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Aula sobre a nova tributação e split payment</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Precificação e formação de preço na prática</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Estratégia de negócio frente ao mercado</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Material complementar</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Tira-dúvidas ao vivo com os especialistas</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Com Kleber, Thiago e Angelita</span><span class="meta">Incluso</span></div>
         </div>
 
         <div class="offer-pricing">
           <div>
             <div class="offer-price-label">Investimento</div>
             <div class="offer-price-value">
-              <span class="from">De R$ 4.431,00 por</span>
-              <span class="amount">12x R$ 310,17</span>
+              <span class="amount">R$ 397</span>
             </div>
-            <div class="offer-price-note">sem juros · ou R$ 3.722,04 à vista</div>
+            <div class="offer-price-note">Pague no PIX, Cartão ou Boleto</div>
           </div>
           <div class="cta-block" style="align-items:flex-end;">
-            <a href="https://wa.me/5511930001873?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Certifica%C3%A7%C3%A3o%20em%20Reforma%20Tribut%C3%A1ria%20para%20o%20Setor%20Veterin%C3%A1rio." target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-large">
+            <a href="https://wa.me/5511930001873?text=Ol%C3%A1!%20Quero%20garantir%20minha%20vaga%20no%20Vet%20Pricing%20(14%2F09%2C%2020h)." target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-large">
               <span>Quero garantir minha vaga</span>
               <svg width="16" height="16" viewBox="0 0 14 14" fill="none" class="arrow"><path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
             <div class="cta-micro">
-              <span>Vagas limitadas por turma</span>
+              <span>Vagas limitadas</span>
               <span class="dot"></span>
-              <span>Parcelamento em 12x</span>
+              <span>14 SET · 20h · Zoom</span>
             </div>
           </div>
         </div>
@@ -636,8 +711,8 @@
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5L9.8 5.8L14.5 6.3L11 9.5L12 14L8 11.6L4 14L5 9.5L1.5 6.3L6.2 5.8L8 1.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
           </span>
           <p>
-            Uma precificação errada no novo cenário pode custar muito mais do que a certificação.
-            <strong>Aplicar a Reforma e formar preço com margem</strong> é o que separa a clínica que lucra da que é engolida pela nova carga a partir de 2026.
+            Uma precificação errada no novo cenário pode custar, em um só mês, muito mais do que a inscrição.
+            <strong>Aprender a precificar e entender o split payment</strong> é o que separa a clínica que se protege da que é pega de surpresa em 2027.
           </p>
         </div>
       </div>
@@ -656,40 +731,32 @@
 
       <div class="faq-list">
         <div class="faq-item open">
-          <button class="faq-q"><span>O curso é só sobre tributação?</span><span class="ic" aria-hidden="true"></span></button>
-          <div class="faq-a"><div class="faq-a-inner">Não. Além de dominar a Reforma (IVA dual, créditos, split payment), você aprende <b>precificação e formação de preço</b> — como ajustar seus valores para cobrir a nova carga e ainda aumentar a margem. As duas frentes andam juntas: entender o imposto e saber precificar é o que protege o seu lucro.</div></div>
+          <button class="faq-q"><span>Quando e onde acontece a aula?</span><span class="ic" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">No dia <b>14 de setembro, às 20h</b>, ao vivo no <b>Zoom</b>. São cerca de 3 horas de conteúdo, com tira-dúvidas ao vivo. O link de acesso é enviado após a inscrição.</div></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q"><span>Preciso ter conhecimento prévio em tributação?</span><span class="ic" aria-hidden="true"></span></button>
-          <div class="faq-a"><div class="faq-a-inner">Não. O programa começa pelos fundamentos e evolui do básico ao avançado. É pensado tanto para quem nunca estudou tributação quanto para quem já atua na área e quer se especializar na Reforma e na precificação aplicadas ao setor veterinário.</div></div>
+          <button class="faq-q"><span>O que é o split payment e por que isso me afeta?</span><span class="ic" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">É o mecanismo em que o imposto passa a ser descontado direto na fonte, no momento em que o cliente paga. Se o cliente desistir, a restituição do governo só acontece depois de cerca de 30 dias — o que pode apertar o caixa de quem não estiver preparado. Na aula você aprende a precificar considerando isso.</div></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q"><span>As aulas são ao vivo ou gravadas?</span><span class="ic" aria-hidden="true"></span></button>
-          <div class="faq-a"><div class="faq-a-inner">Ambos. Há live sessions semanais ao vivo para acompanhamento e tira-dúvidas, e todas as aulas ficam gravadas e disponíveis para o aluno assistir quando e quantas vezes quiser.</div></div>
+          <button class="faq-q"><span>Preciso ser veterinário para participar?</span><span class="ic" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">Não. A aula é para todo mundo que vive do setor veterinário: veterinários, gestores, administradores, empreendedores e sócios de clínicas, hospitais, pet shops e distribuidoras.</div></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q"><span>Quanto tempo dura o curso e qual a carga horária?</span><span class="ic" aria-hidden="true"></span></button>
-          <div class="faq-a"><div class="faq-a-inner">São 05 módulos que somam 60 horas de conteúdo com especialistas de mercado, organizados do básico ao avançado. Você avança no seu ritmo pelas aulas gravadas e acompanha as lives semanais.</div></div>
+          <button class="faq-q"><span>A calculadora de impostos está inclusa?</span><span class="ic" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">Sim. Os participantes têm acesso à calculadora de impostos da Alumine, demonstrada ao vivo na aula. Você aprende a fazer o cálculo na unha e também com a ferramenta.</div></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q"><span>O curso é específico para o setor veterinário?</span><span class="ic" aria-hidden="true"></span></button>
-          <div class="faq-a"><div class="faq-a-inner">Sim. Embora você aprenda toda a base da Reforma e da precificação, os exemplos, cases e simulações são aplicados à realidade de clínicas, hospitais e empresas da cadeia veterinária — de consultas e cirurgias à venda de medicamentos e rações.</div></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q"><span>Vou receber certificado?</span><span class="ic" aria-hidden="true"></span></button>
-          <div class="faq-a"><div class="faq-a-inner">Sim. Ao concluir o programa você recebe o certificado de conclusão da Certificação Digital em Reforma Tributária para o Setor Veterinário.</div></div>
+          <button class="faq-q"><span>Quem são os treinadores?</span><span class="ic" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">Dr. Kleber Ferreira (estratégia de negócio), Thiago Liberman (precificação e ferramentas) e Angelita (contabilidade e tributação) — cobrindo as três frentes que definem a saúde do seu negócio no novo cenário.</div></div>
         </div>
         <div class="faq-item">
           <button class="faq-q"><span>Quais são as formas de pagamento?</span><span class="ic" aria-hidden="true"></span></button>
-          <div class="faq-a"><div class="faq-a-inner">O investimento é de R$ 4.431,00, com condição especial de 12x de R$ 310,17 sem juros, ou R$ 3.722,04 à vista. As condições detalhadas e formas de pagamento são apresentadas no momento da inscrição.</div></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q"><span>Por que aprender isso agora?</span><span class="ic" aria-hidden="true"></span></button>
-          <div class="faq-a"><div class="faq-a-inner">Porque a vigência começa em 2026 e a transição vai até 2033. Quem entende as regras e ajusta o preço desde o início protege a margem, evita pagar imposto a mais e ganha vantagem competitiva. Chegar preparado é mais barato do que corrigir depois.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">O investimento é de <b>R$ 397</b>, e você pode pagar no <b>PIX, Cartão ou Boleto</b>. As instruções de pagamento são enviadas na inscrição.</div></div>
         </div>
         <div class="faq-item">
           <button class="faq-q"><span>Como faço a minha inscrição?</span><span class="ic" aria-hidden="true"></span></button>
-          <div class="faq-a"><div class="faq-a-inner">Basta clicar em qualquer botão de "Garantir minha vaga" nesta página. Você fala diretamente com a nossa equipe para tirar dúvidas e concluir a matrícula na turma de 2026.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">Clique em qualquer botão de "Garantir minha vaga" nesta página. Você fala com a nossa equipe para tirar dúvidas e concluir a inscrição. As vagas são limitadas.</div></div>
         </div>
       </div>
     </div>
@@ -700,24 +767,24 @@
     <div class="container final-cta-inner">
       <span class="eyebrow no-dash" style="margin-bottom:24px;">O próximo passo</span>
       <h2>
-        A nova carga vai apertar a margem de <span class="accent">todo mundo.</span><br />
+        A nova tributação vem <span class="accent">com ou sem você preparado.</span><br />
         A diferença está em quem <span class="accent">sabe precificar.</span>
       </h2>
       <p>
-        Domine a Reforma e a precificação do setor veterinário e entre no sistema de 2026
-        protegendo — e aumentando — a sua margem. As vagas das turmas de 2026 são limitadas.
+        Em 3 horas ao vivo, você entende o split payment, aprende a precificar com margem e
+        sai pronto para proteger a sua clínica em 2027. Vagas limitadas para a aula de 14 de setembro.
       </p>
       <div class="ctas">
-        <a href="https://wa.me/5511930001873?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Certifica%C3%A7%C3%A3o%20em%20Reforma%20Tribut%C3%A1ria%20para%20o%20Setor%20Veterin%C3%A1rio." target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-large">
+        <a href="https://wa.me/5511930001873?text=Ol%C3%A1!%20Quero%20garantir%20minha%20vaga%20no%20Vet%20Pricing%20(14%2F09%2C%2020h)." target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-large">
           <span>Quero garantir minha vaga</span>
           <svg width="16" height="16" viewBox="0 0 14 14" fill="none" class="arrow"><path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
         <div class="cta-micro">
-          <span>Turmas 2026</span>
+          <span>14 de setembro · 20h</span>
           <span class="dot"></span>
-          <span>Vagas limitadas</span>
+          <span>Ao vivo no Zoom</span>
           <span class="dot"></span>
-          <span>Parcelamento em 12x</span>
+          <span>R$ 397</span>
         </div>
       </div>
     </div>
@@ -730,12 +797,12 @@
         <div class="ps-label">P.S.</div>
         <div class="ps-body">
           <p>
-            Esta certificação não é sobre decorar leis. É sobre <strong>aplicar a Reforma e precificar com margem</strong> e sair do outro lado com uma clínica mais lucrativa, mais eficiente e menos exposta à nova carga.
+            A maior parte do setor veterinário <strong>ainda não sabe</strong> que o imposto vai ser descontado na fonte — e segue precificando como sempre fez.
           </p>
           <p>
-            Se você chegou até aqui, já sabe que a mudança vem. A diferença entre quem se antecipa e quem corre atrás está na decisão de começar agora.
+            Quem entende a mudança e ajusta o preço agora se protege. Quem deixa para depois corre o risco de descobrir tarde demais, com o caixa apertado.
           </p>
-          <p>Vagas das turmas de 2026 são limitadas. Garanta a sua antes do encerramento.</p>
+          <p>São 3 horas que podem salvar a margem da sua clínica em 2027. As vagas são limitadas.</p>
         </div>
       </div>
     </div>
@@ -748,12 +815,12 @@
     <div class="footer-brand">
       <img src="assets/alumine-logo.jpg" alt="Alumine" />
       <span class="nav-divider"></span>
-      <span class="nav-program">Certificação <b>Tributação + Precificação Vet</b></span>
+      <span class="nav-program">Programa <b>Vet Pricing</b></span>
     </div>
     <div class="footer-meta">
       <span>© Alumine · 2026</span>
       <span>WhatsApp · (11) 93000-1873</span>
-      <span>Certificação Digital · Setor Veterinário</span>
+      <span>Aula ao vivo · Setor Veterinário</span>
     </div>
   </div>
 </footer>
