@@ -26,20 +26,38 @@ const {
 
 const PRICE_NUMBER = Number(PRICE);
 const DUE_DAYS_NUMBER = Number(DUE_DAYS);
-const ALLOWED_ORIGINS = ALLOWED_ORIGIN.split(",").map((o) => o.trim()).filter(Boolean);
+
+// Limpa lixo colado junto do valor da env (ex.: comentário "... (produção).").
+// Uma URL/origem válida não tem espaços, então cortamos no primeiro espaço.
+const clean = (v = "") => String(v).trim().split(/\s+/)[0];
+const stripSlash = (v = "") => v.replace(/\/+$/, "");
+
+const ASAAS_BASE = stripSlash(clean(ASAAS_BASE_URL));
+const ALLOWED_ORIGINS = ALLOWED_ORIGIN.split(",").map((o) => stripSlash(clean(o))).filter(Boolean);
+
+// Libera as origens da allowlist E qualquer subdomínio *.alumine.com.br, para
+// o CORS não travar por causa de um valor de env levemente diferente.
+function isAllowedOrigin(origin) {
+  if (!origin) return true; // curl / health checks (sem header Origin)
+  const o = stripSlash(origin.trim());
+  if (ALLOWED_ORIGINS.includes(o)) return true;
+  try {
+    const host = new URL(o).hostname;
+    if (host === "alumine.com.br" || host.endsWith(".alumine.com.br")) return true;
+  } catch {}
+  return false;
+}
 
 const app = express();
-app.use(express.json({ limit: "16kb" }));
+// CORS antes do parser. Nunca lançamos erro aqui (isso removeria os cabeçalhos
+// de CORS e produziria um "CORS error" opaco no navegador).
 app.use(
   cors({
-    origin(origin, cb) {
-      // Permite ferramentas sem Origin (curl, health checks) e as origens da allowlist.
-      if (!origin || ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
-      return cb(new Error("Origem não autorizada"));
-    },
+    origin: (origin, cb) => cb(null, isAllowedOrigin(origin)),
     methods: ["POST", "GET", "OPTIONS"],
   })
 );
+app.use(express.json({ limit: "16kb" }));
 
 // ── Helpers ──────────────────────────────────────────────────────────
 const onlyDigits = (v = "") => String(v).replace(/\D/g, "");
@@ -54,7 +72,7 @@ function dueDateISO(daysFromNow) {
 }
 
 async function asaas(path, options = {}) {
-  const res = await fetch(`${ASAAS_BASE_URL}${path}`, {
+  const res = await fetch(`${ASAAS_BASE}${path}`, {
     ...options,
     headers: {
       "Content-Type": "application/json",
@@ -74,7 +92,7 @@ async function asaas(path, options = {}) {
 
 // ── Health ───────────────────────────────────────────────────────────
 app.get("/health", (_req, res) => {
-  res.json({ ok: true, configured: Boolean(ASAAS_API_KEY), base: ASAAS_BASE_URL });
+  res.json({ ok: true, configured: Boolean(ASAAS_API_KEY), base: ASAAS_BASE });
 });
 
 // ── Checkout ─────────────────────────────────────────────────────────
@@ -139,5 +157,5 @@ app.post("/checkout", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Vet Pricing checkout API on :${PORT} — Asaas base ${ASAAS_BASE_URL}`);
+  console.log(`Vet Pricing checkout API on :${PORT} — Asaas base ${ASAAS_BASE}`);
 });
