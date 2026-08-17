@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Checkout — Vet Pricing</title>
+<meta name="description" content="Garanta sua vaga no Vet Pricing — aula ao vivo de 3h no Zoom, 14 de setembro às 20h. Pagamento seguro via Asaas (PIX, Cartão ou Boleto)." />
+<meta name="robots" content="noindex" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="styles.css" />
+
+<style>
+  :root { --font-display: "Instrument Sans", "Geist", -apple-system, sans-serif; }
+  .h-display { font-weight: 600; letter-spacing: -0.03em; }
+  .nav-brand img { height: 44px; mix-blend-mode: screen; }
+  .nav-brand .nav-program, .nav-brand .nav-divider { display: none; }
+
+  .checkout-wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: clamp(32px, 6vw, 72px) var(--gutter) clamp(60px, 8vw, 100px);
+    display: grid;
+    grid-template-columns: 1fr 0.85fr;
+    gap: clamp(28px, 4vw, 56px);
+    align-items: start;
+  }
+  @media (max-width: 860px) { .checkout-wrap { grid-template-columns: 1fr; } }
+
+  /* Resumo do pedido */
+  .summary { position: sticky; top: 100px; }
+  @media (max-width: 860px) { .summary { position: static; order: 2; } }
+  .summary .event-line {
+    display: inline-flex; align-items: center; gap: 10px; white-space: nowrap;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em;
+    color: var(--copper); border: 1px solid var(--line-copper);
+    border-radius: 999px; padding: 9px 16px; background: rgba(95,160,120,0.05);
+    margin-bottom: 22px;
+  }
+  .summary .event-line svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .summary h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(30px, 4vw, 46px); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 14px; }
+  .summary .sub { color: var(--ink-2); font-size: 16px; line-height: 1.55; margin-bottom: 28px; max-width: 46ch; }
+  .summary-card {
+    background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
+    padding: 28px 30px;
+  }
+  .summary-card .row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .summary-card .row:last-of-type { border-bottom: 0; }
+  .summary-card .row .k { color: var(--ink-3); font-size: 14px; }
+  .summary-card .row .v { color: var(--ink-1); font-size: 14px; text-align: right; }
+  .summary-card .total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line-strong); }
+  .summary-card .total .k { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); }
+  .summary-card .total .v { font-family: var(--font-display); font-size: 40px; line-height: 1; letter-spacing: -0.025em; background: var(--grad-brand-flat); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .summary-list { list-style: none; margin: 22px 0 0; padding: 22px 0 0; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
+  .summary-list li { display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--ink-2); }
+  .summary-list .dotc { width: 16px; height: 16px; border-radius: 50%; background: var(--grad-brand-flat); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .summary-list .dotc svg { width: 9px; height: 9px; }
+
+  /* Formulário */
+  .form-card {
+    background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    border: 1px solid var(--line-copper); border-radius: var(--radius-lg);
+    padding: clamp(28px, 3vw, 40px);
+    box-shadow: var(--sh-card);
+  }
+  .form-card h2 { font-family: var(--font-display); font-weight: 600; font-size: 22px; margin-bottom: 4px; }
+  .form-card .hint { color: var(--ink-3); font-size: 13.5px; margin-bottom: 24px; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; }
+  .field input {
+    width: 100%; font-family: var(--font-sans); font-size: 15px; color: var(--ink-1);
+    background: rgba(0,0,0,0.3); border: 1px solid var(--line-strong); border-radius: var(--radius);
+    padding: 14px 16px; transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .field input::placeholder { color: var(--ink-4); }
+  .field input:focus { outline: none; border-color: var(--copper); box-shadow: 0 0 0 3px rgba(95,160,120,0.12); }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
+
+  .methods { margin: 8px 0 22px; }
+  .methods .label { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 10px; }
+  .method-chips { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  @media (max-width: 480px) { .method-chips { grid-template-columns: repeat(2, 1fr); } }
+  .method-chip {
+    border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 12px 8px;
+    text-align: center; font-size: 13px; color: var(--ink-2); cursor: pointer; transition: all 0.18s ease;
+    background: rgba(0,0,0,0.2);
+  }
+  .method-chip:hover { border-color: var(--line-copper); }
+  .method-chip.active { border-color: var(--copper); color: var(--ink-1); background: rgba(95,160,120,0.10); }
+
+  .pay-btn { width: 100%; margin-top: 4px; }
+  .pay-btn[disabled] { opacity: 0.6; cursor: not-allowed; }
+  .form-msg { margin-top: 14px; font-size: 13.5px; line-height: 1.5; display: none; }
+  .form-msg.error { display: block; color: #ffb4a8; }
+  .secure-note { display: flex; align-items: center; gap: 8px; margin-top: 18px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--ink-3); }
+  .secure-note svg { width: 14px; height: 14px; color: var(--copper); }
+</style>
+</head>
+<body class="palette-vet">
+
+<!-- ─── NAV ─────────────────────────────────────────────── -->
+<header class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="/reforma-tributaria.html">
+      <img src="assets/alumine-logo.jpg" alt="Alumine" />
+    </a>
+    <a href="/reforma-tributaria.html" class="nav-cta">
+      Voltar
+    </a>
+  </div>
+</header>
+
+<main class="checkout-wrap">
+  <!-- Resumo do pedido -->
+  <section class="summary">
+    <div class="event-line">
+      <svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="2.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1.5 5.5H12.5M4.5 1.5V3.5M9.5 1.5V3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      14 SET · 20h · ao vivo no Zoom
+    </div>
+    <h1>Vet Pricing</h1>
+    <p class="sub">Aula ao vivo de 3h sobre a nova tributação, o split payment e como precificar para a sua clínica continuar saudável em 2027.</p>
+
+    <div class="summary-card">
+      <div class="row"><span class="k">Produto</span><span class="v">Vet Pricing · aula ao vivo</span></div>
+      <div class="row"><span class="k">Data</span><span class="v">14 de setembro · 20h</span></div>
+      <div class="row"><span class="k">Onde</span><span class="v">Online, ao vivo no Zoom</span></div>
+      <div class="row"><span class="k">Duração</span><span class="v">3 horas + tira-dúvidas</span></div>
+
+      <div class="total">
+        <span class="k">Total</span>
+        <span class="v">R$ 397</span>
+      </div>
+
+      <ul class="summary-list">
+        <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Calculadora de impostos inclusa</li>
+        <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Com Kleber, Thiago e Angelita</li>
+        <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Material complementar</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Formulário -->
+  <section class="form-card">
+    <h2>Garanta sua vaga</h2>
+    <p class="hint">Preencha seus dados para gerar o pagamento seguro.</p>
+
+    <form id="checkout-form" novalidate>
+      <div class="field">
+        <label for="name">Nome completo</label>
+        <input id="name" name="name" type="text" autocomplete="name" placeholder="Seu nome completo" required />
+      </div>
+      <div class="field">
+        <label for="email">E-mail</label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="voce@email.com" required />
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="cpfCnpj">CPF / CNPJ</label>
+          <input id="cpfCnpj" name="cpfCnpj" inputmode="numeric" placeholder="Somente números" required />
+        </div>
+        <div class="field">
+          <label for="phone">WhatsApp (com DDD)</label>
+          <input id="phone" name="phone" inputmode="numeric" autocomplete="tel" placeholder="(11) 90000-0000" required />
+        </div>
+      </div>
+
+      <div class="methods">
+        <div class="label">Forma de pagamento</div>
+        <div class="method-chips" id="methods">
+          <div class="method-chip active" data-method="UNDEFINED">Escolher depois</div>
+          <div class="method-chip" data-method="PIX">PIX</div>
+          <div class="method-chip" data-method="CREDIT_CARD">Cartão</div>
+          <div class="method-chip" data-method="BOLETO">Boleto</div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary pay-btn" id="pay-btn">
+        <span id="pay-label">Ir para o pagamento</span>
+        <svg width="16" height="16" viewBox="0 0 14 14" fill="none" class="arrow"><path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <div class="form-msg" id="form-msg"></div>
+
+      <div class="secure-note">
+        <svg viewBox="0 0 16 16" fill="none"><rect x="3" y="7" width="10" height="6.5" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" stroke="currentColor" stroke-width="1.2"/></svg>
+        Pagamento processado com segurança pelo Asaas
+      </div>
+    </form>
+  </section>
+</main>
+
+<script>
+  // ⚠️ CONFIGURE: URL pública da API de checkout (serviço Node no Coolify).
+  // Ex.: "https://pay.alumine.com.br" — SEM barra no final.
+  const API_BASE = "https://SUA-API-DE-CHECKOUT";
+
+  // Seleção de método de pagamento
+  let billingType = "UNDEFINED";
+  document.querySelectorAll(".method-chip").forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      document.querySelectorAll(".method-chip").forEach(function (c) { c.classList.remove("active"); });
+      chip.classList.add("active");
+      billingType = chip.getAttribute("data-method");
+    });
+  });
+
+  const form = document.getElementById("checkout-form");
+  const btn = document.getElementById("pay-btn");
+  const label = document.getElementById("pay-label");
+  const msg = document.getElementById("form-msg");
+
+  function showError(text) {
+    msg.textContent = text;
+    msg.className = "form-msg error";
+  }
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    msg.className = "form-msg";
+
+    const payload = {
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      cpfCnpj: form.cpfCnpj.value.replace(/\D/g, ""),
+      phone: form.phone.value.replace(/\D/g, ""),
+      billingType: billingType,
+    };
+
+    if (payload.name.length < 3) return showError("Informe o seu nome completo.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) return showError("Informe um e-mail válido.");
+    if (payload.cpfCnpj.length !== 11 && payload.cpfCnpj.length !== 14) return showError("Informe um CPF ou CNPJ válido.");
+    if (payload.phone.length < 10) return showError("Informe um WhatsApp válido com DDD.");
+
+    btn.disabled = true;
+    label.textContent = "Gerando pagamento…";
+
+    try {
+      const res = await fetch(API_BASE + "/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(function () { return {}; });
+      if (!res.ok || !data.invoiceUrl) {
+        throw new Error(data.error || "Não foi possível gerar o pagamento. Tente novamente.");
+      }
+      // Redireciona para a página de pagamento segura do Asaas.
+      window.location.href = data.invoiceUrl;
+    } catch (err) {
+      showError(err.message || "Erro ao processar. Tente novamente em instantes.");
+      btn.disabled = false;
+      label.textContent = "Ir para o pagamento";
+    }
+  });
+</script>
+</body>
+</html>
