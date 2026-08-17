@@ -92,7 +92,18 @@ async function asaas(path, options = {}) {
 
 // ── Health ───────────────────────────────────────────────────────────
 app.get("/health", (_req, res) => {
-  res.json({ ok: true, configured: Boolean(ASAAS_API_KEY), base: ASAAS_BASE });
+  // keyLength/keyPrefixOk ajudam a diagnosticar sem expor a chave:
+  //  - keyLength 0  => a chave não chegou ao processo (nome errado, sem redeploy,
+  //                    ou o "$" inicial foi interpretado pelo Coolify).
+  //  - keyPrefixOk false com keyLength>0 => a chave chegou truncada/alterada.
+  const key = ASAAS_API_KEY || "";
+  res.json({
+    ok: true,
+    configured: Boolean(key),
+    keyLength: key.length,
+    keyPrefixOk: key.startsWith("$aact_"),
+    base: ASAAS_BASE,
+  });
 });
 
 // ── Checkout ─────────────────────────────────────────────────────────
