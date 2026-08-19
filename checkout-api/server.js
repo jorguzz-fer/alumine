@@ -16,22 +16,29 @@ const {
   // Origem(s) do front autorizada(s) a chamar a API (separe por vírgula).
   ALLOWED_ORIGIN = "https://tributario.alumine.com.br",
   PORT = 3000,
-  // Valor do Vet Pricing em reais.
-  PRICE = "397",
+  // Valores do Vet Pricing por forma de pagamento (em reais).
+  PRICE_PIX = "350",
+  PRICE_CARD = "390",
+  PRICE_BOLETO = "390",
   // Dias a partir de hoje para o vencimento da cobrança.
   DUE_DAYS = "2",
   // Descrição que aparece na cobrança.
   CHARGE_DESCRIPTION = "Vet Pricing — aula ao vivo (14/09, 20h)",
 } = process.env;
 
-// Interpreta o preço de forma robusta: aceita "397", "397,00", "R$ 397",
-// valores com texto colado, etc. Na dúvida, cai no padrão 397.
-function parsePrice(v) {
+// Interpreta o preço de forma robusta: aceita "350", "390,00", "R$ 390",
+// valores com texto colado, etc. Na dúvida, cai no fallback informado.
+function parsePrice(v, fallback) {
   const raw = String(v ?? "").replace(",", ".").replace(/[^\d.]/g, "");
   const n = Number(raw);
-  return Number.isFinite(n) && n > 0 ? n : 397;
+  return Number.isFinite(n) && n > 0 ? n : fallback;
 }
-const PRICE_NUMBER = parsePrice(PRICE);
+// Preço por método: PIX tem desconto; cartão/boleto no valor cheio.
+const PRICES = {
+  PIX: parsePrice(PRICE_PIX, 350),
+  CREDIT_CARD: parsePrice(PRICE_CARD, 390),
+  BOLETO: parsePrice(PRICE_BOLETO, 390),
+};
 const DUE_DAYS_NUMBER = Number(DUE_DAYS);
 
 // Limpa lixo colado junto do valor da env (ex.: comentário "... (produção).").
@@ -110,7 +117,7 @@ app.get("/health", (_req, res) => {
     keyLength: key.length,
     keyPrefixOk: key.startsWith("$aact_"),
     base: ASAAS_BASE,
-    price: PRICE_NUMBER,
+    prices: PRICES,
   });
 });
 
@@ -149,13 +156,14 @@ app.post("/checkout", async (req, res) => {
       return res.status(502).json({ error: msg, step: "customer", asaasStatus: customer.status });
     }
 
-    // 2) Cria a cobrança
+    // 2) Cria a cobrança (valor conforme a forma de pagamento)
+    const value = PRICES[billingType] ?? PRICES.CREDIT_CARD;
     const payment = await asaas("/payments", {
       method: "POST",
       body: JSON.stringify({
         customer: customer.data.id,
         billingType,
-        value: PRICE_NUMBER,
+        value,
         dueDate: dueDateISO(DUE_DAYS_NUMBER),
         description: CHARGE_DESCRIPTION,
         externalReference: "vet-pricing",
