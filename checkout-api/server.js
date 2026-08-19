@@ -23,7 +23,7 @@ const {
   // Dias a partir de hoje para o vencimento da cobrança.
   DUE_DAYS = "2",
   // Descrição que aparece na cobrança.
-  CHARGE_DESCRIPTION = "Vet Pricing — aula ao vivo (14/09, 20h)",
+  CHARGE_DESCRIPTION = "Vet Pricing: aula ao vivo (14/09, 20h)",
 } = process.env;
 
 // Interpreta o preço de forma robusta: aceita "350", "390,00", "R$ 390",
