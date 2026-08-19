@@ -53,6 +53,7 @@
   .summary-card .row .k { color: var(--ink-3); font-size: 14px; }
   .summary-card .row .v { color: var(--ink-1); font-size: 14px; text-align: right; }
   .summary-card .total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line-strong); }
+  .summary-card .total-note { text-align: right; font-size: 12.5px; color: var(--ink-3); margin-top: 6px; }
   .summary-card .total .k { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); }
   .summary-card .total .v { font-family: var(--font-display); font-size: 40px; line-height: 1; letter-spacing: -0.025em; background: var(--grad-brand-flat); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .summary-list { list-style: none; margin: 22px 0 0; padding: 22px 0 0; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
@@ -83,8 +84,8 @@
 
   .methods { margin: 8px 0 22px; }
   .methods .label { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 10px; }
-  .method-chips { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-  @media (max-width: 480px) { .method-chips { grid-template-columns: repeat(2, 1fr); } }
+  .method-chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  @media (max-width: 480px) { .method-chips { grid-template-columns: repeat(3, 1fr); } }
   .method-chip {
     border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 12px 8px;
     text-align: center; font-size: 13px; color: var(--ink-2); cursor: pointer; transition: all 0.18s ease;
@@ -133,12 +134,13 @@
 
       <div class="total">
         <span class="k">Total</span>
-        <span class="v">R$ 397</span>
+        <span class="v" id="total-value">R$ 350</span>
       </div>
+      <div class="total-note" id="total-note">à vista no PIX</div>
 
       <ul class="summary-list">
-        <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Calculadora de impostos inclusa</li>
-        <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Com Kleber, Thiago e Angelita</li>
+        <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Créditos e benefícios fiscais</li>
+        <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Com Dr. Kleber Ferreira, Thiago Liberman e Angelita</li>
         <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Material complementar</li>
       </ul>
     </div>
@@ -172,8 +174,7 @@
       <div class="methods">
         <div class="label">Forma de pagamento</div>
         <div class="method-chips" id="methods">
-          <div class="method-chip active" data-method="UNDEFINED">Escolher depois</div>
-          <div class="method-chip" data-method="PIX">PIX</div>
+          <div class="method-chip active" data-method="PIX">PIX</div>
           <div class="method-chip" data-method="CREDIT_CARD">Cartão</div>
           <div class="method-chip" data-method="BOLETO">Boleto</div>
         </div>
@@ -199,15 +200,31 @@
   // Ex.: "https://pay.alumine.com.br" — SEM barra no final.
   const API_BASE = "https://pay.alumine.com.br";
 
-  // Seleção de método de pagamento
-  let billingType = "UNDEFINED";
+  // Preço por forma de pagamento
+  var PRICES = { PIX: 350, CREDIT_CARD: 390, BOLETO: 390 };
+  var NOTES = {
+    PIX: "à vista no PIX",
+    CREDIT_CARD: "à vista ou em até 10x de R$ 45 no cartão",
+    BOLETO: "à vista ou em até 10x de R$ 45 no boleto",
+  };
+  var totalEl = document.getElementById("total-value");
+  var totalNoteEl = document.getElementById("total-note");
+
+  // Seleção de método de pagamento (padrão: PIX)
+  let billingType = "PIX";
+  function updateTotal() {
+    totalEl.textContent = "R$ " + (PRICES[billingType] || 390);
+    totalNoteEl.textContent = NOTES[billingType] || "";
+  }
   document.querySelectorAll(".method-chip").forEach(function (chip) {
     chip.addEventListener("click", function () {
       document.querySelectorAll(".method-chip").forEach(function (c) { c.classList.remove("active"); });
       chip.classList.add("active");
       billingType = chip.getAttribute("data-method");
+      updateTotal();
     });
   });
+  updateTotal();
 
   const form = document.getElementById("checkout-form");
   const btn = document.getElementById("pay-btn");
