@@ -14,12 +14,48 @@ checkout.html (front, estático)
              ├─ POST /customers  (cria o cliente no Asaas)
              └─ POST /payments   (cria a cobrança)
         ← { invoiceUrl }         (redireciona o cliente para o pagamento)
+
+Asaas (pagamento confirmado)
+   └─ POST {API_BASE}/asaas-webhook
+        └─ Purchase pela Conversions API da Meta
 ```
+
+## Rastreamento (Meta)
+
+O front carrega `tracking.js` (raiz do repo), que sobe o Pixel e guarda a origem
+do clique (UTMs, `fbclid`, `_fbp`/`_fbc`). O funil fica assim:
+
+| Momento | Evento | De onde sai |
+| --- | --- | --- |
+| Visita a LP | `PageView`, `ViewContent` | navegador |
+| Clique num CTA | `ClickCheckoutCTA` (custom) | navegador |
+| Abre o checkout | `InitiateCheckout` | navegador |
+| Gera a cobrança | `AddPaymentInfo` | navegador **e** servidor (mesmo `event_id`) |
+| Pagamento confirmado | `Purchase` | só servidor, via webhook do Asaas |
+
+O `event_id` é gerado no navegador e enviado junto do pedido, então a Meta
+deduplica o evento que chega pelos dois caminhos e conta uma conversão só. O
+`Purchase` usa `purchase-{paymentId}`, porque o Asaas dispara
+`PAYMENT_CONFIRMED` e `PAYMENT_RECEIVED` para a mesma cobrança.
+
+A atribuição do clique fica em memória do processo entre o checkout e a
+confirmação do pagamento. Um redeploy nesse intervalo perde `_fbp`/`_fbc`; o
+`Purchase` ainda sai com e-mail, telefone, CPF e nome (buscados no Asaas), que
+já casam bem na Meta.
+
+### Configurar o webhook no Asaas
+
+Configurações > Integrações > Webhooks > Adicionar:
+
+- **URL:** `https://pay.alumine.com.br/asaas-webhook`
+- **Token de autenticação:** o mesmo valor de `ASAAS_WEBHOOK_TOKEN`
+- **Eventos:** `PAYMENT_CONFIRMED` e `PAYMENT_RECEIVED`
 
 ## Endpoints
 
-- `GET /health` — status do serviço (e se a chave está configurada).
-- `POST /checkout` — cria a cobrança. Body JSON: `name`, `email`, `cpfCnpj`, `phone`, `billingType` (`UNDEFINED` | `PIX` | `CREDIT_CARD` | `BOLETO`).
+- `GET /health` — status do serviço (chave do Asaas, Conversions API e webhook).
+- `POST /checkout` — cria a cobrança. Body JSON: `name`, `email`, `cpfCnpj`, `phone`, `billingType` (`UNDEFINED` | `PIX` | `CREDIT_CARD` | `BOLETO`), mais `eventId` e `attrib` (rastreamento, opcionais).
+- `POST /asaas-webhook` — recebe a confirmação de pagamento do Asaas e dispara o `Purchase`. Exige o cabeçalho `asaas-access-token` igual a `ASAAS_WEBHOOK_TOKEN`.
 
 ## Deploy no Coolify
 
@@ -31,7 +67,9 @@ checkout.html (front, estático)
    - `ASAAS_API_KEY` — sua chave do Asaas (**comece pela sandbox**).
    - `ASAAS_BASE_URL` — `https://sandbox.asaas.com/api/v3` (sandbox) ou `https://api.asaas.com/v3` (produção).
    - `ALLOWED_ORIGIN` — `https://tributario.alumine.com.br`.
-   - `PRICE=397`, `DUE_DAYS=2` (opcionais).
+   - `PRICE_PIX=350`, `PRICE_CARD=390`, `PRICE_BOLETO=390`, `DUE_DAYS=2` (opcionais).
+   - `META_PIXEL_ID`, `META_CAPI_TOKEN` — rastreamento server-side.
+   - `ASAAS_WEBHOOK_TOKEN` — token do webhook de pagamento confirmado.
 6. **Deploy.**
 
 ## Conectar o front

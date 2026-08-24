@@ -12,6 +12,9 @@
 
 <link rel="stylesheet" href="styles.css" />
 
+<!-- Pixel da Meta + atribuição (UTMs, fbclid). Configure o PIXEL_ID em tracking.js. -->
+<script src="tracking.js"></script>
+
 <style>
   /* ── Fonte de display menos serifada (apenas nesta página) ──
      Troca Instrument Serif por Instrument Sans (mesma família, sem serifa).
@@ -830,6 +833,23 @@
 </footer>
 
 <script>
+  // ── Eventos da Meta ──
+  // ViewContent: a pessoa chegou na oferta. InitiateCheckout fica na página de
+  // checkout (que é onde ela de fato começa), então aqui os CTAs só marcam a
+  // intenção e carregam a origem do clique para a próxima página.
+  Track.track("ViewContent", {
+    content_name: "Vet Pricing",
+    content_category: "aula-ao-vivo",
+    value: 350,
+    currency: "BRL",
+  });
+
+  document.querySelectorAll('a[href="checkout.html"]').forEach(function (cta, index) {
+    cta.addEventListener("click", function () {
+      Track.custom("ClickCheckoutCTA", { cta_position: index + 1 });
+    });
+  });
+
   // FAQ accordion (reuses .faq-item.open styling from styles.css)
   document.querySelectorAll('.faq-q').forEach(function (btn) {
     btn.addEventListener('click', function () {
