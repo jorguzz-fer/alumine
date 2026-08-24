@@ -16,7 +16,7 @@ const {
   // Produção:  https://api.asaas.com/v3
   ASAAS_BASE_URL = "https://sandbox.asaas.com/api/v3",
   // Origem(s) do front autorizada(s) a chamar a API (separe por vírgula).
-  ALLOWED_ORIGIN = "https://tributario.alumine.com.br",
+  ALLOWED_ORIGIN = "https://vet-pricing.alumine.com.br",
   PORT = 3000,
   // Valores do Vet Pricing por forma de pagamento (em reais).
   PRICE_PIX = "350",
@@ -32,7 +32,7 @@ const {
   ASAAS_WEBHOOK_TOKEN = "",
   // URL pública do checkout, usada como event_source_url quando o evento nasce
   // no servidor (webhook) e não temos a URL da página.
-  PUBLIC_CHECKOUT_URL = "https://tributario.alumine.com.br/checkout.html",
+  PUBLIC_CHECKOUT_URL = "https://vet-pricing.alumine.com.br/checkout.html",
 } = process.env;
 
 // Interpreta o preço de forma robusta: aceita "350", "390,00", "R$ 390",

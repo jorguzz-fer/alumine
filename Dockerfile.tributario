@@ -1,4 +1,4 @@
-# Dedicated image for tributario.alumine.com.br
+# Dedicated image for vet-pricing.alumine.com.br
 # Serves reforma-tributaria.html as the site root (index).
 FROM nginx:alpine
 COPY . /usr/share/nginx/html
