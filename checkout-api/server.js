@@ -8,7 +8,7 @@
 import express from "express";
 import cors from "cors";
 import { timingSafeEqual } from "node:crypto";
-import { sendEvent, buildUserData, attribCustomData, isConfigured as capiConfigured } from "./meta-capi.js";
+import { sendEvent, buildUserData, attribCustomData, isConfigured as capiConfigured, configSummary as capiSummary } from "./meta-capi.js";
 
 const {
   ASAAS_API_KEY,
@@ -166,7 +166,9 @@ app.get("/health", (_req, res) => {
     base: ASAAS_BASE,
     prices: PRICES,
     metaCapi: capiConfigured(),
+    meta: capiSummary(),
     asaasWebhook: Boolean(ASAAS_WEBHOOK_TOKEN),
+    webhookTokenLength: String(ASAAS_WEBHOOK_TOKEN).length,
   });
 });
 

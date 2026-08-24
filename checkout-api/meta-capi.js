@@ -32,6 +32,16 @@ const API_VERSION = clean(META_API_VERSION) || "v23.0";
 
 export const isConfigured = () => Boolean(PIXEL_ID && CAPI_TOKEN);
 
+// Diagnóstico para o /health: diz qual variável não chegou ao processo sem
+// expor o token. Comprimento zero = a variável não chegou (nome errado, sem
+// redeploy, ou definida como variável de build em vez de runtime).
+export const configSummary = () => ({
+  pixelIdLength: PIXEL_ID.length,
+  tokenLength: CAPI_TOKEN.length,
+  apiVersion: API_VERSION,
+  testEventCode: Boolean(TEST_EVENT_CODE),
+});
+
 // A Meta exige os dados pessoais em SHA-256 do valor normalizado.
 const sha256 = (value) => createHash("sha256").update(String(value)).digest("hex");
 const hashText = (value) => {
