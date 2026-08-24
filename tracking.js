@@ -18,7 +18,7 @@
 
   // ⚠️ CONFIGURE: ID do Pixel da Meta.
   // Gerenciador de Eventos > Fontes de dados > seu pixel > o número no topo.
-  var PIXEL_ID = "1479104856076831";
+  var PIXEL_ID = "1401766885429741";
 
   var ATTRIB_KEY = "vp_attrib";
   var ATTRIB_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 dias
