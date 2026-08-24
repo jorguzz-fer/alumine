@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Vet Pricing · Precificação e Nova Tributação para o Setor Veterinário</title>
-<meta name="description" content="Vet Pricing: aula ao vivo de 3h no Zoom sobre a nova tributação, o split payment e como escolher o enquadramento certo e precificar para 2027. 14 de setembro, 20h. Com Dr. Kleber Ferreira, Thiago Liberman e Angelita. A partir de R$ 350 no PIX." />
+<meta name="description" content="Vet Pricing: aula ao vivo de 3h no Zoom sobre a nova tributação, o split payment e como escolher o enquadramento certo e precificar para 2027. 14 de setembro, 20h. Com Dr. Kleber Ferreira, Thiago Liberman e Cícero Gonçalves. A partir de R$ 350 no PIX." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -254,6 +254,59 @@
   .nav-cta { white-space: nowrap; }
   .nav-brand .nav-program,
   .nav-brand .nav-divider { display: none; }
+
+  /* ── Garantia ──
+     Card único e centrado, logo antes do CTA final: é a última objeção
+     ("e se não valer?") tirada do caminho imediatamente antes do pedido. */
+  .guarantee-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(24px, 4vw, 44px);
+    align-items: center;
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+    border: 1px solid var(--line-copper);
+    border-radius: var(--radius-lg);
+    padding: clamp(28px, 4vw, 48px);
+    box-shadow: var(--sh-card);
+  }
+  @media (max-width: 720px) {
+    .guarantee-card { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+  }
+
+  .guarantee-seal {
+    display: grid;
+    place-items: center;
+    width: clamp(96px, 12vw, 124px);
+    height: clamp(96px, 12vw, 124px);
+    border-radius: 50%;
+    border: 1px solid var(--line-copper);
+    /* Anel duplo + halo: sem isso o círculo some no fundo escuro e o selo
+       perde a leitura de "selo de garantia". */
+    box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.025), 0 0 50px -16px var(--copper);
+    background: radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.06), transparent 72%);
+    color: var(--copper-bright);
+    flex-shrink: 0;
+  }
+  .guarantee-seal .num {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 4vw, 38px);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .guarantee-seal .unit {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-top: 6px;
+  }
+
+  .guarantee-card h2 { margin: 0 0 14px; }
+  .guarantee-card p { color: var(--ink-2); margin: 0; max-width: 60ch; }
+  .guarantee-card p + p { margin-top: 12px; }
+  .guarantee-card .fine { color: var(--ink-3); font-size: 14px; }
 </style>
 </head>
 <body class="palette-vet">
@@ -327,7 +380,7 @@
         <ul class="mini-list">
           <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> 3 horas de aula ao vivo</li>
           <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Créditos e benefícios fiscais</li>
-          <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Com Dr. Kleber Ferreira, Thiago Liberman e Angelita</li>
+          <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Com Dr. Kleber Ferreira, Thiago Liberman e Cícero Gonçalves</li>
           <li><span class="dotc"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Tira-dúvidas ao vivo</li>
         </ul>
         <a href="checkout.html" class="btn btn-primary" style="width:100%;">
@@ -470,7 +523,7 @@
               <span class="step-num">01</span>
               <div>
                 <div class="step-title">A nova tributação e o split payment</div>
-                <div class="step-desc">O que muda de verdade, como o imposto passa a ser descontado na fonte e o impacto no seu caixa. Com Angelita (contabilidade).</div>
+                <div class="step-desc">O que muda de verdade, como o imposto passa a ser descontado na fonte e o impacto no seu caixa. Com Cícero Gonçalves (contabilidade).</div>
               </div>
             </li>
             <li class="method-step">
@@ -564,7 +617,7 @@
         </div>
         <div class="trainer-card">
           <div class="role">Contabilidade e tributação</div>
-          <div class="who">Angelita</div>
+          <div class="who">Cícero Gonçalves</div>
           <p>Especialista em contabilidade e na aplicação da nova tributação. Traduz o split payment e os créditos para a realidade da clínica.</p>
         </div>
       </div>
@@ -688,8 +741,10 @@
           <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Precificação e formação de preço na prática</span><span class="meta">Incluso</span></div>
           <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Estratégia de negócio frente ao mercado</span><span class="meta">Incluso</span></div>
           <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Material complementar</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Certificado de conclusão</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Gravação da aula para assistir depois</span><span class="meta">Incluso</span></div>
           <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Tira-dúvidas ao vivo com os especialistas</span><span class="meta">Incluso</span></div>
-          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Com Dr. Kleber Ferreira, Thiago Liberman e Angelita</span><span class="meta">Incluso</span></div>
+          <div class="offer-item"><span class="check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#08140d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="name">Com Dr. Kleber Ferreira, Thiago Liberman e Cícero Gonçalves</span><span class="meta">Incluso</span></div>
         </div>
 
         <div class="offer-pricing">
@@ -754,8 +809,20 @@
           <div class="faq-a"><div class="faq-a-inner">Sim. Além de entender a tributação e o split payment, você aprende a formar preço com os números da sua clínica, simulando a tributação e considerando custos, créditos, benefícios fiscais e margem.</div></div>
         </div>
         <div class="faq-item">
+          <button class="faq-q"><span>Não consigo assistir ao vivo. Perco a aula?</span><span class="ic" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">Não. A aula fica <b>gravada</b> e você recebe o acesso depois, para assistir quando puder e rever quantas vezes precisar. Ainda assim vale reservar a data: o tira-dúvidas ao vivo é onde você pergunta sobre a realidade da sua clínica.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>A aula dá certificado?</span><span class="ic" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">Sim. Você recebe o <b>certificado de conclusão</b> depois da aula, com as 3 horas de carga horária.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>E se eu achar que não valeu?</span><span class="ic" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">Você tem <b>7 dias depois da aula</b> para pedir o reembolso integral, sem precisar justificar. É só entrar em contato com a nossa equipe.</div></div>
+        </div>
+        <div class="faq-item">
           <button class="faq-q"><span>Quem são os treinadores?</span><span class="ic" aria-hidden="true"></span></button>
-          <div class="faq-a"><div class="faq-a-inner">Dr. Kleber Ferreira (estratégia de negócio), Thiago Liberman (precificação e ferramentas) e Angelita (contabilidade e tributação), cobrindo as três frentes que definem a saúde do seu negócio no novo cenário.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">Dr. Kleber Ferreira (estratégia de negócio), Thiago Liberman (precificação e ferramentas) e Cícero Gonçalves (contabilidade e tributação), cobrindo as três frentes que definem a saúde do seu negócio no novo cenário.</div></div>
         </div>
         <div class="faq-item">
           <button class="faq-q"><span>Quais são as formas de pagamento?</span><span class="ic" aria-hidden="true"></span></button>
@@ -764,6 +831,34 @@
         <div class="faq-item">
           <button class="faq-q"><span>Como faço a minha inscrição?</span><span class="ic" aria-hidden="true"></span></button>
           <div class="faq-a"><div class="faq-a-inner">Clique em qualquer botão de "Garantir minha vaga" nesta página. Você fala com a nossa equipe para tirar dúvidas e concluir a inscrição. As vagas são limitadas.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── GARANTIA ─────────────────────────────────────── -->
+  <section class="section guarantee" id="garantia">
+    <div class="container narrow">
+      <div class="guarantee-card">
+        <div class="guarantee-seal" aria-hidden="true">
+          <div style="text-align:center;">
+            <div class="num">7</div>
+            <div class="unit">dias</div>
+          </div>
+        </div>
+        <div>
+          <span class="eyebrow no-dash">Garantia</span>
+          <h2 class="h-display h-2" style="max-width:22ch;">
+            Sete dias para decidir se <em class="italic-serif brand-grad">valeu a pena.</em>
+          </h2>
+          <p>
+            Participe da aula, receba o material e leve o conteúdo para os números da sua clínica.
+            Se em até <b style="color:var(--ink-1);font-weight:500;">7 dias depois da aula</b> você
+            concluir que não valeu, é só pedir: devolvemos <b style="color:var(--ink-1);font-weight:500;">100% do valor pago</b>.
+          </p>
+          <p class="fine">
+            Sem formulário, sem justificativa e sem letra miúda. O risco de experimentar é nosso, não seu.
+          </p>
         </div>
       </div>
     </div>
