@@ -66,7 +66,7 @@ Configurações > Integrações > Webhooks > Adicionar:
 5. **Environment Variables** (copie de `.env.example`):
    - `ASAAS_API_KEY` — sua chave do Asaas (**comece pela sandbox**).
    - `ASAAS_BASE_URL` — `https://sandbox.asaas.com/api/v3` (sandbox) ou `https://api.asaas.com/v3` (produção).
-   - `ALLOWED_ORIGIN` — `https://tributario.alumine.com.br`.
+   - `ALLOWED_ORIGIN` — `https://vet-pricing.alumine.com.br`.
    - `PRICE_PIX=350`, `PRICE_CARD=390`, `PRICE_BOLETO=390`, `DUE_DAYS=2` (opcionais).
    - `META_PIXEL_ID`, `META_CAPI_TOKEN` — rastreamento server-side.
    - `ASAAS_WEBHOOK_TOKEN` — token do webhook de pagamento confirmado.
