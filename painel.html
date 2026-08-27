@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel Vet Pricing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+  /* ---- tokens: paleta clara completa no :root nu ---- */
+  :root {
+    --ground:        #f3f5f2;
+    --surface:       #fbfcfa;
+    --surface-sunk:  #eef1ed;
+    --line:          #dde3dd;
+    --line-strong:   #c4cec6;
+
+    --ink:           #131a15;
+    --ink-2:         #4a554d;
+    --ink-3:         #77837b;
+
+    --accent:        #00794a;
+    --accent-soft:   #e2f0e8;
+
+    --good:          #1a7f4b;
+    --warn:          #96690a;
+    --crit:          #b3341f;
+
+    --s1: #00794a;
+    --s2: #2b5fd0;
+    --s3: #cf5a12;
+    --s4: #a1479f;
+    --s5: #7d7a0a;
+
+    --shadow: 0 1px 2px rgba(19,26,21,.05), 0 8px 24px -12px rgba(19,26,21,.12);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:       #0e1310;
+      --surface:      #161d18;
+      --surface-sunk: #111713;
+      --line:         #26302a;
+      --line-strong:  #3a4740;
+
+      --ink:          #e8ede9;
+      --ink-2:        #a6b3aa;
+      --ink-3:        #78857c;
+
+      --accent:       #2f9e6b;
+      --accent-soft:  #16281f;
+
+      --good:         #3f9e6a;
+      --warn:         #c99a2b;
+      --crit:         #de6a52;
+
+      --s1: #2f9e6b;
+      --s2: #5f8ae8;
+      --s3: #dd7133;
+      --s4: #c072c4;
+      --s5: #95921f;
+
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.6);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:       #0e1310;
+    --surface:      #161d18;
+    --surface-sunk: #111713;
+    --line:         #26302a;
+    --line-strong:  #3a4740;
+
+    --ink:          #e8ede9;
+    --ink-2:        #a6b3aa;
+    --ink-3:        #78857c;
+
+    --accent:       #2f9e6b;
+    --accent-soft:  #16281f;
+
+    --good:         #3f9e6a;
+    --warn:         #c99a2b;
+    --crit:         #de6a52;
+
+    --s1: #2f9e6b;
+    --s2: #5f8ae8;
+    --s3: #dd7133;
+    --s4: #c072c4;
+    --s5: #95921f;
+
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.6);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    margin: 0;
+    padding: 32px 20px 88px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: 34px; }
+
+  .mono {
+    font-family: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  h1 {
+    font-size: clamp(30px, 5vw, 44px);
+    font-weight: 800;
+    letter-spacing: -.025em;
+    line-height: 1.05;
+    text-wrap: balance;
+    margin: 6px 0 0;
+  }
+
+  h2 {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -.012em;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  p { margin: 0; }
+  .lede { color: var(--ink-2); max-width: 66ch; }
+
+  /* ---- cabeçalho ---- */
+  .head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px 32px;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-bottom: 26px;
+    border-bottom: 2px solid var(--line-strong);
+  }
+
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 11px 5px 9px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: .04em;
+    color: var(--ink-2);
+    white-space: nowrap;
+  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+  .dot.live { background: var(--good); box-shadow: 0 0 0 3px color-mix(in srgb, var(--good) 22%, transparent); }
+  .dot.idle { background: var(--ink-3); }
+
+  .countdown {
+    text-align: right;
+    flex: none;
+  }
+  .countdown .num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 54px;
+    font-weight: 600;
+    line-height: .9;
+    letter-spacing: -.04em;
+    color: var(--accent);
+    display: block;
+  }
+  .countdown .cap { font-size: 12.5px; color: var(--ink-3); margin-top: 8px; }
+
+  /* ---- blocos ---- */
+  section { display: flex; flex-direction: column; gap: 16px; }
+  .sec-head { display: flex; flex-direction: column; gap: 5px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+  }
+
+  /* ---- meta / ponto de equilíbrio ---- */
+  .goal {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .goal > div { background: var(--surface); padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; }
+  .goal .k { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); font-family: 'IBM Plex Mono', monospace; }
+  .goal .v { font-family: 'IBM Plex Mono', monospace; font-size: 27px; font-weight: 600; letter-spacing: -.03em; line-height: 1.1; }
+  .goal .n { font-size: 12.5px; color: var(--ink-3); line-height: 1.4; }
+  .goal .hero { background: var(--accent-soft); }
+  .goal .hero .v { color: var(--accent); }
+  .goal .v .unit { font-family: 'Archivo', sans-serif; font-weight: 700; margin-left: -.12em; }
+
+  /* ---- placar ---- */
+  .scores {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .score { background: var(--surface); padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 4px; }
+  .score .k { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); font-family: 'IBM Plex Mono', monospace; }
+  .score .v { font-family: 'IBM Plex Mono', monospace; font-size: 25px; font-weight: 600; letter-spacing: -.02em; color: var(--ink-3); }
+
+  .awaiting {
+    display: flex; align-items: center; gap: 10px;
+    padding: 13px 16px;
+    border: 1px dashed var(--line-strong);
+    border-radius: 8px;
+    background: var(--surface-sunk);
+    color: var(--ink-2);
+    font-size: 13.5px;
+  }
+  .awaiting .dot { background: var(--warn); }
+
+  /* ---- funil ---- */
+  .funnel { padding: 6px 4px; }
+  .step {
+    display: grid;
+    grid-template-columns: 15ch 1fr 11ch;
+    align-items: center;
+    gap: 16px;
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .step:last-child { border-bottom: 0; }
+  .step:hover { background: var(--surface-sunk); }
+  .step .lbl { font-size: 13.5px; font-weight: 600; }
+  .step .sub { font-size: 11.5px; color: var(--ink-3); font-family: 'IBM Plex Mono', monospace; }
+  .track { height: 10px; background: var(--surface-sunk); border: 1px solid var(--line); border-radius: 3px; position: relative; overflow: hidden; }
+  .track > i { position: absolute; inset: 0 100% 0 0; background: var(--accent); border-radius: 0 4px 4px 0; }
+  .step .val { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 500; color: var(--ink-3); }
+
+  /* ---- tabela ---- */
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 720px; }
+  th, td { text-align: right; padding: 12px 14px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  tr:last-child td { border-bottom: 0; }
+  thead th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    background: var(--surface-sunk);
+    border-bottom: 1px solid var(--line-strong);
+  }
+  tbody tr:hover { background: var(--surface-sunk); }
+  td { font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; color: var(--ink-3); }
+  td.name { font-family: 'Archivo', sans-serif; font-size: 13.5px; font-weight: 600; color: var(--ink); }
+  .swatch { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 9px; vertical-align: baseline; }
+  .angle { display: block; font-family: 'Archivo', sans-serif; font-size: 11.5px; font-weight: 400; color: var(--ink-3); margin-top: 2px; }
+
+  /* ---- regras ---- */
+  .rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+  .rule { padding: 17px 19px; display: flex; flex-direction: column; gap: 7px; }
+  .rule h3 { margin: 0; font-size: 14.5px; font-weight: 700; letter-spacing: -.005em; }
+  .rule p { font-size: 13.5px; color: var(--ink-2); line-height: 1.5; }
+  .rule .tag {
+    align-self: flex-start;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    padding: 3px 7px; border-radius: 4px;
+    background: var(--surface-sunk); color: var(--ink-3);
+    border: 1px solid var(--line);
+  }
+
+  /* ---- setup ---- */
+  .setup { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .setup > div { background: var(--surface); padding: 15px 18px; display: flex; flex-direction: column; gap: 3px; }
+  .setup .k { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .setup .v { font-family: 'IBM Plex Mono', monospace; font-size: 13px; word-break: break-word; }
+
+  footer { border-top: 1px solid var(--line); padding-top: 20px; color: var(--ink-3); font-size: 12.5px; display: flex; flex-wrap: wrap; gap: 6px 20px; }
+
+  @media (max-width: 620px) {
+    .step { grid-template-columns: 1fr 8ch; }
+    .step .track { display: none; }
+    .countdown { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="head">
+    <div>
+      <div class="eyebrow">Meta Ads · Conta CA — Dr. Kleber Ferreira</div>
+      <h1>Vet Pricing</h1>
+      <div class="pills">
+        <span class="pill"><span class="dot live"></span>Campanha ativa</span>
+        <span class="pill"><span class="dot live"></span>5 anúncios aprovados</span>
+        <span class="pill">R$ 50 / dia · CBO</span>
+        <span class="pill">Otimiza InitiateCheckout</span>
+      </div>
+    </div>
+    <div class="countdown">
+      <span class="num">18</span>
+      <div class="cap">dias de veiculação<br>até 14 set, 19h</div>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head">
+      <h2>O número que decide</h2>
+      <p class="lede">Com R$ 50 por dia até o dia da aula, a mídia inteira custa R$ 900. Três inscrições pagam a conta — a quarta em diante é lucro.</p>
+    </div>
+    <div class="goal">
+      <div class="hero">
+        <div class="k">Empate</div>
+        <div class="v">3 <span class="unit">vendas</span></div>
+        <div class="n">Vale para os dois preços: 2,6 no PIX de R$ 350, 2,3 no cartão de R$ 390. Ambos arredondam para 3.</div>
+      </div>
+      <div>
+        <div class="k">Orçamento total</div>
+        <div class="v">R$ 900</div>
+        <div class="n">R$ 50 × 18 dias, se rodar até o fim sem alteração.</div>
+      </div>
+      <div>
+        <div class="k">CPA teto</div>
+        <div class="v">R$ 350</div>
+        <div class="n">Acima disso cada venda dá prejuízo na mídia. É o limite, não a meta.</div>
+      </div>
+      <div>
+        <div class="k">Por criativo</div>
+        <div class="v">R$ 180</div>
+        <div class="n">Se o CBO dividisse por igual — ele não divide, e é justamente isso que queremos observar.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Placar</h2>
+      <p class="lede">Acumulado desde a liberação da entrega.</p>
+    </div>
+    <div class="scores">
+      <div class="score"><span class="k">Gasto</span><span class="v">—</span></div>
+      <div class="score"><span class="k">Impressões</span><span class="v">—</span></div>
+      <div class="score"><span class="k">Cliques</span><span class="v">—</span></div>
+      <div class="score"><span class="k">Checkouts</span><span class="v">—</span></div>
+      <div class="score"><span class="k">Vendas</span><span class="v">—</span></div>
+    </div>
+    <div class="awaiting">
+      <span class="dot"></span>
+      <span>Aguardando a primeira entrega. Os anúncios saíram do bloqueio de pixel hoje às 14h; o painel enche na próxima atualização.</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Funil</h2>
+      <p class="lede">Cada degrau mostra quanto do degrau anterior sobreviveu. É onde o vazamento aparece — se o clique é barato mas ninguém chega ao checkout, o problema é a página, não o criativo.</p>
+    </div>
+    <div class="card funnel">
+      <div class="step">
+        <div><div class="lbl">Impressões</div><div class="sub">CPM</div></div>
+        <div class="track"><i style="inset:0 100% 0 0"></i></div>
+        <div class="val">—</div>
+      </div>
+      <div class="step">
+        <div><div class="lbl">Cliques no link</div><div class="sub">CTR · CPC</div></div>
+        <div class="track"><i style="inset:0 100% 0 0"></i></div>
+        <div class="val">—</div>
+      </div>
+      <div class="step">
+        <div><div class="lbl">Viu a página</div><div class="sub">LandingPageView</div></div>
+        <div class="track"><i style="inset:0 100% 0 0"></i></div>
+        <div class="val">—</div>
+      </div>
+      <div class="step">
+        <div><div class="lbl">Iniciou checkout</div><div class="sub">evento otimizado</div></div>
+        <div class="track"><i style="inset:0 100% 0 0"></i></div>
+        <div class="val">—</div>
+      </div>
+      <div class="step">
+        <div><div class="lbl">Comprou</div><div class="sub">Purchase · via CAPI</div></div>
+        <div class="track"><i style="inset:0 100% 0 0"></i></div>
+        <div class="val">—</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Os cinco ângulos</h2>
+      <p class="lede">Cada peça ataca a mesma dor por um caminho diferente. O CBO vai concentrar o dinheiro sozinho — a tabela existe para você ver <em>em quem</em>, e se concorda.</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Criativo</th>
+            <th>Gasto</th>
+            <th>Impr.</th>
+            <th>CTR</th>
+            <th>CPM</th>
+            <th>Cliques</th>
+            <th>Checkouts</th>
+            <th>Custo / checkout</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="name"><span class="swatch" style="background:var(--s1)"></span>01 Split<span class="angle">O imposto sai antes do dinheiro entrar</span></td>
+            <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+          </tr>
+          <tr>
+            <td class="name"><span class="swatch" style="background:var(--s2)"></span>02 A conta<span class="angle">Sua clínica em 2027, linha por linha</span></td>
+            <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+          </tr>
+          <tr>
+            <td class="name"><span class="swatch" style="background:var(--s3)"></span>03 Margem<span class="angle">Aumentou o preço e continua sem sobrar</span></td>
+            <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+          </tr>
+          <tr>
+            <td class="name"><span class="swatch" style="background:var(--s4)"></span>04 Chute<span class="angle">Preço no chute é o erro de todo dia</span></td>
+            <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+          </tr>
+          <tr>
+            <td class="name"><span class="swatch" style="background:var(--s5)"></span>05 Autoridade<span class="angle">Dr. Kleber Ferreira</span></td>
+            <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Como eu vou ler isto</h2>
+      <p class="lede">Escrito antes dos dados chegarem, de propósito: regra combinada na frente vale mais que justificativa inventada depois.</p>
+    </div>
+    <div class="rules">
+      <div class="card rule">
+        <span class="tag">Expectativa</span>
+        <h3>O conjunto não sai do aprendizado</h3>
+        <p>A Meta quer 50 conversões por semana para estabilizar. Com R$ 50 por dia e um produto de R$ 350, isso é inalcançável — e tudo bem. Significa que os números vão oscilar mais que o normal, e que julgar pelo topo do funil (CTR, custo por visita) é mais confiável do que pelo fundo nos primeiros dias.</p>
+      </div>
+      <div class="card rule">
+        <span class="tag">Paciência</span>
+        <h3>Nada se decide antes de 3 dias</h3>
+        <p>Com cinco peças dividindo R$ 50, cada uma recebe uns R$ 10 por dia. Um dia de dado é ruído. Comparar criativo antes do terceiro dia é ler sorte, não desempenho.</p>
+      </div>
+      <div class="card rule">
+        <span class="tag">Corte</span>
+        <h3>Quando eu mato uma peça</h3>
+        <p>Gastou uns R$ 60 sem nenhum checkout <em>enquanto</em> outra já trouxe pelo menos um. O que importa é a comparação, não o número solto — se nenhuma converteu, o problema não é a peça.</p>
+      </div>
+      <div class="card rule">
+        <span class="tag">Alarme</span>
+        <h3>O sinal de que é a página</h3>
+        <p>CTR saudável e custo por visita baixo, mas checkout perto de zero: aí a peça cumpriu o papel e o vazamento está na landing ou no preço. Mexer em criativo nesse cenário é consertar o lugar errado.</p>
+      </div>
+      <div class="card rule">
+        <span class="tag">Teto</span>
+        <h3>CPA acima de R$ 350</h3>
+        <p>Cada venda passa a custar mais do que traz. Não é motivo para desligar de imediato — perto da data, comprar inscrição no prejuízo pode valer pela sala cheia — mas é decisão consciente, nunca descuido.</p>
+      </div>
+      <div class="card rule">
+        <span class="tag">Atenção</span>
+        <h3>O fuso engana</h3>
+        <p>A conta está em <span class="mono">America/Noronha</span>, uma hora à frente de Brasília. Uma venda às 23h30 daqui aparece no relatório como sendo do dia seguinte. Vale lembrar na hora de comparar dias.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Configuração verificada</h2>
+      <p class="lede">Lido direto da API, não do que eu pretendia configurar.</p>
+    </div>
+    <div class="setup">
+      <div><span class="k">Campanha</span><span class="v">120247482699950436</span></div>
+      <div><span class="k">Conjunto</span><span class="v">120247482700590436</span></div>
+      <div><span class="k">Objetivo</span><span class="v">OUTCOME_SALES</span></div>
+      <div><span class="k">Otimização</span><span class="v">OFFSITE_CONVERSIONS<br>INITIATED_CHECKOUT</span></div>
+      <div><span class="k">Pixel</span><span class="v">1401766885429741<br>Vet-pricing</span></div>
+      <div><span class="k">Público</span><span class="v">LAL 1% Clínicas + Advantage+<br>expansão liberada</span></div>
+      <div><span class="k">Geo · Idade</span><span class="v">BR (recent) · 25–65</span></div>
+      <div><span class="k">Encerramento</span><span class="v">14 set 2026 · 19h BRT</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Última atualização: 27 ago 2026, 14h BRT</span>
+    <span>Fonte: API de Marketing da Meta</span>
+    <span>Retrato estático — republicado a cada atualização, sempre nesta URL</span>
+  </footer>
+
+</div>
+</body>
+</html>
