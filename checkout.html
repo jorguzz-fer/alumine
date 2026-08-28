@@ -200,8 +200,11 @@
 
 <script>
   // ⚠️ CONFIGURE: URL pública da API de checkout (serviço Node no Coolify).
-  // Ex.: "https://pay.alumine.com.br" — SEM barra no final.
-  const API_BASE = "https://pay.alumine.com.br";
+  // Mesma origem, de proposito. O nginx encaminha /api/ para a API do checkout
+  // (ver nginx-tributario.conf). Chamar pay.alumine.com.br daqui seria
+  // cross-origin: obriga um preflight OPTIONS que falha no Safari do iPhone,
+  // e o comprador so ve "Load failed" sem nunca chegar ao pagamento.
+  const API_BASE = "/api";
 
   // Preço por forma de pagamento
   var PRICES = { PIX: 350, CREDIT_CARD: 390, BOLETO: 390 };
