@@ -22,7 +22,7 @@ está hospedado; não é a zona alumine.com.br do Cloudflare). Tipicamente:
 - [ ] Esperar o Brevo marcar o domínio como autenticado (verde)
 - [ ] Enviar teste para um Gmail e um Outlook próprios; abrir "mostrar original"
       e conferir `SPF: PASS`, `DKIM: PASS`, `DMARC: PASS`
-- [ ] Substituir nos 3 HTMLs o placeholder `[ENDEREÇO COMPLETO DA EMPRESA — obrigatório]`
+- [x] Endereço físico no rodapé: Av. Santo Antonio, 1453 — Osasco — SP
 - [ ] Conferir que `{{ unsubscribe }}` foi mantido (o Brevo exige)
 
 ## Fatiar a base em 4 lotes (para o escalonamento)
