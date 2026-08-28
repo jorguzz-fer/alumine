@@ -184,7 +184,14 @@ app.post("/checkout", async (req, res) => {
     const name = String(req.body?.name || "").trim();
     const email = String(req.body?.email || "").trim();
     const cpfCnpj = onlyDigits(req.body?.cpfCnpj);
-    const phone = onlyDigits(req.body?.phone);
+    let phone = onlyDigits(req.body?.phone);
+    // Numero digitado com +55 na frente passa na validacao de tamanho minimo
+    // mas o Asaas rejeita com um 400 opaco na criacao do cliente — travou
+    // compras reais em 28/08. O front normaliza, mas o servidor nao pode
+    // depender de JS novo no navegador de todo mundo.
+    if ((phone.length === 12 || phone.length === 13) && phone.startsWith("55")) {
+      phone = phone.slice(2);
+    }
     let billingType = String(req.body?.billingType || "UNDEFINED").toUpperCase();
     if (!VALID_BILLING.has(billingType)) billingType = "UNDEFINED";
     const attrib = pickAttrib(req.body?.attrib);
@@ -195,7 +202,9 @@ app.post("/checkout", async (req, res) => {
     if (name.length < 3) errors.push("Informe o nome completo.");
     if (!isEmail(email)) errors.push("Informe um e-mail válido.");
     if (cpfCnpj.length !== 11 && cpfCnpj.length !== 14) errors.push("Informe um CPF ou CNPJ válido.");
-    if (phone.length < 10) errors.push("Informe um WhatsApp válido com DDD.");
+    if (phone.length < 10 || phone.length > 11) {
+      errors.push("Informe o WhatsApp com DDD, sem o +55 — ex.: 11 98888-7777.");
+    }
     if (errors.length) return res.status(400).json({ error: errors.join(" ") });
 
     // 1) Cria o cliente
