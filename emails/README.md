@@ -4,8 +4,8 @@ Base: **3.129 contatos** de clínicas veterinárias, já importada no Brevo.
 Remetente: **doutorkleber.com.br** — domínio **frio** no Brevo (nunca disparou em massa
 por lá), por isso o envio do e-mail 1 é **escalonado**.
 
-Remetente sugerido: `Dr. Kleber Ferreira <kleber@doutorkleber.com.br>`
-(use a caixa que existir; evite `noreply@`).
+Remetente: `Dr. Kleber Ferreira <kleber@doutorkleber.com.br>` (confirmado)
+
 
 ## Antes de qualquer envio (checklist técnico)
 
