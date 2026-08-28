@@ -265,7 +265,15 @@
     if (payload.name.length < 3) return showError("Informe o seu nome completo.");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) return showError("Informe um e-mail válido.");
     if (payload.cpfCnpj.length !== 11 && payload.cpfCnpj.length !== 14) return showError("Informe um CPF ou CNPJ válido.");
-    if (payload.phone.length < 10) return showError("Informe um WhatsApp válido com DDD.");
+    // Muita gente digita com o +55 na frente. O Asaas espera DDD + número
+    // (10-11 dígitos) e devolve um 400 opaco para qualquer outra coisa — foi
+    // exatamente o que travou compras reais. Normaliza antes de validar.
+    if ((payload.phone.length === 12 || payload.phone.length === 13) && payload.phone.startsWith("55")) {
+      payload.phone = payload.phone.slice(2);
+    }
+    if (payload.phone.length < 10 || payload.phone.length > 11) {
+      return showError("Informe o WhatsApp com DDD, sem o +55 — ex.: 11 98888-7777.");
+    }
 
     btn.disabled = true;
     label.textContent = "Gerando pagamento…";
@@ -282,20 +290,50 @@
     });
     payload.attrib = Track.attribution();
 
+    // Rede móvel derruba requisição à toa — já vimos o fetch morrer no 5G com
+    // a API saudável. Falha de transporte (TypeError) ganha novas tentativas;
+    // resposta HTTP de erro não, porque repetir não muda a resposta do
+    // servidor. Custo conhecido: se a resposta se perder DEPOIS de o servidor
+    // criar a cobrança, a tentativa seguinte cria uma segunda fatura — fica só
+    // uma paga, aceitável neste volume.
+    async function postCheckout() {
+      var tentativas = 3;
+      for (var i = 1; ; i++) {
+        try {
+          return await fetch(API_BASE + "/checkout", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+        } catch (err) {
+          if (i >= tentativas) throw err;
+          label.textContent = "Instabilidade na rede, tentando de novo…";
+          await new Promise(function (r) { setTimeout(r, i * 1500); });
+        }
+      }
+    }
+
+    // Sem essa marca no pixel, um checkout quebrado só aparece quando alguém
+    // testa no aparelho certo — custou dois dias descobrir isso da última vez.
+    var falhaJaMarcada = false;
     try {
-      const res = await fetch(API_BASE + "/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const res = await postCheckout();
       const data = await res.json().catch(function () { return {}; });
       if (!res.ok || !data.invoiceUrl) {
+        falhaJaMarcada = true;
+        Track.custom("CheckoutError", { error_type: "server", status: res.status });
         throw new Error(data.error || "Não foi possível gerar o pagamento. Tente novamente.");
       }
       // Redireciona para a página de pagamento segura do Asaas.
       window.location.href = data.invoiceUrl;
     } catch (err) {
-      showError(err.message || "Erro ao processar. Tente novamente em instantes.");
+      if (!falhaJaMarcada) {
+        Track.custom("CheckoutError", { error_type: "network" });
+      }
+      var mensagem = err && err.message && err.message.indexOf("Load") === -1 && err.message.indexOf("fetch") === -1
+        ? err.message
+        : "A conexão falhou antes de concluir. Confira a internet e toque de novo no botão — seus dados continuam preenchidos.";
+      showError(mensagem);
       btn.disabled = false;
       label.textContent = "Ir para o pagamento";
     }

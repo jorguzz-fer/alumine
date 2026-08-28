@@ -233,16 +233,24 @@
   .score .k { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); font-family: 'IBM Plex Mono', monospace; }
   .score .v { font-family: 'IBM Plex Mono', monospace; font-size: 25px; font-weight: 600; letter-spacing: -.02em; color: var(--ink-3); }
 
-  .awaiting {
-    display: flex; align-items: center; gap: 10px;
-    padding: 13px 16px;
-    border: 1px dashed var(--line-strong);
+  .alert {
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 16px 18px;
+    border: 1px solid var(--crit);
+    border-left-width: 4px;
     border-radius: 8px;
-    background: var(--surface-sunk);
+    background: var(--surface);
     color: var(--ink-2);
     font-size: 13.5px;
+    line-height: 1.5;
   }
-  .awaiting .dot { background: var(--warn); }
+  .alert-h {
+    display: flex; align-items: center; gap: 9px;
+    font-family: 'Archivo', sans-serif; font-size: 15px; font-weight: 700;
+    color: var(--ink); letter-spacing: -.005em;
+  }
+  .alert .dot { background: var(--crit); box-shadow: 0 0 0 3px color-mix(in srgb, var(--crit) 20%, transparent); }
+  .alert strong { color: var(--ink); font-weight: 700; }
 
   /* ---- funil ---- */
   .funnel { padding: 6px 4px; }
@@ -328,7 +336,7 @@
       </div>
     </div>
     <div class="countdown">
-      <span class="num">18</span>
+      <span class="num">17</span>
       <div class="cap">dias de veiculação<br>até 14 set, 19h</div>
     </div>
   </header>
@@ -336,7 +344,7 @@
   <section>
     <div class="sec-head">
       <h2>O número que decide</h2>
-      <p class="lede">Com R$ 50 por dia até o dia da aula, a mídia inteira custa R$ 900. Três inscrições pagam a conta — a quarta em diante é lucro.</p>
+      <p class="lede">Com R$ 50 por dia até o dia da aula, a mídia inteira custa cerca de R$ 926. Três inscrições pagam a conta — a quarta em diante é lucro.</p>
     </div>
     <div class="goal">
       <div class="hero">
@@ -346,8 +354,8 @@
       </div>
       <div>
         <div class="k">Orçamento total</div>
-        <div class="v">R$ 900</div>
-        <div class="n">R$ 50 × 18 dias, se rodar até o fim sem alteração.</div>
+        <div class="v">R$ 926</div>
+        <div class="n">R$ 76 já gastos + 17 dias × R$ 50, se rodar até o fim sem alteração.</div>
       </div>
       <div>
         <div class="k">CPA teto</div>
@@ -355,9 +363,9 @@
         <div class="n">Acima disso cada venda dá prejuízo na mídia. É o limite, não a meta.</div>
       </div>
       <div>
-        <div class="k">Por criativo</div>
-        <div class="v">R$ 180</div>
-        <div class="n">Se o CBO dividisse por igual — ele não divide, e é justamente isso que queremos observar.</div>
+        <div class="k">Concentração</div>
+        <div class="v">76%</div>
+        <div class="n">Do gasto foi para a peça 01. O CBO escolheu cedo — e escolheu a de menor CTR.</div>
       </div>
     </div>
   </section>
@@ -368,56 +376,58 @@
       <p class="lede">Acumulado desde a liberação da entrega.</p>
     </div>
     <div class="scores">
-      <div class="score"><span class="k">Gasto</span><span class="v">—</span></div>
-      <div class="score"><span class="k">Impressões</span><span class="v">—</span></div>
-      <div class="score"><span class="k">Cliques</span><span class="v">—</span></div>
-      <div class="score"><span class="k">Checkouts</span><span class="v">—</span></div>
-      <div class="score"><span class="k">Vendas</span><span class="v">—</span></div>
+      <div class="score"><span class="k">Gasto</span><span class="v" style="color:var(--ink)">R$ 76,39</span></div>
+      <div class="score"><span class="k">Impressões</span><span class="v" style="color:var(--ink)">1.880</span></div>
+      <div class="score"><span class="k">Cliques no link</span><span class="v" style="color:var(--ink)">69</span></div>
+      <div class="score"><span class="k">Checkouts</span><span class="v" style="color:var(--ink)">6</span></div>
+      <div class="score"><span class="k">Vendas</span><span class="v" style="color:var(--crit)">0</span></div>
     </div>
-    <div class="awaiting">
-      <span class="dot"></span>
-      <span>Aguardando a primeira entrega. Os anúncios saíram do bloqueio de pixel hoje às 14h; o painel enche na próxima atualização.</span>
+    <div class="alert" style="border-color:var(--good)">
+      <div class="alert-h"><span class="dot" style="background:var(--good); box-shadow:0 0 0 3px color-mix(in srgb, var(--good) 20%, transparent)"></span>Checkout no celular: quebrado em 27/08, consertado em 28/08</div>
+      <p>O <span class="mono">fetch</span> do pagamento morria de forma intermitente no Safari em rede móvel — 16 checkouts abertos sem nenhuma tentativa de pagar. Dois consertos: a API passou a ser servida no mesmo domínio (<span class="mono">/api</span>) e o HTTP/3 foi desligado no Cloudflare. Validado de ponta a ponta em 28/08: compra PIX real feita no 5G chegou como <strong>Purchase</strong> na Meta com correspondência 8.0/10.</p>
+      <p>De quebra: o formulário agora normaliza telefone com +55 (um 400 do Asaas travava compra real), tenta de novo sozinho quando a rede cai, e marca <span class="mono">CheckoutError</span> no pixel quando falha — a próxima quebra aparece aqui no painel, não dois dias depois.</p>
     </div>
   </section>
 
   <section>
     <div class="sec-head">
       <h2>Funil</h2>
-      <p class="lede">Cada degrau mostra quanto do degrau anterior sobreviveu. É onde o vazamento aparece — se o clique é barato mas ninguém chega ao checkout, o problema é a página, não o criativo.</p>
+      <p class="lede">Cada degrau mostra quanto do degrau anterior sobreviveu. O vazamento está no último degrau: os quatro primeiros vão bem, e a queda inteira acontece depois que a pessoa já abriu o checkout.</p>
     </div>
     <div class="card funnel">
       <div class="step">
-        <div><div class="lbl">Impressões</div><div class="sub">CPM</div></div>
-        <div class="track"><i style="inset:0 100% 0 0"></i></div>
-        <div class="val">—</div>
+        <div><div class="lbl">Impressões</div><div class="sub">CPM R$ 40,63</div></div>
+        <div class="track"><i style="inset:0 0.0% 0 0; background:var(--accent)"></i></div>
+        <div class="val">1.880</div>
       </div>
       <div class="step">
-        <div><div class="lbl">Cliques no link</div><div class="sub">CTR · CPC</div></div>
-        <div class="track"><i style="inset:0 100% 0 0"></i></div>
-        <div class="val">—</div>
+        <div><div class="lbl">Cliques no link</div><div class="sub">CTR 5,37% · 3,7% dos que viram</div></div>
+        <div class="track"><i style="inset:0 96.3% 0 0; background:var(--accent)"></i></div>
+        <div class="val">69</div>
       </div>
       <div class="step">
-        <div><div class="lbl">Viu a página</div><div class="sub">LandingPageView</div></div>
-        <div class="track"><i style="inset:0 100% 0 0"></i></div>
-        <div class="val">—</div>
+        <div><div class="lbl">Viu a página</div><div class="sub">LandingPageView · 86% dos cliques</div></div>
+        <div class="track"><i style="inset:0 14.5% 0 0; background:var(--accent)"></i></div>
+        <div class="val">59</div>
       </div>
       <div class="step">
-        <div><div class="lbl">Iniciou checkout</div><div class="sub">evento otimizado</div></div>
-        <div class="track"><i style="inset:0 100% 0 0"></i></div>
-        <div class="val">—</div>
+        <div><div class="lbl">Iniciou checkout</div><div class="sub">10% de quem viu · R$ 12,73 cada</div></div>
+        <div class="track"><i style="inset:0 89.8% 0 0; background:var(--accent)"></i></div>
+        <div class="val">6</div>
       </div>
       <div class="step">
         <div><div class="lbl">Comprou</div><div class="sub">Purchase · via CAPI</div></div>
-        <div class="track"><i style="inset:0 100% 0 0"></i></div>
-        <div class="val">—</div>
+        <div class="track"><i style="inset:0 100.0% 0 0; background:var(--crit)"></i></div>
+        <div class="val" style="color:var(--crit)">0</div>
       </div>
+    </div>
     </div>
   </section>
 
   <section>
     <div class="sec-head">
       <h2>Os cinco ângulos</h2>
-      <p class="lede">Cada peça ataca a mesma dor por um caminho diferente. O CBO vai concentrar o dinheiro sozinho — a tabela existe para você ver <em>em quem</em>, e se concorda.</p>
+      <p class="lede">Cada peça ataca a mesma dor por um caminho diferente. O CBO já concentrou: 76% do gasto foi para a peça 01, que tem a <em>pior</em> CTR das cinco. As peças 03 e 04 têm CTR muito melhor e mal receberam verba.</p>
     </div>
     <div class="tablewrap">
       <table>
@@ -436,23 +446,23 @@
         <tbody>
           <tr>
             <td class="name"><span class="swatch" style="background:var(--s1)"></span>01 Split<span class="angle">O imposto sai antes do dinheiro entrar</span></td>
-            <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+            <td>R$ 58,39</td><td>1.412</td><td>4,60%</td><td>R$ 41,35</td><td>44</td><td>3</td><td>R$ 19,46</td>
           </tr>
           <tr>
             <td class="name"><span class="swatch" style="background:var(--s2)"></span>02 A conta<span class="angle">Sua clínica em 2027, linha por linha</span></td>
-            <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+            <td>R$ 1,48</td><td>21</td><td>4,76%</td><td>R$ 70,48</td><td>1</td><td>1</td><td>R$ 1,48</td>
           </tr>
           <tr>
             <td class="name"><span class="swatch" style="background:var(--s3)"></span>03 Margem<span class="angle">Aumentou o preço e continua sem sobrar</span></td>
-            <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+            <td>R$ 4,27</td><td>108</td><td>7,41%</td><td>R$ 39,54</td><td>7</td><td>0</td><td>—</td>
           </tr>
           <tr>
             <td class="name"><span class="swatch" style="background:var(--s4)"></span>04 Chute<span class="angle">Preço no chute é o erro de todo dia</span></td>
-            <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+            <td>R$ 8,62</td><td>258</td><td>8,53%</td><td>R$ 33,41</td><td>12</td><td>2</td><td>R$ 4,31</td>
           </tr>
           <tr>
             <td class="name"><span class="swatch" style="background:var(--s5)"></span>05 Autoridade<span class="angle">Dr. Kleber Ferreira</span></td>
-            <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+            <td>R$ 3,63</td><td>81</td><td>6,17%</td><td>R$ 44,81</td><td>5</td><td>0</td><td>—</td>
           </tr>
         </tbody>
       </table>
@@ -516,7 +526,7 @@
   </section>
 
   <footer>
-    <span>Última atualização: 27 ago 2026, 14h BRT</span>
+    <span>Última atualização: 28 ago 2026, 12h BRT</span>
     <span>Fonte: API de Marketing da Meta</span>
     <span>Retrato estático — republicado a cada atualização, sempre nesta URL</span>
   </footer>
