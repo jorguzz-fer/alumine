@@ -115,7 +115,13 @@
 
   /* Resumo do pedido */
   .summary { position: sticky; top: 100px; }
-  @media (max-width: 860px) { .summary { position: static; order: 2; } }
+  /* No mobile o resumo vinha DEPOIS do formulário (order: 2), então a
+     primeira coisa que o comprador via era um campo pedindo o nome — e o
+     preço, a data e o que ele está levando só apareciam ao rolar o
+     formulário inteiro. Para uma compra de R$ 350 vinda de anúncio frio,
+     isso pede o CPF antes de dar o motivo. A ordem natural do DOM já é
+     resumo → formulário; basta não invertê-la. */
+  @media (max-width: 860px) { .summary { position: static; } }
   .summary .event-line {
     display: inline-flex; align-items: center; gap: 10px; white-space: nowrap;
     font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em;
