@@ -89,17 +89,11 @@
   .nav-cta { background: rgba(45,122,82,0.05); }
   .nav-cta:hover { background: rgba(45,122,82,0.10); }
 
-  /* O logo é texto branco sobre preto, com mix-blend-mode: screen para
-     sumir o fundo no tema escuro. Em fundo claro isso o apagaria — daí
-     o chip escuro, que preserva o truque e o gradiente do "A". */
-  .nav-brand {
-    background: #0f0f12;
-    border-radius: 10px;
-    padding: 6px 14px;
-    display: inline-flex;
-    align-items: center;
-  }
-  .nav-brand img { height: 32px; mix-blend-mode: screen; }
+  /* Logo desenhado para fundo claro: texto escuro, fundo transparente.
+     Dispensa o chip e o mix-blend-mode que a versão para fundo escuro
+     exigia. O lockup tem duas linhas ("Alumine" + "Vet-Pricing") em um
+     bloco 3:1; abaixo de ~34px a segunda linha some. */
+  .nav-brand img { height: 38px; width: auto; display: block; }
   .nav-brand .nav-program, .nav-brand .nav-divider { display: none; }
 
   .checkout-wrap {
@@ -197,7 +191,7 @@
 <header class="nav">
   <div class="nav-inner">
     <a class="nav-brand" href="/reforma-tributaria.html">
-      <img src="assets/alumine-logo.jpg" alt="Alumine" />
+      <img src="assets/alumine-vet-pricing.png" alt="Alumine · Vet-Pricing" />
     </a>
     <a href="/reforma-tributaria.html" class="nav-cta">
       Voltar
