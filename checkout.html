@@ -330,6 +330,15 @@
     msg.className = "form-msg error";
   }
 
+  // Entre "abriu o checkout" e "mandou o formulario" nao havia nenhum sinal:
+  // 119 aberturas e zero AddPaymentInfo nao diziam em qual campo a pessoa
+  // travava. Marcar a reprovacao no pixel transforma esse buraco em dado, do
+  // mesmo jeito que o CheckoutError fez com a falha de rede.
+  function reprovar(campo, texto) {
+    Track.custom("CheckoutValidationFail", { field: campo });
+    return showError(texto);
+  }
+
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     msg.className = "form-msg";
@@ -342,17 +351,23 @@
       billingType: billingType,
     };
 
-    if (payload.name.length < 3) return showError("Informe o seu nome completo.");
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) return showError("Informe um e-mail válido.");
-    if (payload.cpfCnpj.length !== 11 && payload.cpfCnpj.length !== 14) return showError("Informe um CPF ou CNPJ válido.");
+    if (payload.name.length < 3) return reprovar("name", "Informe o seu nome completo.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) return reprovar("email", "Informe um e-mail válido.");
+    if (payload.cpfCnpj.length !== 11 && payload.cpfCnpj.length !== 14) return reprovar("cpfCnpj", "Informe um CPF ou CNPJ válido.");
     // Muita gente digita com o +55 na frente. O Asaas espera DDD + número
     // (10-11 dígitos) e devolve um 400 opaco para qualquer outra coisa — foi
     // exatamente o que travou compras reais. Normaliza antes de validar.
     if ((payload.phone.length === 12 || payload.phone.length === 13) && payload.phone.startsWith("55")) {
       payload.phone = payload.phone.slice(2);
     }
+    // Ainda se digita o DDD com zero na frente ("011 98888-7777"). Antes de
+    // 28/08 a regra era so "10 digitos ou mais" e isso passava; a regra nova
+    // barrava sem que ninguem visse. Normalizar custa uma linha.
+    if ((payload.phone.length === 11 || payload.phone.length === 12) && payload.phone.startsWith("0")) {
+      payload.phone = payload.phone.slice(1);
+    }
     if (payload.phone.length < 10 || payload.phone.length > 11) {
-      return showError("Informe o WhatsApp com DDD, sem o +55 — ex.: 11 98888-7777.");
+      return reprovar("phone", "Informe o WhatsApp com DDD, sem o +55 — ex.: 11 98888-7777.");
     }
 
     btn.disabled = true;
