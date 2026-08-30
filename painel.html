@@ -9,6 +9,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 
+</head>
+<body>
 <style>
   /* ---- tokens: paleta clara completa no :root nu ---- */
   :root {
@@ -340,8 +342,7 @@
     .countdown { text-align: left; }
   }
 </style>
-</head>
-<body>
+
 <div class="wrap">
 
   <header class="head">
@@ -351,16 +352,16 @@
       <div class="pills">
         <span class="pill"><span class="dot live"></span>Campanha ativa</span>
         <span class="pill"><span class="dot live"></span>5 anúncios aprovados</span>
-        <span class="pill">R$ 50 / dia · CBO</span>
+        <span class="pill">R$ 100 / dia · CBO</span>
         <span class="pill">Otimiza InitiateCheckout</span>
       </div>
     </div>
     <div class="countdown">
-      <span class="num">16</span>
+      <span class="num">15</span>
       <div class="cap">dias de veiculação<br>até 14 set, 19h</div>
       <div class="stamp">
         <span class="k">Atualizado</span>
-        <span class="v">29/08/2026 · 09h27 BRT</span>
+        <span class="v">30/08/2026 · 14h49 BRT</span>
       </div>
     </div>
   </header>
@@ -368,18 +369,18 @@
   <section>
     <div class="sec-head">
       <h2>O número que decide</h2>
-      <p class="lede">Com R$ 50 por dia até o dia da aula, a mídia inteira custa cerca de R$ 960. Três inscrições pagam a conta — a quarta em diante é lucro.</p>
+      <p class="lede">O orçamento dobrou em 29/08. Com R$ 100 por dia até o dia da aula, a mídia inteira custa cerca de R$ 1.800 — e a meta de empate dobrou junto: eram 3 inscrições, agora são 6.</p>
     </div>
     <div class="goal">
       <div class="hero">
         <div class="k">Empate</div>
-        <div class="v">3 <span class="unit">vendas</span></div>
-        <div class="n">Vale para os dois preços: 2,6 no PIX de R$ 350, 2,3 no cartão de R$ 390. Ambos arredondam para 3.</div>
+        <div class="v">6 <span class="unit">vendas</span></div>
+        <div class="n">5,1 no PIX de R$ 350 e 4,6 no cartão de R$ 390. Arredondando para cima, 6 e 5 — uso o pior caso.</div>
       </div>
       <div>
         <div class="k">Orçamento total</div>
-        <div class="v">R$ 960</div>
-        <div class="n">R$ 160 já gastos + 16 dias × R$ 50, se rodar até o fim sem alteração.</div>
+        <div class="v">R$ 1.800</div>
+        <div class="n">R$ 300 já gastos + 15 dias × R$ 100, se rodar até o fim sem alteração.</div>
       </div>
       <div>
         <div class="k">CPA teto</div>
@@ -387,9 +388,9 @@
         <div class="n">Acima disso cada venda dá prejuízo na mídia. É o limite, não a meta.</div>
       </div>
       <div>
-        <div class="k">Concentração</div>
-        <div class="v">78%</div>
-        <div class="n">Do gasto foi para a peça 01. O CBO escolheu cedo — e escolheu a de menor CTR.</div>
+        <div class="k">Custo / checkout</div>
+        <div class="v">R$ 7,31</div>
+        <div class="n">Era R$ 12,73 em 28/08 e R$ 8,02 em 29/08. O topo do funil está barateando, não piorando.</div>
       </div>
     </div>
   </section>
@@ -397,20 +398,21 @@
   <section>
     <div class="sec-head">
       <h2>Placar</h2>
-      <p class="lede">Acumulado desde a liberação da entrega.</p>
+      <p class="lede">Export do Gerenciador de Anúncios, janela 24–30/08 — que na prática é todo o período veiculado.</p>
     </div>
     <div class="scores">
-      <div class="score"><span class="k">Gasto</span><span class="v" style="color:var(--ink)">R$ 160,48</span></div>
-      <div class="score"><span class="k">Impressões</span><span class="v" style="color:var(--ink)">4.685</span></div>
-      <div class="score"><span class="k">Cliques no link</span><span class="v" style="color:var(--ink)">177</span></div>
-      <div class="score"><span class="k">Checkouts</span><span class="v" style="color:var(--ink)">20</span></div>
+      <div class="score"><span class="k">Gasto</span><span class="v" style="color:var(--ink)">R$ 299,58</span></div>
+      <div class="score"><span class="k">Impressões</span><span class="v" style="color:var(--ink)">10.869</span></div>
+      <div class="score"><span class="k">Cliques no link</span><span class="v" style="color:var(--ink)">360</span></div>
+      <div class="score"><span class="k">Checkouts</span><span class="v" style="color:var(--ink)">41</span></div>
       <div class="score"><span class="k">Vendas</span><span class="v" style="color:var(--crit)">0</span></div>
     </div>
     <div class="alert">
-      <div class="alert-h"><span class="dot"></span>O checkout continua sem converter — e o motivo mudou</div>
-      <p>Desde que a correção entrou no ar (28/08, 10h), o pixel registrou cerca de <strong>30 <span class="mono">InitiateCheckout</span></strong> de tráfego real e <strong>zero <span class="mono">AddPaymentInfo</span></strong>. Zero <span class="mono">CheckoutError</span> também.</p>
-      <p>Isso aponta para um lugar diferente do bug anterior. O <span class="mono">AddPaymentInfo</span> dispara <em>depois</em> das validações e <em>antes</em> da chamada de pagamento; o <span class="mono">CheckoutError</span> dispara se essa chamada falha. Nenhum dos dois aparecendo significa que ninguém está passando das validações do formulário — não é falha de rede, e não é o Asaas recusando.</p>
-      <p><strong>Pendente de confirmação:</strong> não há registro de que o deploy do PR #37 (retry, telefone, <span class="mono">CheckoutError</span>) tenha sido feito. A ausência total de <span class="mono">CheckoutError</span> é compatível com ele nunca ter subido.</p>
+      <div class="alert-h"><span class="dot"></span>41 checkouts abertos, nenhuma venda — o vazamento é só no último degrau</div>
+      <p>Os quatro primeiros degraus estão bons e melhorando: CTR de 3,31% no link, 85% dos cliques chegam a carregar a página, e 13% de quem chega abre o checkout a R$ 7,31 cada. Nada disso é o problema.</p>
+      <p>A queda inteira acontece <em>depois</em> que a pessoa já abriu o checkout. A cadeia de pagamento foi provada de ponta a ponta em 28/08 com um PIX real de R$ 5 feito no celular em 5G, então não é a infraestrutura. Sobram duas explicações: <strong>atrito no formulário</strong> ou <strong>resistência ao preço</strong>.</p>
+      <p><strong>O teste que separa as duas leva um minuto</strong> e está no Gerenciador de Eventos, com o período em "Hoje": se houver <span class="mono">AddPaymentInfo</span>, as pessoas preenchem tudo e desistem no valor — é preço. Se continuar zerado, elas travam antes, no formulário — é atrito. Não consigo ler o pixel desta sessão; esse número precisa vir de você.</p>
+      <p class="mono" style="font-size:12px; opacity:.75">O export do Gerenciador de Anúncios não traz coluna de compras. O zero acima é a última verificação direta, não uma leitura deste arquivo.</p>
     </div>
   </section>
 
@@ -421,24 +423,24 @@
     </div>
     <div class="card funnel">
       <div class="step">
-        <div><div class="lbl">Impressões</div><div class="sub">CPM R$ 34,25</div></div>
+        <div><div class="lbl">Impressões</div><div class="sub">CPM R$ 27,56 · frequência 1,66</div></div>
         <div class="track"><i style="inset:0 0.0% 0 0; background:var(--accent)"></i></div>
-        <div class="val">4.685</div>
+        <div class="val">10.869</div>
       </div>
       <div class="step">
-        <div><div class="lbl">Cliques no link</div><div class="sub">CTR 5,29% · 3,8% dos que viram</div></div>
-        <div class="track"><i style="inset:0 96.2% 0 0; background:var(--accent)"></i></div>
-        <div class="val">177</div>
+        <div><div class="lbl">Cliques no link</div><div class="sub">CTR 3,31% no link · 4,53% geral</div></div>
+        <div class="track"><i style="inset:0 96.688% 0 0; background:var(--accent)"></i></div>
+        <div class="val">360</div>
       </div>
       <div class="step">
-        <div><div class="lbl">Viu a página</div><div class="sub">LandingPageView · 84% dos cliques</div></div>
-        <div class="track"><i style="inset:0 15.799999999999997% 0 0; background:var(--accent)"></i></div>
-        <div class="val">149</div>
+        <div><div class="lbl">Viu a página</div><div class="sub">LandingPageView · 85% dos cliques</div></div>
+        <div class="track"><i style="inset:0 14.722% 0 0; background:var(--accent)"></i></div>
+        <div class="val">307</div>
       </div>
       <div class="step">
-        <div><div class="lbl">Iniciou checkout</div><div class="sub">13% de quem viu · R$ 8,02 cada</div></div>
-        <div class="track"><i style="inset:0 86.6% 0 0; background:var(--accent)"></i></div>
-        <div class="val">20</div>
+        <div><div class="lbl">Iniciou checkout</div><div class="sub">13% de quem viu · R$ 7,31 cada</div></div>
+        <div class="track"><i style="inset:0 86.645% 0 0; background:var(--accent)"></i></div>
+        <div class="val">41</div>
       </div>
       <div class="step">
         <div><div class="lbl">Comprou</div><div class="sub">Purchase · via CAPI</div></div>
@@ -453,7 +455,8 @@
   <section>
     <div class="sec-head">
       <h2>Os cinco ângulos</h2>
-      <p class="lede">Cada peça ataca a mesma dor por um caminho diferente. O CBO já concentrou: 76% do gasto foi para a peça 01, que tem a <em>pior</em> CTR das cinco. As peças 03 e 04 têm CTR muito melhor e mal receberam verba.</p>
+      <p class="lede">Cada peça ataca a mesma dor por um caminho diferente. Em 29/08 o CBO tinha concentrado 76% do gasto na peça 01, que tem a <em>pior</em> CTR das cinco, enquanto 03 e 04 mal receberam verba.</p>
+      <p class="lede" style="margin-top:10px"><strong>Estes números são de 29/08 e não foram atualizados.</strong> O export enviado é de nível de campanha e não traz quebra por anúncio — para renovar esta tabela é preciso exportar com detalhamento por anúncio, ou reconectar o MCP da Meta.</p>
     </div>
     <div class="tablewrap">
       <table>
@@ -503,13 +506,14 @@
     <div class="rules">
       <div class="card rule">
         <span class="tag">Expectativa</span>
-        <h3>O conjunto não sai do aprendizado</h3>
-        <p>A Meta quer 50 conversões por semana para estabilizar. Com R$ 50 por dia e um produto de R$ 350, isso é inalcançável — e tudo bem. Significa que os números vão oscilar mais que o normal, e que julgar pelo topo do funil (CTR, custo por visita) é mais confiável do que pelo fundo nos primeiros dias.</p>
+        <h3>O conjunto deve sair do aprendizado</h3>
+        <p>Eu vinha dizendo o contrário, e o dado corrigiu: a Meta quer 50 conversões por semana, mas o evento otimizado aqui é <span class="mono">InitiateCheckout</span>, não a compra. A R$ 100 por dia e R$ 7,31 por checkout, são ~14 por dia — perto de 96 por semana, quase o dobro do necessário.</p>
+        <p>Isso é bom para a estabilidade da entrega e ruim como consolo: significa que a Meta está entregando bem exatamente o evento que <em>não</em> paga a conta.</p>
       </div>
       <div class="card rule">
         <span class="tag">Paciência</span>
         <h3>Nada se decide antes de 3 dias</h3>
-        <p>Com cinco peças dividindo R$ 50, cada uma recebe uns R$ 10 por dia. Um dia de dado é ruído. Comparar criativo antes do terceiro dia é ler sorte, não desempenho.</p>
+        <p>Com cinco peças dividindo R$ 100, cada uma recebe uns R$ 20 por dia. Um dia de dado ainda é ruído. Comparar criativo antes do terceiro dia é ler sorte, não desempenho.</p>
       </div>
       <div class="card rule">
         <span class="tag">Corte</span>
@@ -552,8 +556,8 @@
   </section>
 
   <footer>
-    <span>Última atualização: 29/08/2026 às 09h27 BRT</span>
-    <span>Fonte: API de Marketing da Meta</span>
+    <span>Última atualização: 30/08/2026 às 14h49 BRT</span>
+    <span>Fonte: export do Gerenciador de Anúncios, janela 24–30/08, nível de campanha</span>
     <span>Retrato estático — republicado a cada atualização, sempre nesta URL</span>
   </footer>
 

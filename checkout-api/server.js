@@ -192,6 +192,11 @@ app.post("/checkout", async (req, res) => {
     if ((phone.length === 12 || phone.length === 13) && phone.startsWith("55")) {
       phone = phone.slice(2);
     }
+    // DDD com zero na frente ("011 98888-7777") ainda e comum. Nenhum DDD
+    // comeca com zero, entao a leitura nao e ambigua.
+    if ((phone.length === 11 || phone.length === 12) && phone.startsWith("0")) {
+      phone = phone.slice(1);
+    }
     let billingType = String(req.body?.billingType || "UNDEFINED").toUpperCase();
     if (!VALID_BILLING.has(billingType)) billingType = "UNDEFINED";
     const attrib = pickAttrib(req.body?.attrib);

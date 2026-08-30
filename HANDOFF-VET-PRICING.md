@@ -14,9 +14,9 @@ Preços: **R$ 390** no cartão · **R$ 350** no PIX · 10x de R$ 45.
 Autoridade: **Dr. Kleber Ferreira** — pesquisador na USP e proprietário de um dos maiores
 laboratórios de diagnóstico veterinário do país, com o selo DNA USP de Inovação.
 
-**A matemática que decide tudo:** R$ 50/dia de mídia até 14/09 ≈ R$ 900–926 no total.
-**3 inscrições pagam a mídia inteira.** CPA teto = R$ 350 (acima disso, cada venda dá
-prejuízo na mídia).
+**A matemática que decide tudo:** o orçamento subiu para **R$ 100/dia em 29/08** (antes
+R$ 50). Nesse ritmo, até 14/09 são ~R$ 1.700 de mídia — **5 inscrições pagam tudo**.
+CPA teto = R$ 350 (acima disso, cada venda dá prejuízo na mídia).
 
 ---
 
@@ -28,7 +28,7 @@ prejuízo na mídia).
 |---|---|
 | Conta de anúncios | `554955683460627` — "CA - Dr. Kleber Ferreira" |
 | Business | `475650458464388` |
-| Campanha | `120247482699950436` — `[VET-PRICING][CONVERSAO][SET26]` · CBO R$50/dia · `OUTCOME_SALES` |
+| Campanha | `120247482699950436` — `[VET-PRICING][CONVERSAO][SET26]` · CBO **R$100/dia** (desde 29/08) · `OUTCOME_SALES` |
 | Conjunto | `120247482700590436` — `[VET-PRICING][INITIATE-CHECKOUT][LAL 1% CLINICAS][BR 25-65]` |
 | Otimização | `OFFSITE_CONVERSIONS` / `INITIATED_CHECKOUT` |
 | Público | Lookalike 1% (`120247507387420436`) como sugestão + Advantage+ com expansão liberada |
@@ -123,34 +123,38 @@ zera a cada deploy. Comprador que gera a fatura antes de um deploy e paga depois
 **O fuso da conta de anúncios é `America/Noronha`** (UTC-2), 1h à frente de Brasília.
 Venda às 23h30 daqui aparece no relatório como do dia seguinte.
 
-**O conjunto não vai sair da fase de aprendizado** com R$50/dia e produto de R$350
+**O conjunto não vai sair da fase de aprendizado** nem com R$100/dia e produto de R$350
 (a Meta quer 50 conversões/semana). Oscilação não é sinal.
 
 ---
 
-## Rotina agendada — PRECISA SER RECRIADA
+## Painel — atualização sob demanda
 
-Existe uma rotina diária que atualiza o painel às **8h de Brasília** (`0 11 * * *`):
-`trig_01N1GYCFcQR3mnUW5w1oD7NY`.
+O painel **não tem mais rotina agendada**. A rotina diária existia
+(`trig_01N1GYCFcQR3mnUW5w1oD7NY`) e foi apagada em 30/08: sessões disparadas por
+rotina criada via ferramenta **não carregam conectores MCP**, então ela rodou quatro
+manhãs seguidas sem conseguir ler nada da Meta.
 
-**Ela está amarrada à sessão antiga** — vai continuar disparando lá, não na sessão nova.
-E ela **falhou na primeira execução** porque as sessões disparadas por rotina criada via
-ferramenta **não carregam conectores MCP** (sem Meta-ADS, sem dados).
+**Agora eu peço a atualização quando quiser.** Quando eu pedir, o procedimento é:
 
-Recomendação: **recriar pela interface de Routines da claude.ai** (Configurações →
-Routines), onde os conectores ficam vinculados ao agendamento. Depois apague a antiga.
+1. Puxar da Meta (`ad_account_id` `554955683460627`): `ads_get_errors` nas 7 entidades e
+   `ads_get_ad_entities` em nível de campanha e de anúncio, `date_preset` `lifetime` e
+   `yesterday`, com `impressions`, `reach`, `clicks`, `link_click`, `ctr`, `cpm`,
+   `amount_spent`, `omni_landing_page_view`, `omni_initiated_checkout`, `omni_purchase`,
+   `cost_per_omni_initiated_checkout`.
+2. Preencher Placar, Funil e a tabela dos cinco criativos no fonte do artefato; atualizar
+   o carimbo de "Última atualização" e os dias restantes até 14/09. Nas barras do funil, a
+   largura de cada `.track > i` é proporcional ao degrau anterior.
+3. Republicar o artefato no **mesmo caminho de arquivo** (preserva a URL) e regenerar
+   `painel.html` no repositório a partir do mesmo fonte.
 
-O que a rotina faz: puxa erros de entrega e métricas da campanha, preenche o painel,
-republica o artefato, regenera `painel.html` no repositório, e **só me avisa se alguma
-regra de decisão disparou** — senão atualiza em silêncio.
+**Se o MCP da Meta estiver fora, não invente número** — diga que está fora.
 
 **As regras de decisão** (escritas antes dos dados, de propósito):
 - Nada se decide antes de 3 dias de veiculação
 - Mato uma peça quando gastou ~R$60 sem nenhum checkout **enquanto** outra já trouxe pelo menos um
 - CTR boa + checkout perto de zero = o problema é a página, não o criativo
 - CPA acima de R$ 350 = decisão consciente, nunca descuido
-
----
 
 ## O que está pendente
 
