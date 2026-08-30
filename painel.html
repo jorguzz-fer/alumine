@@ -361,7 +361,7 @@
       <div class="cap">dias de veiculação<br>até 14 set, 19h</div>
       <div class="stamp">
         <span class="k">Atualizado</span>
-        <span class="v">30/08/2026 · 14h49 BRT</span>
+        <span class="v">30/08/2026 · 16h17 BRT</span>
       </div>
     </div>
   </header>
@@ -408,11 +408,13 @@
       <div class="score"><span class="k">Vendas</span><span class="v" style="color:var(--crit)">0</span></div>
     </div>
     <div class="alert">
-      <div class="alert-h"><span class="dot"></span>41 checkouts abertos, nenhuma venda — o vazamento é só no último degrau</div>
-      <p>Os quatro primeiros degraus estão bons e melhorando: CTR de 3,31% no link, 85% dos cliques chegam a carregar a página, e 13% de quem chega abre o checkout a R$ 7,31 cada. Nada disso é o problema.</p>
-      <p>A queda inteira acontece <em>depois</em> que a pessoa já abriu o checkout. A cadeia de pagamento foi provada de ponta a ponta em 28/08 com um PIX real de R$ 5 feito no celular em 5G, então não é a infraestrutura. Sobram duas explicações: <strong>atrito no formulário</strong> ou <strong>resistência ao preço</strong>.</p>
-      <p><strong>O teste que separa as duas leva um minuto</strong> e está no Gerenciador de Eventos, com o período em "Hoje": se houver <span class="mono">AddPaymentInfo</span>, as pessoas preenchem tudo e desistem no valor — é preço. Se continuar zerado, elas travam antes, no formulário — é atrito. Não consigo ler o pixel desta sessão; esse número precisa vir de você.</p>
-      <p class="mono" style="font-size:12px; opacity:.75">O export do Gerenciador de Anúncios não traz coluna de compras. O zero acima é a última verificação direta, não uma leitura deste arquivo.</p>
+      <div class="alert-h"><span class="dot"></span>O checkout não quebrou desde sempre — ele parou em 28/08, e dá para datar</div>
+      <p>Os quatro primeiros degraus estão bons e melhorando: CTR de 3,31% no link, 85% dos cliques carregam a página, e 13% de quem chega abre o checkout a R$ 7,31 cada. Nada disso é o problema.</p>
+      <p>No Gerenciador de Eventos, <span class="mono">PageView</span>, <span class="mono">ViewContent</span>, <span class="mono">InitiateCheckout</span> e <span class="mono">ClickCheckoutCTA</span> aparecem recebidos <strong>há 1 hora</strong>. Já <span class="mono">AddPaymentInfo</span> (29 disparos) e <span class="mono">Purchase</span> (2) estão <strong>parados há 2 dias</strong>. O funil está vivo até a abertura do checkout e morto depois dela.</p>
+      <p>O código não está quebrado: rodando o checkout num viewport de iPhone com formulário válido, o <span class="mono">AddPaymentInfo</span> dispara e a requisição sai. Então as pessoas não estão conseguindo montar um formulário válido — e até agora nenhum evento dizia em qual campo.</p>
+      <p><strong>Suspeito principal, pela coincidência de data:</strong> o deploy de 28/08 às 14h21 trocou a validação de telefone de "10 dígitos ou mais" para 10–11 dígitos exatos. Quem digita <span class="mono">011 98888-7777</span> passava antes e passou a ser barrado. Já normalizado no front e no servidor.</p>
+      <p><strong>O que fecha o diagnóstico:</strong> cada reprovação agora dispara <span class="mono">CheckoutValidationFail</span> com o campo em <span class="mono">custom_data</span>. Depois do deploy, algumas horas de tráfego dizem se o gargalo é nome, e-mail, CPF ou telefone — em vez de manter quatro hipóteses abertas.</p>
+      <p class="mono" style="font-size:12px; opacity:.75">O export do Gerenciador de Anúncios não traz coluna de compras. Os 2 <span class="mono">Purchase</span> do pixel incluem o teste de R$ 5 de 28/08; a campanha segue com zero venda atribuída.</p>
     </div>
   </section>
 
@@ -556,7 +558,7 @@
   </section>
 
   <footer>
-    <span>Última atualização: 30/08/2026 às 14h49 BRT</span>
+    <span>Última atualização: 30/08/2026 às 16h17 BRT</span>
     <span>Fonte: export do Gerenciador de Anúncios, janela 24–30/08, nível de campanha</span>
     <span>Retrato estático — republicado a cada atualização, sempre nesta URL</span>
   </footer>
