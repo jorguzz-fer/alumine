@@ -357,11 +357,11 @@
       </div>
     </div>
     <div class="countdown">
-      <span class="num">15</span>
+      <span class="num">14</span>
       <div class="cap">dias de veiculação<br>até 14 set, 19h</div>
       <div class="stamp">
         <span class="k">Atualizado</span>
-        <span class="v">30/08/2026 · 16h17 BRT</span>
+        <span class="v">31/08/2026 · 13h45 BRT</span>
       </div>
     </div>
   </header>
@@ -375,12 +375,12 @@
       <div class="hero">
         <div class="k">Empate</div>
         <div class="v">6 <span class="unit">vendas</span></div>
-        <div class="n">5,1 no PIX de R$ 350 e 4,6 no cartão de R$ 390. Arredondando para cima, 6 e 5 — uso o pior caso.</div>
+        <div class="n">5,2 no PIX de R$ 350 e 4,6 no cartão de R$ 390. Arredondando para cima, 6 e 5 — uso o pior caso.</div>
       </div>
       <div>
         <div class="k">Orçamento total</div>
         <div class="v">R$ 1.800</div>
-        <div class="n">R$ 300 já gastos + 15 dias × R$ 100, se rodar até o fim sem alteração.</div>
+        <div class="n">R$ 407 já gastos + 14 dias × R$ 100, se rodar até o fim sem alteração.</div>
       </div>
       <div>
         <div class="k">CPA teto</div>
@@ -389,8 +389,8 @@
       </div>
       <div>
         <div class="k">Custo / checkout</div>
-        <div class="v">R$ 7,31</div>
-        <div class="n">Era R$ 12,73 em 28/08 e R$ 8,02 em 29/08. O topo do funil está barateando, não piorando.</div>
+        <div class="v">R$ 7,41</div>
+        <div class="n">R$ 12,73 em 28/08, R$ 8,02 em 29/08, R$ 7,31 ontem. Estabilizou em torno de R$ 7.</div>
       </div>
     </div>
   </section>
@@ -398,18 +398,18 @@
   <section>
     <div class="sec-head">
       <h2>Placar</h2>
-      <p class="lede">Export do Gerenciador de Anúncios, janela 24–30/08 — que na prática é todo o período veiculado.</p>
+      <p class="lede">Lido direto da API de Marketing, período máximo — todo o histórico da campanha.</p>
     </div>
     <div class="scores">
-      <div class="score"><span class="k">Gasto</span><span class="v" style="color:var(--ink)">R$ 299,58</span></div>
-      <div class="score"><span class="k">Impressões</span><span class="v" style="color:var(--ink)">10.869</span></div>
-      <div class="score"><span class="k">Cliques no link</span><span class="v" style="color:var(--ink)">360</span></div>
-      <div class="score"><span class="k">Checkouts</span><span class="v" style="color:var(--ink)">41</span></div>
+      <div class="score"><span class="k">Gasto</span><span class="v" style="color:var(--ink)">R$ 407,47</span></div>
+      <div class="score"><span class="k">Impressões</span><span class="v" style="color:var(--ink)">16.191</span></div>
+      <div class="score"><span class="k">Cliques no link</span><span class="v" style="color:var(--ink)">534</span></div>
+      <div class="score"><span class="k">Checkouts</span><span class="v" style="color:var(--ink)">55</span></div>
       <div class="score"><span class="k">Vendas</span><span class="v" style="color:var(--crit)">0</span></div>
     </div>
     <div class="alert">
       <div class="alert-h"><span class="dot"></span>O checkout não quebrou desde sempre — ele parou em 28/08, e dá para datar</div>
-      <p>Os quatro primeiros degraus estão bons e melhorando: CTR de 3,31% no link, 85% dos cliques carregam a página, e 13% de quem chega abre o checkout a R$ 7,31 cada. Nada disso é o problema.</p>
+      <p>Os quatro primeiros degraus estão bons e melhorando: CTR de 3,30% no link, 87% dos cliques carregam a página, e 12% de quem chega abre o checkout a R$ 7,41 cada. Já são 55 aberturas. Nada disso é o problema.</p>
       <p>No Gerenciador de Eventos, <span class="mono">PageView</span>, <span class="mono">ViewContent</span>, <span class="mono">InitiateCheckout</span> e <span class="mono">ClickCheckoutCTA</span> aparecem recebidos <strong>há 1 hora</strong>. Já <span class="mono">AddPaymentInfo</span> (29 disparos) e <span class="mono">Purchase</span> (2) estão <strong>parados há 2 dias</strong>. O funil está vivo até a abertura do checkout e morto depois dela.</p>
       <p>O código não está quebrado: rodando o checkout num viewport de iPhone com formulário válido, o <span class="mono">AddPaymentInfo</span> dispara e a requisição sai. Então as pessoas não estão conseguindo montar um formulário válido — e até agora nenhum evento dizia em qual campo.</p>
       <p><strong>Suspeito principal, pela coincidência de data:</strong> o deploy de 28/08 às 14h21 trocou a validação de telefone de "10 dígitos ou mais" para 10–11 dígitos exatos. Quem digita <span class="mono">011 98888-7777</span> passava antes e passou a ser barrado. Já normalizado no front e no servidor.</p>
@@ -425,24 +425,24 @@
     </div>
     <div class="card funnel">
       <div class="step">
-        <div><div class="lbl">Impressões</div><div class="sub">CPM R$ 27,56 · frequência 1,66</div></div>
+        <div><div class="lbl">Impressões</div><div class="sub">CPM R$ 25,17 · frequência 1,75</div></div>
         <div class="track"><i style="inset:0 0.0% 0 0; background:var(--accent)"></i></div>
-        <div class="val">10.869</div>
+        <div class="val">16.191</div>
       </div>
       <div class="step">
-        <div><div class="lbl">Cliques no link</div><div class="sub">CTR 3,31% no link · 4,53% geral</div></div>
-        <div class="track"><i style="inset:0 96.688% 0 0; background:var(--accent)"></i></div>
-        <div class="val">360</div>
+        <div><div class="lbl">Cliques no link</div><div class="sub">CTR 3,30% no link · 4,57% geral</div></div>
+        <div class="track"><i style="inset:0 96.702% 0 0; background:var(--accent)"></i></div>
+        <div class="val">534</div>
       </div>
       <div class="step">
-        <div><div class="lbl">Viu a página</div><div class="sub">LandingPageView · 85% dos cliques</div></div>
-        <div class="track"><i style="inset:0 14.722% 0 0; background:var(--accent)"></i></div>
-        <div class="val">307</div>
+        <div><div class="lbl">Viu a página</div><div class="sub">LandingPageView · 87% dos cliques</div></div>
+        <div class="track"><i style="inset:0 13.109% 0 0; background:var(--accent)"></i></div>
+        <div class="val">464</div>
       </div>
       <div class="step">
-        <div><div class="lbl">Iniciou checkout</div><div class="sub">13% de quem viu · R$ 7,31 cada</div></div>
-        <div class="track"><i style="inset:0 86.645% 0 0; background:var(--accent)"></i></div>
-        <div class="val">41</div>
+        <div><div class="lbl">Iniciou checkout</div><div class="sub">12% de quem viu · R$ 7,41 cada</div></div>
+        <div class="track"><i style="inset:0 88.147% 0 0; background:var(--accent)"></i></div>
+        <div class="val">55</div>
       </div>
       <div class="step">
         <div><div class="lbl">Comprou</div><div class="sub">Purchase · via CAPI</div></div>
@@ -457,9 +457,8 @@
   <section>
     <div class="sec-head">
       <h2>Os cinco ângulos</h2>
-      <p class="lede">Cada peça ataca a mesma dor por um caminho diferente. Em 29/08 o CBO tinha concentrado 76% do gasto na peça 01, que tem a <em>pior</em> CTR das cinco, enquanto 03 e 04 mal receberam verba.</p>
-      <p class="lede" style="margin-top:10px"><strong>Estes números são de 29/08 e não foram atualizados.</strong> O export enviado é de nível de campanha e não traz quebra por anúncio — para renovar esta tabela é preciso exportar com detalhamento por anúncio, ou reconectar o MCP da Meta.</p>
-    </div>
+      <p class="lede">Cada peça ataca a mesma dor por um caminho diferente. O CBO concentrou 74% do gasto na peça 01 — e, com quatro dias de dado, essa escolha se mostrou certa: a 01 traz checkout a R$ 6,32, metade do custo da 04.</p>
+      <p class="lede" style="margin-top:10px"><strong>Correção do que eu disse em 29/08.</strong> Eu tinha marcado a 01 como "pior CTR" e a 04 como a melhor, e reclamado que o CBO escolhera errado. Com volume, a CTR da 04 caiu de 8,53% para 4,46% — era amostra pequena, não desempenho. E CTR nunca foi o critério que importa aqui: o que paga a conta é custo por checkout, e nele a 01 ganha com folga.</p>
     <div class="tablewrap">
       <table>
         <thead>
@@ -477,7 +476,7 @@
         <tbody>
           <tr>
             <td class="name"><span class="swatch" style="background:var(--s1)"></span>01 Split<span class="angle">O imposto sai antes do dinheiro entrar</span></td>
-            <td>R$ 125,13</td><td>3.598</td><td>4,75%</td><td>R$ 34,78</td><td>119</td><td>16</td><td>R$ 7,82</td>
+            <td>R$ 303,41</td><td>11.481</td><td>4,41%</td><td>R$ 26,43</td><td>367</td><td>48</td><td>R$ 6,32</td>
           </tr>
           <tr>
             <td class="name"><span class="swatch" style="background:var(--s2)"></span>02 A conta<span class="angle">Sua clínica em 2027, linha por linha</span></td>
@@ -485,15 +484,15 @@
           </tr>
           <tr>
             <td class="name"><span class="swatch" style="background:var(--s3)"></span>03 Margem<span class="angle">Aumentou o preço e continua sem sobrar</span></td>
-            <td>R$ 5,67</td><td>153</td><td>6,54%</td><td>R$ 37,06</td><td>8</td><td>0</td><td>—</td>
+            <td>R$ 7,16</td><td>205</td><td>6,34%</td><td>R$ 34,93</td><td>12</td><td>0</td><td>—</td>
           </tr>
           <tr>
             <td class="name"><span class="swatch" style="background:var(--s4)"></span>04 Chute<span class="angle">Preço no chute é o erro de todo dia</span></td>
-            <td>R$ 21,58</td><td>734</td><td>7,63%</td><td>R$ 29,40</td><td>40</td><td>3</td><td>R$ 7,19</td>
+            <td>R$ 75,52</td><td>3.837</td><td>4,46%</td><td>R$ 19,68</td><td>124</td><td>6</td><td>R$ 12,59</td>
           </tr>
           <tr>
             <td class="name"><span class="swatch" style="background:var(--s5)"></span>05 Autoridade<span class="angle">Dr. Kleber Ferreira</span></td>
-            <td>R$ 6,62</td><td>178</td><td>5,62%</td><td>R$ 37,19</td><td>10</td><td>0</td><td>—</td>
+            <td>R$ 19,90</td><td>646</td><td>7,59%</td><td>R$ 30,80</td><td>30</td><td>0</td><td>—</td>
           </tr>
         </tbody>
       </table>
@@ -515,12 +514,12 @@
       <div class="card rule">
         <span class="tag">Paciência</span>
         <h3>Nada se decide antes de 3 dias</h3>
-        <p>Com cinco peças dividindo R$ 100, cada uma recebe uns R$ 20 por dia. Um dia de dado ainda é ruído. Comparar criativo antes do terceiro dia é ler sorte, não desempenho.</p>
+        <p>Prazo cumprido: são quatro dias de veiculação. E a espera se pagou — a CTR da 04 caiu de 8,53% para 4,46% quando ganhou volume. Julgar no dia 1 teria matado a peça certa.</p>
       </div>
       <div class="card rule">
         <span class="tag">Corte</span>
         <h3>Quando eu mato uma peça</h3>
-        <p>Gastou uns R$ 60 sem nenhum checkout <em>enquanto</em> outra já trouxe pelo menos um. O que importa é a comparação, não o número solto — se nenhuma converteu, o problema não é a peça.</p>
+        <p>Gastou uns R$ 60 sem nenhum checkout <em>enquanto</em> outra já trouxe pelo menos um. <strong>Nenhuma disparou.</strong> As duas sem checkout (03 e 05) gastaram R$ 7 e R$ 20 — longe do limiar. Não há corte a fazer hoje.</p>
       </div>
       <div class="card rule">
         <span class="tag">Alarme</span>
@@ -558,8 +557,8 @@
   </section>
 
   <footer>
-    <span>Última atualização: 30/08/2026 às 16h17 BRT</span>
-    <span>Fonte: export do Gerenciador de Anúncios, janela 24–30/08, nível de campanha</span>
+    <span>Última atualização: 31/08/2026 às 13h45 BRT</span>
+    <span>Fonte: API de Marketing da Meta, período máximo, níveis de campanha e de anúncio</span>
     <span>Retrato estático — republicado a cada atualização, sempre nesta URL</span>
   </footer>
 
