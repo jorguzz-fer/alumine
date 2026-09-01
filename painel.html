@@ -357,11 +357,11 @@
       </div>
     </div>
     <div class="countdown">
-      <span class="num">14</span>
+      <span class="num">13</span>
       <div class="cap">dias de veiculação<br>até 14 set, 19h</div>
       <div class="stamp">
         <span class="k">Atualizado</span>
-        <span class="v">31/08/2026 · 13h45 BRT</span>
+        <span class="v">01/09/2026 · 11h00 BRT</span>
       </div>
     </div>
   </header>
@@ -380,17 +380,17 @@
       <div>
         <div class="k">Orçamento total</div>
         <div class="v">R$ 1.800</div>
-        <div class="n">R$ 407 já gastos + 14 dias × R$ 100, se rodar até o fim sem alteração.</div>
+        <div class="n">R$ 510 já gastos + 13 dias × R$ 100, se rodar até o fim sem alteração.</div>
       </div>
       <div>
         <div class="k">CPA teto</div>
-        <div class="v">R$ 350</div>
-        <div class="n">Acima disso cada venda dá prejuízo na mídia. É o limite, não a meta.</div>
+        <div class="v" style="color:var(--crit)">R$ 350</div>
+        <div class="n"><strong>Ultrapassado.</strong> Já foram R$ 510 sem venda: a primeira, quando vier, nasce custando mais do que traz.</div>
       </div>
       <div>
         <div class="k">Custo / checkout</div>
-        <div class="v">R$ 7,41</div>
-        <div class="n">R$ 12,73 em 28/08, R$ 8,02 em 29/08, R$ 7,31 ontem. Estabilizou em torno de R$ 7.</div>
+        <div class="v">R$ 7,08</div>
+        <div class="n">R$ 12,73 · R$ 8,02 · R$ 7,31 · R$ 7,41 · agora R$ 7,08. O topo do funil não é o problema.</div>
       </div>
     </div>
   </section>
@@ -401,15 +401,16 @@
       <p class="lede">Lido direto da API de Marketing, período máximo — todo o histórico da campanha.</p>
     </div>
     <div class="scores">
-      <div class="score"><span class="k">Gasto</span><span class="v" style="color:var(--ink)">R$ 407,47</span></div>
-      <div class="score"><span class="k">Impressões</span><span class="v" style="color:var(--ink)">16.191</span></div>
-      <div class="score"><span class="k">Cliques no link</span><span class="v" style="color:var(--ink)">534</span></div>
-      <div class="score"><span class="k">Checkouts</span><span class="v" style="color:var(--ink)">55</span></div>
+      <div class="score"><span class="k">Gasto</span><span class="v" style="color:var(--ink)">R$ 510,09</span></div>
+      <div class="score"><span class="k">Impressões</span><span class="v" style="color:var(--ink)">21.453</span></div>
+      <div class="score"><span class="k">Cliques no link</span><span class="v" style="color:var(--ink)">732</span></div>
+      <div class="score"><span class="k">Checkouts</span><span class="v" style="color:var(--ink)">72</span></div>
       <div class="score"><span class="k">Vendas</span><span class="v" style="color:var(--crit)">0</span></div>
     </div>
     <div class="alert">
-      <div class="alert-h"><span class="dot"></span>O checkout não quebrou desde sempre — ele parou em 28/08, e dá para datar</div>
-      <p>Os quatro primeiros degraus estão bons e melhorando: CTR de 3,30% no link, 87% dos cliques carregam a página, e 12% de quem chega abre o checkout a R$ 7,41 cada. Já são 55 aberturas. Nada disso é o problema.</p>
+      <div class="alert-h"><span class="dot"></span>R$ 510 gastos, 72 checkouts, nenhuma venda — o teto de CPA já foi ultrapassado</div>
+      <p>Os quatro primeiros degraus continuam bons: CTR de 3,41% no link, 86% dos cliques carregam a página, e 11% de quem chega abre o checkout a R$ 7,08 cada — o custo por checkout só cai. Já são 72 aberturas. Nada disso é o problema.</p>
+      <p><strong>É aqui que a conta virou.</strong> O gasto passou de R$ 350, que era o teto por venda. Não existe mais cenário em que a primeira inscrição saia no lucro — ela já custou mais do que traz. A campanha não está cara: ela entrega checkout barato para uma página que não fecha.</p>
       <p>No Gerenciador de Eventos, <span class="mono">PageView</span>, <span class="mono">ViewContent</span>, <span class="mono">InitiateCheckout</span> e <span class="mono">ClickCheckoutCTA</span> aparecem recebidos <strong>há 1 hora</strong>. Já <span class="mono">AddPaymentInfo</span> (29 disparos) e <span class="mono">Purchase</span> (2) estão <strong>parados há 2 dias</strong>. O funil está vivo até a abertura do checkout e morto depois dela.</p>
       <p>O código não está quebrado: rodando o checkout num viewport de iPhone com formulário válido, o <span class="mono">AddPaymentInfo</span> dispara e a requisição sai. Então as pessoas não estão conseguindo montar um formulário válido — e até agora nenhum evento dizia em qual campo.</p>
       <p><strong>Suspeito principal, pela coincidência de data:</strong> o deploy de 28/08 às 14h21 trocou a validação de telefone de "10 dígitos ou mais" para 10–11 dígitos exatos. Quem digita <span class="mono">011 98888-7777</span> passava antes e passou a ser barrado. Já normalizado no front e no servidor.</p>
@@ -425,24 +426,24 @@
     </div>
     <div class="card funnel">
       <div class="step">
-        <div><div class="lbl">Impressões</div><div class="sub">CPM R$ 25,17 · frequência 1,75</div></div>
+        <div><div class="lbl">Impressões</div><div class="sub">CPM R$ 23,78 · frequência 1,85</div></div>
         <div class="track"><i style="inset:0 0.0% 0 0; background:var(--accent)"></i></div>
-        <div class="val">16.191</div>
+        <div class="val">21.453</div>
       </div>
       <div class="step">
-        <div><div class="lbl">Cliques no link</div><div class="sub">CTR 3,30% no link · 4,57% geral</div></div>
-        <div class="track"><i style="inset:0 96.702% 0 0; background:var(--accent)"></i></div>
-        <div class="val">534</div>
+        <div><div class="lbl">Cliques no link</div><div class="sub">CTR 3,41% no link · 4,80% geral</div></div>
+        <div class="track"><i style="inset:0 96.588% 0 0; background:var(--accent)"></i></div>
+        <div class="val">732</div>
       </div>
       <div class="step">
-        <div><div class="lbl">Viu a página</div><div class="sub">LandingPageView · 87% dos cliques</div></div>
-        <div class="track"><i style="inset:0 13.109% 0 0; background:var(--accent)"></i></div>
-        <div class="val">464</div>
+        <div><div class="lbl">Viu a página</div><div class="sub">LandingPageView · 86% dos cliques</div></div>
+        <div class="track"><i style="inset:0 14.071% 0 0; background:var(--accent)"></i></div>
+        <div class="val">629</div>
       </div>
       <div class="step">
-        <div><div class="lbl">Iniciou checkout</div><div class="sub">12% de quem viu · R$ 7,41 cada</div></div>
-        <div class="track"><i style="inset:0 88.147% 0 0; background:var(--accent)"></i></div>
-        <div class="val">55</div>
+        <div><div class="lbl">Iniciou checkout</div><div class="sub">11% de quem viu · R$ 7,08 cada</div></div>
+        <div class="track"><i style="inset:0 88.553% 0 0; background:var(--accent)"></i></div>
+        <div class="val">72</div>
       </div>
       <div class="step">
         <div><div class="lbl">Comprou</div><div class="sub">Purchase · via CAPI</div></div>
@@ -457,8 +458,8 @@
   <section>
     <div class="sec-head">
       <h2>Os cinco ângulos</h2>
-      <p class="lede">Cada peça ataca a mesma dor por um caminho diferente. O CBO concentrou 74% do gasto na peça 01 — e, com quatro dias de dado, essa escolha se mostrou certa: a 01 traz checkout a R$ 6,32, metade do custo da 04.</p>
-      <p class="lede" style="margin-top:10px"><strong>Correção do que eu disse em 29/08.</strong> Eu tinha marcado a 01 como "pior CTR" e a 04 como a melhor, e reclamado que o CBO escolhera errado. Com volume, a CTR da 04 caiu de 8,53% para 4,46% — era amostra pequena, não desempenho. E CTR nunca foi o critério que importa aqui: o que paga a conta é custo por checkout, e nele a 01 ganha com folga.</p>
+      <p class="lede">Cada peça ataca a mesma dor por um caminho diferente. O CBO concentrou 71% do gasto na peça 01, e com cinco dias de dado a escolha segue certa: a 01 traz checkout a R$ 6,14, contra R$ 9,35 da 04 e R$ 18,41 da 05.</p>
+      <p class="lede" style="margin-top:10px">A ordem por CTR e a ordem por custo por checkout são <em>opostas</em>: a 05 Autoridade tem a melhor CTR (6,47%) e o pior custo por checkout (R$ 18,41); a 01 tem a CTR mais baixa e o melhor custo. Quem clica no criativo de autoridade não é quem compra — vale lembrar disso antes de julgar peça por CTR.</p>
     <div class="tablewrap">
       <table>
         <thead>
@@ -476,7 +477,7 @@
         <tbody>
           <tr>
             <td class="name"><span class="swatch" style="background:var(--s1)"></span>01 Split<span class="angle">O imposto sai antes do dinheiro entrar</span></td>
-            <td>R$ 303,41</td><td>11.481</td><td>4,41%</td><td>R$ 26,43</td><td>367</td><td>48</td><td>R$ 6,32</td>
+            <td>R$ 362,08</td><td>14.668</td><td>4,58%</td><td>R$ 24,69</td><td>477</td><td>59</td><td>R$ 6,14</td>
           </tr>
           <tr>
             <td class="name"><span class="swatch" style="background:var(--s2)"></span>02 A conta<span class="angle">Sua clínica em 2027, linha por linha</span></td>
@@ -488,11 +489,11 @@
           </tr>
           <tr>
             <td class="name"><span class="swatch" style="background:var(--s4)"></span>04 Chute<span class="angle">Preço no chute é o erro de todo dia</span></td>
-            <td>R$ 75,52</td><td>3.837</td><td>4,46%</td><td>R$ 19,68</td><td>124</td><td>6</td><td>R$ 12,59</td>
+            <td>R$ 84,14</td><td>4.442</td><td>4,66%</td><td>R$ 18,94</td><td>152</td><td>9</td><td>R$ 9,35</td>
           </tr>
           <tr>
             <td class="name"><span class="swatch" style="background:var(--s5)"></span>05 Autoridade<span class="angle">Dr. Kleber Ferreira</span></td>
-            <td>R$ 19,90</td><td>646</td><td>7,59%</td><td>R$ 30,80</td><td>30</td><td>0</td><td>—</td>
+            <td>R$ 55,23</td><td>2.116</td><td>6,47%</td><td>R$ 26,10</td><td>90</td><td>3</td><td>R$ 18,41</td>
           </tr>
         </tbody>
       </table>
@@ -519,7 +520,7 @@
       <div class="card rule">
         <span class="tag">Corte</span>
         <h3>Quando eu mato uma peça</h3>
-        <p>Gastou uns R$ 60 sem nenhum checkout <em>enquanto</em> outra já trouxe pelo menos um. <strong>Nenhuma disparou.</strong> As duas sem checkout (03 e 05) gastaram R$ 7 e R$ 20 — longe do limiar. Não há corte a fazer hoje.</p>
+        <p>Gastou uns R$ 60 sem nenhum checkout <em>enquanto</em> outra já trouxe pelo menos um. <strong>Ainda não disparou.</strong> A 05 já gastou R$ 55, perto do limiar, mas trouxe 3 checkouts — a regra não se aplica a ela. A 03 gastou R$ 7. Nada a cortar.</p>
       </div>
       <div class="card rule">
         <span class="tag">Alarme</span>
@@ -529,7 +530,7 @@
       <div class="card rule">
         <span class="tag">Teto</span>
         <h3>CPA acima de R$ 350</h3>
-        <p>Cada venda passa a custar mais do que traz. Não é motivo para desligar de imediato — perto da data, comprar inscrição no prejuízo pode valer pela sala cheia — mas é decisão consciente, nunca descuido.</p>
+        <p><strong>Disparou em 01/09.</strong> R$ 510 gastos e nenhuma venda: a primeira já nasce no prejuízo. A regra sempre disse que isso não obriga a desligar — perto da data, comprar inscrição no prejuízo pode valer pela sala cheia. Mas era para ser decisão consciente, e agora é.</p>
       </div>
       <div class="card rule">
         <span class="tag">Atenção</span>
@@ -557,7 +558,7 @@
   </section>
 
   <footer>
-    <span>Última atualização: 31/08/2026 às 13h45 BRT</span>
+    <span>Última atualização: 01/09/2026 às 11h00 BRT</span>
     <span>Fonte: API de Marketing da Meta, período máximo, níveis de campanha e de anúncio</span>
     <span>Retrato estático — republicado a cada atualização, sempre nesta URL</span>
   </footer>
