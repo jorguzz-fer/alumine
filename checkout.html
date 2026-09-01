@@ -331,11 +331,27 @@
   }
 
   // Entre "abriu o checkout" e "mandou o formulario" nao havia nenhum sinal:
-  // 119 aberturas e zero AddPaymentInfo nao diziam em qual campo a pessoa
-  // travava. Marcar a reprovacao no pixel transforma esse buraco em dado, do
-  // mesmo jeito que o CheckoutError fez com a falha de rede.
+  // aberturas de checkout e zero AddPaymentInfo nao diziam em qual campo a
+  // pessoa travava.
+  //
+  // A primeira tentativa foi um evento so, CheckoutValidationFail, com o campo
+  // em custom_data. Nao funcionou: o Gerenciador de Eventos agrega apenas os
+  // parametros que ele reconhece como padrao, entao a linha do evento mostra
+  // "nenhum parametro detectado" e manda usar Eventos de Teste — que so enxerga
+  // o proprio clique de quem testa, nunca o comprador real.
+  //
+  // Por isso o campo virou o NOME do evento. Nome de evento a Meta agrega
+  // sempre: a quebra aparece direto na lista do Gerenciador e na API de
+  // estatisticas do dataset. O total de reprovacoes passa a ser a soma dos
+  // quatro.
+  var EVENTO_POR_CAMPO = {
+    name:    "CheckoutFailName",
+    email:   "CheckoutFailEmail",
+    cpfCnpj: "CheckoutFailCpf",
+    phone:   "CheckoutFailPhone",
+  };
   function reprovar(campo, texto) {
-    Track.custom("CheckoutValidationFail", { field: campo });
+    Track.custom(EVENTO_POR_CAMPO[campo], { field: campo });
     return showError(texto);
   }
 
