@@ -156,6 +156,31 @@ manhãs seguidas sem conseguir ler nada da Meta.
 - CTR boa + checkout perto de zero = o problema é a página, não o criativo
 - CPA acima de R$ 350 = decisão consciente, nunca descuido
 
+## Fluxo de conversão pelo WhatsApp (a partir de 02/09)
+
+O botão de conversão da LP deixou de ir para o checkout. O fluxo é:
+
+**anúncio → LP → botão → WhatsApp da Karen → Karen manda o link do checkout → PIX**
+
+- **Karen** é agente de IA, atendendo por WhatsApp via **Z-API (API não oficial)**.
+  Consequências: (1) o número **não** está no Gerenciador de Negócios da Meta, então
+  anúncio de "clique para WhatsApp" **não é possível** com ele — o caminho é sempre pela
+  LP; (2) número em API não oficial pode ser bloqueado pelo WhatsApp se receber volume
+  súbito de desconhecidos — responder rápido e em linguagem natural reduz o risco.
+- O número fica na constante `WHATSAPP_NUMERO` no script da LP (`55` + DDD + número,
+  só dígitos). O link estático no HTML é o fallback sem JS; o script reescreve o `href`
+  para incluir a referência do criativo.
+- A mensagem pré-preenchida leva `(ref: <utm_content>)`. **A Karen deve devolver essa
+  referência no link do checkout que ela envia**, assim:
+  `https://vet-pricing.alumine.com.br/checkout.html?utm_source=whatsapp&utm_medium=karen&utm_content=<ref>`
+  O `tracking.js` do checkout captura esses `utm_*` e a compra chega atribuída na Meta
+  pela CAPI. Sem isso, a venda vira `Purchase` órfão.
+- O clique no botão dispara **`Contact`** (evento padrão da Meta), não mais
+  `ClickCheckoutCTA`. É o único dos dois que o conjunto consegue otimizar
+  (`custom_event_type: CONTACT`). **O conjunto ainda otimiza `INITIATED_CHECKOUT`** —
+  precisa ser trocado para `CONTACT` junto com o deploy, senão perde o sinal. A troca
+  reinicia a fase de aprendizado.
+
 ## O que está pendente
 
 ### 1. E-mail para 3.129 contatos (prioridade)
