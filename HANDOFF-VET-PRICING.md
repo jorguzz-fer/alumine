@@ -175,11 +175,16 @@ O botão de conversão da LP deixou de ir para o checkout. O fluxo é:
   `https://vet-pricing.alumine.com.br/checkout.html?utm_source=whatsapp&utm_medium=karen&utm_content=<ref>`
   O `tracking.js` do checkout captura esses `utm_*` e a compra chega atribuída na Meta
   pela CAPI. Sem isso, a venda vira `Purchase` órfão.
-- O clique no botão dispara **`Contact`** (evento padrão da Meta), não mais
-  `ClickCheckoutCTA`. É o único dos dois que o conjunto consegue otimizar
-  (`custom_event_type: CONTACT`). **O conjunto ainda otimiza `INITIATED_CHECKOUT`** —
-  precisa ser trocado para `CONTACT` junto com o deploy, senão perde o sinal. A troca
-  reinicia a fase de aprendizado.
+- O clique no botão dispara **dois** eventos padrão da Meta: `Contact` (descreve o que
+  aconteceu; serve para leitura) e `InitiateCheckout` (é o que o conjunto otimiza).
+  **Por que não otimizar por `Contact`:** a campanha tem objetivo `OUTCOME_SALES`, e a
+  Meta recusa `CONTACT` e `LEAD` como evento de otimização nesse objetivo (erro
+  `2446814`, testado em 03/09). Trocar objetivo de campanha já veiculada não é permitido;
+  conversão personalizada exige passo manual no Gerenciador de Eventos. Manter
+  `InitiateCheckout` no clique preserva o sinal **e o aprendizado acumulado** — a
+  população é a mesma que antes disparava esse evento ao carregar o checkout.
+  Custo conhecido: quem a Karen leva ao checkout dispara `InitiateCheckout` de novo lá.
+  A partir daqui, "checkouts" no painel significa "cliques no CTA da LP".
 
 ## O que está pendente
 
