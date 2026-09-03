@@ -993,8 +993,21 @@
   // nao se perder na conversa — e a Karen devolve essa referencia nos utm_*
   // do link do checkout, para a compra chegar atribuida na Meta.
   //
-  // O evento e o Contact padrao da Meta, nao um custom: e o unico dos dois que
-  // o conjunto de anuncios consegue otimizar (custom_event_type CONTACT).
+  // O clique dispara dois eventos padrao da Meta:
+  //
+  // - Contact, que descreve o que aconteceu (a pessoa abriu conversa) e serve
+  //   para leitura no Gerenciador de Eventos.
+  // - InitiateCheckout, que e o evento que o conjunto de anuncios otimiza. A
+  //   campanha tem objetivo OUTCOME_SALES, e a Meta recusa CONTACT e LEAD como
+  //   evento de otimizacao nesse objetivo (erro 2446814). Trocar o objetivo
+  //   nao e permitido em campanha ja veiculada, e criar uma conversao
+  //   personalizada exige passo manual no Gerenciador de Eventos. Manter
+  //   InitiateCheckout no clique do CTA preserva o sinal — e o aprendizado
+  //   acumulado, porque a populacao e a mesma: quem clicava no botao antes ia
+  //   para o checkout e disparava exatamente este evento ao carregar a pagina.
+  //
+  // Custo conhecido: quem a Karen leva ao checkout dispara InitiateCheckout de
+  // novo na pagina de pagamento. Volume baixo, e sao pessoas mais quentes.
   var WHATSAPP_NUMERO = "5511978906701"; // 55 + DDD + numero, so digitos
 
   function referenciaDoCriativo() {
@@ -1014,6 +1027,12 @@
       Track.track("Contact", {
         content_name: "Vet Pricing",
         cta_position: index + 1,
+        channel: "whatsapp",
+      });
+      Track.track("InitiateCheckout", {
+        content_name: "Vet Pricing",
+        value: 350,
+        currency: "BRL",
         channel: "whatsapp",
       });
     });
