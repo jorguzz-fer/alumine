@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="Aula interativa da Alumine: custos ocultos no fluxo de caixa — tipos, ciclo do caixa, estudo de caso e indicadores.">
+<meta property="og:title" content="Custos ocultos no fluxo de caixa · Alumine">
+<meta property="og:description" content="Mini-aula executiva interativa: onde está o dinheiro que a empresa faturou?">
+<meta property="og:image" content="https://aula.alumine.com.br/img/logo.png">
+<link rel="icon" type="image/png" href="img/mark.png">
+<title>Custos ocultos no fluxo de caixa</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Palco 16:9 fixo (1600×900) escalado; cada slide = coluna de texto (540px) + bancada interativa.
+   Identidade Alumine: ameixa (superfície) + cobre (ação/destaque) sobre papel off-white; Outfit nos títulos, Montserrat no texto.
+   Cores de fluxo: entrada = ameixa, saída conhecida = cinza, custo oculto = cobre. */
+:root{
+  --bg:#F1EFEA; --bg2:#E9E6E0; --surface:#FAF9F6; --sunken:#E3E0DA; --line:#D9D5CE; --line2:#8A8590;
+  --ink:#1c1a1f; --ink2:#3d3a42; --muted:#6a6670;
+  --accent:#C4622D; --accent-ink:#A04A1C; --accent-soft:rgba(196,98,45,.12); --btn:#A04A1C;
+  --plum:#7B1E7A; --plum-deep:#4A1249; --plum-ink:#7B1E7A; --plum-light:#C87BC7; --copper-light:#E8A277; --on-brand:#fff;
+  --ref:#7B1E7A;
+  --in:#7B1E7A; --out:#8A8590; --hidden:#C4622D;
+  --ok:#2A6B47; --warn:#835A06; --crit:#B23A2A;
+  --f-display:"Outfit",system-ui,sans-serif;
+  --f-body:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#141217; --bg2:#1c1a1f; --surface:#1c1a1f; --sunken:#232028; --line:#2f2c35; --line2:#6F6A76;
+  --ink:#F1EFEA; --ink2:#C9C4CE; --muted:#A39EA8;
+  --accent:#C4622D; --accent-ink:#E8A277; --accent-soft:rgba(232,162,119,.12);
+  --plum-ink:#C87BC7; --ref:#C87BC7; --in:#C87BC7; --out:#6F6A76; --hidden:#E07A40;
+  --ok:#5CBF8A; --warn:#E3B04B; --crit:#EF6B5C; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#141217; --bg2:#1c1a1f; --surface:#1c1a1f; --sunken:#232028; --line:#2f2c35; --line2:#6F6A76;
+  --ink:#F1EFEA; --ink2:#C9C4CE; --muted:#A39EA8;
+  --accent:#C4622D; --accent-ink:#E8A277; --accent-soft:rgba(232,162,119,.12);
+  --plum-ink:#C87BC7; --ref:#C87BC7; --in:#C87BC7; --out:#6F6A76; --hidden:#E07A40;
+  --ok:#5CBF8A; --warn:#E3B04B; --crit:#EF6B5C; color-scheme:dark }
+
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);overflow:hidden;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));box-sizing:border-box}
+*{box-sizing:border-box}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--copper-light);outline-offset:2px}
+
+/* logo por tema */
+.logo-dark{display:none}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .logo-dark{display:block} :root:not([data-theme="light"]) .logo-light{display:none} }
+:root[data-theme="dark"] .logo-dark{display:block} :root[data-theme="dark"] .logo-light{display:none}
+
+#viewport{position:relative;width:100%;height:100%;overflow:hidden}
+#deck{width:1600px;height:900px;position:absolute;left:50%;top:50%;transform-origin:center center;background:var(--bg);overflow:hidden}
+.slide{position:absolute;inset:0 0 64px 0;display:grid;grid-template-columns:540px 1fr;
+  opacity:0;visibility:hidden;transition:opacity .45s ease, visibility 0s linear .45s}
+.slide.active{opacity:1;visibility:visible;transition:opacity .45s ease}
+.copy{padding:56px 40px 28px 72px;display:flex;flex-direction:column;gap:20px;min-width:0;position:relative;z-index:2}
+.eyebrow{font-family:var(--f-body);font-weight:700;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);display:flex;gap:12px;align-items:center}
+.eyebrow::before{content:"";width:28px;height:2px;background:var(--accent)}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;margin:0;text-wrap:pretty;letter-spacing:-.01em}
+h2{font-size:50px;line-height:1.06}
+h2 em,h1 em{font-style:normal;color:var(--accent)}
+.lead{font-size:19px;line-height:1.55;color:var(--ink2);margin:0;max-width:44ch}
+.lead strong{color:var(--ink);font-weight:600}
+.note{font-size:15px;line-height:1.55;color:var(--muted);margin:0;max-width:48ch}
+.note strong{color:var(--ink2);font-weight:600}
+.bench{position:relative;min-width:0;border-left:1px solid var(--line);background:radial-gradient(ellipse at 60% 45%, var(--bg2), var(--bg) 72%)}
+.mono{font-family:var(--f-mono)}
+.tabnum{font-variant-numeric:tabular-nums}
+
+/* controles */
+.ctrl{display:flex;flex-direction:column;gap:10px}
+.ctrl-row{display:flex;flex-direction:column;gap:2px}
+.ctrl-row label{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:15px;color:var(--ink2)}
+.ctrl-row label output{font-family:var(--f-mono);font-size:17px;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:26px;background:transparent;cursor:pointer;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:4px;background:linear-gradient(90deg,var(--accent) var(--p,50%),var(--line2) var(--p,50%));border-radius:2px}
+input[type=range]::-moz-range-track{height:4px;background:var(--line2);border-radius:2px}
+input[type=range]::-moz-range-progress{height:4px;background:var(--accent);border-radius:2px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--bg);border:3px solid var(--accent);margin-top:-8px}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--bg);border:3px solid var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line2);background:transparent;border-radius:999px;padding:7px 16px;font-size:14px;font-weight:600;cursor:pointer;color:var(--ink2);transition:background .2s,color .2s,border-color .2s}
+.chip:hover{border-color:var(--ink2);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--plum);color:var(--on-brand);border-color:var(--plum)}
+.toggle{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--ink2);cursor:pointer;user-select:none}
+.toggle input{width:18px;height:18px;accent-color:var(--plum)}
+.readout{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.readout div{background:var(--surface);padding:12px 16px;display:flex;flex-direction:column;gap:4px}
+.readout span{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.readout b{font-family:var(--f-display);font-weight:600;font-size:28px;font-variant-numeric:tabular-nums;color:var(--ink);line-height:1.1}
+.readout b small{font-size:15px;color:var(--muted);font-weight:400;margin-left:4px;font-family:var(--f-body)}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;padding:6px 14px;border-radius:999px;border:1px solid currentColor;align-self:flex-start}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.status.ok{color:var(--ok)} .status.warn{color:var(--warn)} .status.crit{color:var(--crit)}
+.btn{border:1px solid var(--line2);background:transparent;border-radius:999px;padding:9px 18px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink)}
+.btn.primary{background:var(--btn);border-color:var(--btn);color:#fff}
+.btn:hover{border-color:var(--ink2)}
+
+/* rodapé */
+#nav{position:absolute;left:0;right:0;bottom:0;height:64px;display:flex;align-items:center;gap:18px;padding:0 28px 0 72px;border-top:1px solid var(--line);background:var(--bg);z-index:10}
+#nav .title{display:flex;align-items:center;gap:12px;font-family:var(--f-display);font-weight:600;font-size:15px;color:var(--muted);white-space:nowrap}
+#nav .title img{height:26px;width:auto}
+#ticks{display:flex;gap:6px;flex:1;align-items:center}
+#ticks button{flex:1;height:22px;border:0;background:transparent;cursor:pointer;position:relative;padding:0}
+#ticks button::after{content:"";position:absolute;left:0;right:0;top:10px;height:3px;background:var(--line2);border-radius:2px;opacity:.5;transition:background .3s,opacity .3s}
+#ticks button.done::after{background:var(--plum-ink);opacity:1}
+#ticks button.on::after{background:var(--accent);opacity:1}
+#ticks button:hover::after{background:var(--ink);opacity:1}
+#counter{font-family:var(--f-mono);font-size:14px;color:var(--ink2);min-width:64px;text-align:center;font-variant-numeric:tabular-nums}
+.iconbtn{width:40px;height:40px;border-radius:50%;border:1px solid var(--line2);background:transparent;display:grid;place-items:center;cursor:pointer;color:var(--ink2)}
+.iconbtn:hover{color:var(--ink);border-color:var(--ink2)}
+.iconbtn svg{width:18px;height:18px}
+.kbd{font-family:var(--f-mono);font-size:13px;border:1px solid var(--line2);border-bottom-width:2px;border-radius:4px;padding:1px 7px;color:var(--ink2)}
+.credit{font-size:13px;color:var(--muted);line-height:1.5}
+
+/* ===== 1 · capa ===== */
+#s1{grid-template-columns:700px 1fr}
+#s1 .copy{justify-content:center;padding-left:96px;gap:26px}
+#s1 .brandlogo img{height:44px;width:auto}
+#s1 h1{font-size:80px;line-height:1.02}
+#s1 .bench{border:0;background:none}
+.hero{position:absolute;inset:48px 64px 40px 8px;background:var(--plum);color:var(--on-brand);border-radius:0 0 0 120px;padding:60px 64px 56px 72px;display:flex;flex-direction:column;gap:26px;overflow:hidden}
+.hero::after{content:"";position:absolute;width:520px;height:520px;border-radius:50%;right:-200px;top:-220px;background:rgba(255,255,255,.07);pointer-events:none}
+.hero::before{content:"";position:absolute;width:300px;height:300px;border-radius:50%;right:40px;bottom:-190px;border:2px solid var(--copper-light);opacity:.55;pointer-events:none}
+.hero .kicker{font-weight:700;font-size:14px;letter-spacing:.12em;text-transform:uppercase}
+.hero .big{font-family:var(--f-display);font-weight:600;font-size:56px;line-height:1.06;margin:0;max-width:15ch}
+.hero .big span{color:var(--copper-light)}
+.hero p{margin:0;font-size:18px;line-height:1.55;max-width:46ch}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px;position:relative;z-index:1}
+.flip{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:16px;padding:20px 22px;text-align:left;cursor:pointer;color:var(--on-brand);display:flex;flex-direction:column;gap:10px;transition:background .25s}
+.flip:hover{background:rgba(255,255,255,.18)}
+.flip b{font-family:var(--f-display);font-weight:600;font-size:30px;letter-spacing:.01em}
+.flip b i{font-style:normal;color:var(--copper-light)}
+.flip span{font-size:16px;line-height:1.5;filter:blur(6px);opacity:.55;transition:filter .4s,opacity .4s;user-select:none}
+.flip.open span{filter:none;opacity:1;user-select:auto}
+.flip small{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.flip.open small{visibility:hidden}
+.goals{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:auto;position:relative;z-index:1}
+.goals .lbl{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-right:6px}
+.goals .pill{border-radius:999px;background:var(--on-brand);color:var(--plum);font-weight:700;font-size:15px;padding:8px 18px}
+
+/* ===== 2 · seis tipos ===== */
+.types{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:16px;padding:48px 56px 40px 44px}
+.tcard{border:1px solid var(--line);border-radius:16px;padding:22px 24px;display:flex;flex-direction:column;gap:8px;cursor:pointer;background:var(--surface);text-align:left;color:var(--ink);transition:background .25s,border-color .25s,transform .25s,color .25s}
+.tcard:hover{border-color:var(--line2);transform:translateY(-2px)}
+.tcard .n{font-family:var(--f-display);font-weight:700;font-size:44px;line-height:1;color:var(--accent)}
+.tcard h3{font-size:26px;line-height:1.15}
+.tcard p{margin:0;font-size:16px;line-height:1.45;color:var(--ink2)}
+.tcard .where{font-size:14px;color:var(--muted);margin-top:auto}
+.tcard .where b{font-weight:700;color:var(--ink2)}
+.tcard.sel{background:var(--plum);border-color:var(--plum);color:var(--on-brand)}
+.tcard.sel .n{color:var(--copper-light)}
+.tcard.sel p,.tcard.sel .where,.tcard.sel .where b{color:var(--on-brand)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;min-height:0}
+.ntag{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;border:1.5px solid currentColor;background:var(--bg)}
+.ntag.saida{color:var(--accent-ink)} .ntag.econ{color:var(--plum-ink)} .ntag.giro{color:var(--ink2);border-style:dashed}
+.tcard.sel .ntag{background:#fff}
+.tcard.sel .ntag.saida{color:#A04A1C} .tcard.sel .ntag.econ{color:#7B1E7A} .tcard.sel .ntag.giro{color:#3d3a42}
+.types:not(.nat) .tags{display:none}
+.diag{border-left:3px solid var(--accent);padding:4px 0 4px 18px;display:flex;flex-direction:column;gap:6px;min-height:150px}
+.diag .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.diag b{font-family:var(--f-display);font-weight:600;font-size:24px;color:var(--ink)}
+.diag p{margin:0;font-size:17px;line-height:1.5;color:var(--ink2)}
+.legend{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ===== 3 · ciclo ===== */
+.cycle{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:40px 56px 32px 48px;gap:26px}
+.cycle svg text{font-family:var(--f-body);fill:var(--muted);font-size:14px}
+.formula{display:grid;grid-template-columns:1.6fr 1fr;gap:16px}
+.fcard{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 24px;display:flex;flex-direction:column;gap:8px}
+.fcard .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.fcard .eq{font-family:var(--f-display);font-weight:600;font-size:26px;line-height:1.2;color:var(--ink);font-variant-numeric:tabular-nums}
+.fcard .eq em{font-style:normal;color:var(--accent)}
+.fcard p{margin:0;font-size:15px;line-height:1.5;color:var(--ink2)}
+.plumcard{background:var(--plum);color:var(--on-brand);border-radius:22px 22px 22px 0;padding:20px 24px;display:flex;flex-direction:column;gap:8px}
+.plumcard .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.plumcard p{margin:0;font-family:var(--f-display);font-weight:500;font-size:24px;line-height:1.25}
+.plumcard p span{color:var(--copper-light)}
+
+/* ===== 4 · caso ===== */
+.case{position:absolute;inset:0;display:flex;flex-direction:column;padding:36px 56px 28px 48px;gap:16px}
+.case svg text{font-family:var(--f-body);font-size:14px;fill:var(--muted)}
+.stackwrap{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 24px;display:flex;flex-direction:column;gap:10px;position:relative}
+.stackwrap .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between}
+.stackwrap .k b{color:var(--ink);font-family:var(--f-display);font-size:18px;letter-spacing:0;text-transform:none}
+.stackbar{display:flex;height:44px;border-radius:8px;overflow:hidden;gap:3px}
+.stackbar div{background:var(--hidden);transition:flex-grow .4s ease;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700;min-width:0;overflow:hidden;white-space:nowrap}
+.stacklbl{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:14px;color:var(--ink2)}
+.stacklbl span b{display:block;font-family:var(--f-display);font-weight:600;font-size:20px;color:var(--ink)}
+.stackwrap.veil .stackbar,.stackwrap.veil .stacklbl{filter:blur(8px);opacity:.35}
+.veilmsg{position:absolute;inset:0;display:none;place-items:center;font-size:17px;font-weight:600;color:var(--ink2)}
+.stackwrap.veil .veilmsg{display:grid}
+.mini .ctrl-row label{font-size:14px}
+.mini .ctrl-row label output{font-size:15px}
+.mini input[type=range]{height:22px}
+
+/* ===== 5 · rotina ===== */
+.chain{display:flex;flex-direction:column;gap:8px}
+.step{display:grid;grid-template-columns:40px 1fr;gap:4px 14px;align-items:center;padding:10px 14px;border:1px solid var(--line);border-radius:12px;opacity:.35;transition:opacity .4s,border-color .4s,background .4s;cursor:pointer;background:transparent;text-align:left;color:var(--ink)}
+.step.on{opacity:1}
+.step.cur{border-color:var(--accent);background:var(--accent-soft)}
+.step .num{grid-row:span 2;width:40px;height:40px;border-radius:50%;background:var(--plum);color:#fff;display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:18px}
+.step b{font-family:var(--f-display);font-weight:600;font-size:20px}
+.step span{font-size:14px;line-height:1.4;color:var(--ink2)}
+.leak{position:absolute;inset:0;display:grid;grid-template-columns:460px 1fr;grid-template-rows:1fr auto;gap:18px 22px;padding:32px 48px 24px 40px}
+.leak .chip{font-size:13px;padding:5px 12px}
+.leak .readout b{font-size:22px}
+.leak .readout div{padding:9px 14px}
+.leak .panel{gap:10px;padding:20px 22px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 24px;display:flex;flex-direction:column;gap:12px;min-height:0}
+.panel h3{font-size:22px}
+.panel .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.field{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--ink2)}
+.field input{background:var(--bg);border:1px solid var(--line2);border-radius:8px;padding:9px 12px;font-size:16px;color:var(--ink);font-variant-numeric:tabular-nums;width:100%}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rank{display:flex;flex-direction:column;gap:8px;overflow:auto;min-height:0}
+.rrow{display:grid;grid-template-columns:24px 1fr 150px 24px;gap:10px;align-items:center;font-size:15px}
+.rrow .pos{font-family:var(--f-display);font-weight:700;font-size:18px;color:var(--muted);text-align:center}
+.rrow .nm{display:flex;flex-direction:column;gap:5px;min-width:0}
+.rrow .nm span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+.rrow .bar{height:10px;border-radius:5px;background:var(--out);transition:width .4s}
+.rrow.top .bar{background:var(--accent)}
+.rrow.top .pos{color:var(--accent-ink)}
+.rrow .val{font-family:var(--f-display);font-weight:600;font-size:17px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+.rrow .val small{display:block;font-family:var(--f-body);font-weight:400;font-size:12px;color:var(--muted)}
+.rrow .x{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:18px}
+.kpis{grid-column:1 / -1;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--surface);display:flex;flex-direction:column;gap:4px}
+.kpi .k{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
+.kpi b{font-family:var(--f-display);font-weight:600;font-size:18px;color:var(--ink);line-height:1.2}
+.kpi span{font-size:13px;line-height:1.4;color:var(--muted)}
+.takeaway{background:var(--plum);color:#fff;border-radius:0 0 0 40px;padding:18px 22px;font-family:var(--f-display);font-weight:500;font-size:21px;line-height:1.3}
+.takeaway small{display:block;font-family:var(--f-body);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+
+/* ===== 6 · revisão ===== */
+.quiz{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:56px 64px 40px 48px;align-content:center;height:100%}
+.q{border:1px solid var(--line);border-radius:16px;padding:24px 28px;display:flex;flex-direction:column;gap:12px;cursor:pointer;background:var(--surface);text-align:left;color:var(--ink);transition:border-color .25s}
+.q:hover{border-color:var(--line2)}
+.q .qn{font-size:13px;font-weight:700;color:var(--accent-ink);letter-spacing:.12em}
+.q .qt{font-family:var(--f-display);font-size:23px;line-height:1.3;font-weight:600}
+.q .qa{font-size:16px;line-height:1.55;color:var(--ink2);border-top:1px dashed var(--line2);padding-top:12px;filter:blur(7px);opacity:.5;transition:filter .4s,opacity .4s;user-select:none}
+.q.open .qa{filter:none;opacity:1;user-select:auto}
+.q .qh{font-size:13px;color:var(--muted)}
+.q.open .qh{visibility:hidden}
+@media (prefers-reduced-motion: reduce){ .slide{transition:none} }
+</style>
+
+</head>
+<body>
+<div id="viewport">
+<div id="deck" role="application" aria-label="Aula: Custos ocultos no fluxo de caixa">
+
+<!-- 1 · CAPA -->
+<section class="slide active" id="s1" data-name="Capa">
+  <div class="copy">
+    <div class="brandlogo"><img class="logo-light" src="img/logo.png" alt="Alumine"><img class="logo-dark" src="img/logo-white.png" alt="Alumine"></div>
+    <div class="eyebrow">Finanças · Gestão de caixa</div>
+    <h1>Custos <em>ocultos</em> no fluxo de caixa</h1>
+    <p class="lead">Custos ocultos são <strong>saídas, perdas ou necessidades financeiras recorrentes</strong> que a gestão não acompanha de forma explícita.</p>
+    <p class="note">Mini-aula executiva · 5 temas · cerca de 12 min<br>Use <span class="kbd">←</span> <span class="kbd">→</span> ou <span class="kbd">espaço</span> para avançar e <span class="kbd">F</span> para tela cheia.</p>
+  </div>
+  <div class="bench">
+    <div class="hero">
+      <div class="kicker">Pergunta-chave</div>
+      <p class="big">Onde está o dinheiro que a empresa <span>faturou?</span></p>
+      <p>Uma empresa pode vender muito, dar lucro e ainda ficar sem dinheiro. Antes de responder, clique nos cartões.</p>
+      <div class="duo">
+        <button class="flip"><b>Vender <i>≠</i> receber</b><span>Competência não é disponibilidade. A venda entra no resultado quando é faturada; o dinheiro entra no banco quando o cliente paga.</span><small>clique para revelar</small></button>
+        <button class="flip"><b>Lucro <i>≠</i> caixa</b><span>Margem não elimina descasamento. Um negócio lucrativo fica sem caixa quando paga antes de receber.</span><small>clique para revelar</small></button>
+      </div>
+      <div class="goals"><span class="lbl">Objetivo da aula</span><span class="pill">Reconhecer</span><span class="pill">Quantificar</span><span class="pill">Corrigir</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · SEIS TIPOS -->
+<section class="slide" id="s2" data-name="Os 6 tipos">
+  <div class="copy">
+    <div class="eyebrow">Mapa dos vazamentos</div>
+    <h2>Os 6 tipos de custos <em>ocultos</em></h2>
+    <p class="lead">Eles raramente aparecem como uma linha única: ficam <strong>dispersos entre processos, contratos e prazos</strong>.</p>
+    <div class="diag" id="diag"></div>
+    <label class="toggle"><input type="checkbox" id="natToggle"> Mostrar a natureza de cada custo</label>
+    <div class="legend" id="natLegend" hidden>
+      <span class="ntag saida">Saída de caixa</span><span class="ntag econ">Custo econômico</span><span class="ntag giro">Necessidade de caixa</span>
+    </div>
+    <p class="note"><strong>Importante:</strong> saldo em estoque ou contas a receber não é “custo” por si só; o financiamento e as perdas deles podem ser.</p>
+  </div>
+  <div class="bench"><div class="types" id="types"></div></div>
+</section>
+
+<!-- 3 · CICLO DO CAIXA -->
+<section class="slide" id="s3" data-name="Ciclo do caixa">
+  <div class="copy" style="gap:16px;padding-top:48px">
+    <div class="eyebrow">O custo do tempo</div>
+    <h2>O ciclo do <em>caixa</em></h2>
+    <p class="lead" style="font-size:18px">Uma venda pode ser saudável na margem e <strong>pesada para financiar</strong>. Mexa nos prazos e veja quanto o tempo custa.</p>
+    <div class="ctrl">
+      <div class="ctrl-row"><label for="cPay">Pagamento ao fornecedor <output id="cPayOut">dia 0</output></label><input type="range" id="cPay" min="0" max="60" value="0"></div>
+      <div class="ctrl-row"><label for="cInv">Entrega e faturamento <output id="cInvOut">dia 10</output></label><input type="range" id="cInv" min="0" max="60" value="10"></div>
+      <div class="ctrl-row"><label for="cRec">Prazo do cliente após faturar <output id="cRecOut">30 dias</output></label><input type="range" id="cRec" min="0" max="90" value="30"></div>
+      <div class="ctrl-row"><label for="cCap">Capital financiado <output id="cCapOut">R$ 40.000</output></label><input type="range" id="cCap" min="5000" max="200000" step="5000" value="40000"></div>
+      <div class="ctrl-row"><label for="cRate">Custo do dinheiro <output id="cRateOut">2,0% a.m.</output></label><input type="range" id="cRate" min="0.5" max="6" step="0.1" value="2"></div>
+    </div>
+    <div class="chips" id="levers">
+      <button class="chip" data-l="pay">Fornecedor +15 dias</button>
+      <button class="chip" data-l="rec">Cliente −15 dias</button>
+      <button class="chip" data-l="inv">Estoque −5 dias</button>
+      <button class="chip" data-l="reset">Exemplo da aula</button>
+    </div>
+  </div>
+  <div class="bench">
+    <div class="cycle">
+      <svg id="cycleSvg" viewBox="0 0 960 350" style="width:100%;height:auto"></svg>
+      <div class="formula">
+        <div class="fcard">
+          <div class="k">Custo financeiro do prazo</div>
+          <div class="eq" id="cEq">R$ 40.000 × 2% × (40 ÷ 30) = <em>R$ 1.067</em></div>
+          <p id="cCmp"></p>
+        </div>
+        <div class="plumcard">
+          <div class="k">Distinção essencial</div>
+          <p>Prazo é <span>necessidade de caixa</span>. Juros são <span>custo financeiro</span>.</p>
+        </div>
+      </div>
+      <p class="credit" style="margin:0">Exemplo ilustrativo: juros simples proporcionais aos dias, mês de 30 dias, sem IOF, tarifas ou capitalização. Ciclo de caixa = dias até faturar + prazo do cliente − prazo do fornecedor.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · ESTUDO DE CASO -->
+<section class="slide" id="s4" data-name="Estudo de caso">
+  <div class="copy" style="gap:14px;padding-top:48px">
+    <div class="eyebrow">Estudo de caso</div>
+    <h2>Vender <em>não</em> basta</h2>
+    <p class="lead" style="font-size:18px">Mesmo mês, duas leituras da empresa. Valores hipotéticos, sem saldo inicial e sem outras entradas ou saídas.</p>
+    <div class="chips" role="group" aria-label="Leitura">
+      <button class="chip" id="rdSup" aria-pressed="true">Leitura superficial</button>
+      <button class="chip" id="rdReal" aria-pressed="false">Movimentação real do caixa</button>
+    </div>
+    <div class="ctrl mini">
+      <div class="ctrl-row"><label for="kRec">Recebido no mês (do faturado) <output id="kRecOut">80%</output></label><input type="range" id="kRec" min="50" max="100" step="5" value="80"></div>
+      <div class="ctrl-row"><label for="k0">Taxas financeiras <output id="k0Out">R$ 1.600</output></label><input type="range" id="k0" min="0" max="5000" step="100" value="1600"></div>
+      <div class="ctrl-row"><label for="k1">Juros de capital de giro <output id="k1Out">R$ 1.200</output></label><input type="range" id="k1" min="0" max="5000" step="100" value="1200"></div>
+      <div class="ctrl-row"><label for="k2">Horas extras por retrabalho <output id="k2Out">R$ 1.800</output></label><input type="range" id="k2" min="0" max="5000" step="100" value="1800"></div>
+      <div class="ctrl-row"><label for="k3">Multas e estornos <output id="k3Out">R$ 1.400</output></label><input type="range" id="k3" min="0" max="5000" step="100" value="1400"></div>
+    </div>
+    <div id="kStatus" class="status warn">Erro: confundir venda com dinheiro disponível</div>
+  </div>
+  <div class="bench">
+    <div class="case">
+      <svg id="wf" viewBox="0 0 960 470" style="width:100%;height:auto"></svg>
+      <div class="stackwrap" id="stackWrap">
+        <div class="k"><span>Pagos sem controle, espalhados em pequenas linhas</span><b id="hidTot">R$ 6.000</b></div>
+        <div class="stackbar" id="stackBar"></div>
+        <div class="stacklbl" id="stackLbl"></div>
+        <div class="veilmsg">Invisível nesta leitura</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · ROTINA -->
+<section class="slide" id="s5" data-name="Indicadores">
+  <div class="copy" style="gap:16px;padding-top:48px">
+    <div class="eyebrow">Rotina de gestão</div>
+    <h2>De invisível a <em>indicador</em></h2>
+    <p class="lead" style="font-size:18px">Rotina simples: buscar, calcular, agir e acompanhar.</p>
+    <div class="chain" id="chain">
+      <button class="step"><span class="num">1</span><b>Rastrear</b><span>Concilie extrato, DRE, contas a receber e contratos.</span></button>
+      <button class="step"><span class="num">2</span><b>Mensurar</b><span>Quantifique R$/mês, % da receita, frequência e prazo.</span></button>
+      <button class="step"><span class="num">3</span><b>Priorizar</b><span>Ataque os 3 maiores vazamentos por impacto e recorrência.</span></button>
+      <button class="step"><span class="num">4</span><b>Monitorar</b><span>Revise toda semana o caixa projetado para 13 semanas.</span></button>
+    </div>
+    <div class="chips"><button class="chip" id="chainNext">Próximo passo →</button><button class="chip" id="chainReset">Recomeçar</button></div>
+    <div class="takeaway"><small>Para levar à empresa</small>“Qual pequeno custo se repete todo mês e ninguém calcula?”</div>
+  </div>
+  <div class="bench">
+    <div class="leak">
+      <div class="panel">
+        <div class="k">Mensurar · calculadora de vazamento</div>
+        <div class="chips" id="presets"></div>
+        <label class="field">Nome do custo<input id="lName" maxlength="40" value="Tarifa da maquininha"></label>
+        <div class="fields">
+          <label class="field">R$ por ocorrência<input id="lVal" type="number" min="0" step="0.1" value="3.2"></label>
+          <label class="field">Vezes por mês<input id="lFreq" type="number" min="0" step="1" value="500"></label>
+        </div>
+        <label class="field">Faturamento mensal (R$)<input id="lRev" type="number" min="1" step="1000" value="100000"></label>
+        <div class="readout">
+          <div><span>Por mês</span><b id="lMon">R$ 1.600</b></div>
+          <div><span>Por ano</span><b id="lYear">R$ 19.200</b></div>
+          <div><span>% do faturamento</span><b id="lPct">1,6%</b></div>
+          <div><span>Em 13 semanas</span><b id="l13">R$ 4.800</b></div>
+        </div>
+        <button class="btn primary" id="lAdd" style="align-self:flex-start">Adicionar à lista →</button>
+      </div>
+      <div class="panel">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><h3>Priorizar · maiores vazamentos</h3><span class="credit" id="rankTot" style="white-space:nowrap"></span></div>
+        <p class="note" style="font-size:14px;margin:0">Ordenados por R$ por ano. Os 3 primeiros, em cobre, são o foco do mês.</p>
+        <div class="rank" id="rank"></div>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><span class="k">Custo financeiro</span><b>÷ faturamento</b><span>Taxas + juros + antecipação, em % da receita.</span></div>
+        <div class="kpi"><span class="k">Recebíveis vencidos</span><b>Valor e idade</b><span>Quanto está atrasado e há quantos dias.</span></div>
+        <div class="kpi"><span class="k">Retrabalho</span><b>Horas e R$ pagos</b><span>Horas extras e compras emergenciais por correção.</span></div>
+        <div class="kpi"><span class="k">Dias de caixa</span><b>Saldo ÷ saída diária</b><span>Quantos dias a empresa aguenta sem novas entradas.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · REVISÃO -->
+<section class="slide" id="s6" data-name="Revisão">
+  <div class="copy">
+    <div class="eyebrow">Revisão</div>
+    <h2>Pergunte à <em>turma</em></h2>
+    <p class="lead">Leia a pergunta, espere as respostas e clique no cartão para revelar.</p>
+    <div class="takeaway" style="margin-top:12px"><small>Fechamento</small>O caixa não melhora apenas vendendo mais; melhora quando o negócio enxerga por onde o dinheiro entra, fica preso e sai.</div>
+    <p class="credit" style="margin-top:auto">Conteúdo baseado no material original da aula. Todos os valores são fictícios e simplificados, para fins didáticos, e não constituem recomendação financeira ou contábil.</p>
+  </div>
+  <div class="bench"><div class="quiz" id="quiz"></div></div>
+</section>
+
+<nav id="nav" aria-label="Navegação dos slides">
+  <span class="title"><img src="img/mark.png" alt="">Custos ocultos no fluxo de caixa</span>
+  <button class="iconbtn" id="prev" aria-label="Slide anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button>
+  <div id="ticks"></div>
+  <button class="iconbtn" id="next" aria-label="Próximo slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+  <span id="counter">01 / 06</span>
+  <button class="iconbtn" id="themeBtn" aria-label="Alternar tema claro/escuro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></button>
+  <button class="iconbtn" id="fsBtn" aria-label="Tela cheia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+</nav>
+</div>
+</div>
+
+<!-- ============ NÚCLEO: deck, navegação, tema ============ -->
+<script>
+(function(){
+const deck=document.getElementById('deck');
+const slides=[...document.querySelectorAll('.slide')];
+const ticks=document.getElementById('ticks');
+window.DECK={index:0,scale:1,listeners:[],onChange(f){this.listeners.push(f)}};
+slides.forEach((s,i)=>{const b=document.createElement('button');b.title=(i+1)+'. '+s.dataset.name;b.setAttribute('aria-label',b.title);b.onclick=()=>go(i);ticks.appendChild(b)});
+function fit(){const vp=document.getElementById('viewport');const s=Math.min(vp.clientWidth/1600,vp.clientHeight/900);DECK.scale=s;deck.style.transform=`translate(-50%,-50%) scale(${s})`;DECK.listeners.forEach(f=>f('scale'))}
+window.addEventListener('resize',fit);fit();
+function go(i){i=Math.max(0,Math.min(slides.length-1,i));DECK.index=i;
+  slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+  [...ticks.children].forEach((b,k)=>{b.classList.toggle('on',k===i);b.classList.toggle('done',k<i)});
+  document.getElementById('counter').textContent=String(i+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+  try{history.replaceState(null,'','#s'+(i+1))}catch(e){}
+  DECK.listeners.forEach(f=>f('slide'));}
+DECK.go=go;
+document.getElementById('prev').onclick=()=>go(DECK.index-1);
+document.getElementById('next').onclick=()=>go(DECK.index+1);
+document.addEventListener('keydown',e=>{
+  const t=e.target, tag=(t.tagName||'').toLowerCase();
+  if(tag==='input'&&(t.type!=='range'&&t.type!=='checkbox'||/Arrow|Page|Home|End/.test(e.key)))return;
+  if(e.key==='ArrowRight'||e.key==='PageDown'||(e.key===' '&&tag!=='button')){e.preventDefault();go(DECK.index+1)}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(DECK.index-1)}
+  else if(e.key==='Home')go(0); else if(e.key==='End')go(slides.length-1);
+  else if(e.key==='f'||e.key==='F'){toggleFS()}
+});
+function toggleFS(){try{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}}
+document.getElementById('fsBtn').onclick=toggleFS;
+document.getElementById('themeBtn').onclick=()=>{const r=document.documentElement;const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');r.dataset.theme=cur==='dark'?'light':'dark';DECK.listeners.forEach(f=>f('theme'))};
+try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>DECK.listeners.forEach(f=>f('theme')))}catch(e){}
+const m=/^#s(\d+)$/.exec(location.hash);go(m?(+m[1]-1):0);
+window.addEventListener('hashchange',()=>{const m=/^#s(\d+)$/.exec(location.hash);if(m&&(+m[1]-1)!==DECK.index)go(+m[1]-1)});
+window.cssVar=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+window.fill=r=>r.style.setProperty('--p',((r.value-r.min)/(r.max-r.min)*100)+'%');
+document.querySelectorAll('input[type=range]').forEach(r=>{r.addEventListener('input',()=>fill(r));fill(r)});
+const nf0=new Intl.NumberFormat('pt-BR',{maximumFractionDigits:0});
+window.BRL=v=>(v<0?'− ':'')+'R$ '+nf0.format(Math.abs(Math.round(v)));
+window.MIL=v=>(v<0?'− ':v>0?'+ ':'')+'R$ '+new Intl.NumberFormat('pt-BR',{maximumFractionDigits:1}).format(Math.abs(v)/1000)+' mil';
+window.PCT=(v,d=1)=>new Intl.NumberFormat('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v)+'%';
+// capa: cartões de revelar
+document.querySelectorAll('.flip').forEach(b=>b.onclick=()=>b.classList.toggle('open'));
+})();
+</script>
+
+<!-- ============ 2 · seis tipos ============ -->
+<script>
+(function(){
+const T=[
+ {n:'01',t:'Financeiros',d:'Tarifas, juros, antecipação de recebíveis.',w:'Extrato e meios de pagamento.',q:'Qual é o custo efetivo para receber R$ 100? Compare tarifa percentual, Pix, boleto, antecipação e juros.',nat:[['saida','Saída de caixa']]},
+ {n:'02',t:'Capital de giro',d:'Custo para financiar o intervalo entre pagar e receber.',w:'Prazos e caixa projetado.',q:'Quantos dias o seu caixa financia a operação antes de o cliente pagar? O prazo não é despesa, mas o financiamento dele pode ser.',nat:[['giro','Prazo: necessidade de caixa'],['saida','Juros: saída']]},
+ {n:'03',t:'Operacionais',d:'Retrabalho, horas extras, perdas e desperdício.',w:'Rotina e produtividade.',q:'Quantas horas de retrabalho, compras emergenciais e correções geram novos pagamentos? Com equipe fixa, parte é custo econômico, sem desembolso imediato.',nat:[['saida','Horas extras: saída'],['econ','Equipe fixa: custo econômico']]},
+ {n:'04',t:'Comerciais',d:'Descontos excessivos, estornos, devoluções e chargebacks.',w:'Pedido, contrato e cobrança.',q:'Há descontos sem regra, comissões sem margem, estornos, devoluções, chargebacks ou inadimplência?',nat:[['saida','Saída ou perda de receita']]},
+ {n:'05',t:'Estoque e ativos',d:'Armazenagem, obsolescência e estrutura ociosa.',w:'Giro e capacidade utilizada.',q:'Quanto custa armazenar, perder ou deixar vencer? Estoque parado imobiliza caixa, mas não vira despesa automaticamente.',nat:[['giro','Estoque: capital imobilizado'],['saida','Perdas: saída']]},
+ {n:'06',t:'Fiscais e contratuais',d:'Multas, juros por atraso, reajustes e falhas de controle.',w:'Contratos e obrigações.',q:'Que prazo esquecido gerou multa? Que contrato tem reajuste automático que ninguém revisa?',nat:[['saida','Saída de caixa']]}
+];
+const box=document.getElementById('types'),diag=document.getElementById('diag');
+function sel(i){[...box.children].forEach((c,k)=>c.classList.toggle('sel',k===i));
+  diag.innerHTML=`<span class="k">Pergunta de diagnóstico · ${T[i].n}</span><b>${T[i].t}</b><p>${T[i].q}</p>`}
+T.forEach((x,i)=>{const b=document.createElement('button');b.className='tcard';
+  b.innerHTML=`<span class="n">${x.n}</span><h3>${x.t}</h3><p>${x.d}</p><div class="tags">${x.nat.map(([c,l])=>`<span class="ntag ${c}">${l}</span>`).join('')}</div><span class="where"><b>Onde?</b> ${x.w}</span>`;
+  b.onclick=()=>sel(i);box.appendChild(b)});
+sel(0);
+const tg=document.getElementById('natToggle');tg.onchange=()=>{box.classList.toggle('nat',tg.checked);document.getElementById('natLegend').hidden=!tg.checked};
+})();
+</script>
+
+<!-- ============ 3 · ciclo do caixa ============ -->
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const pay=$('cPay'),inv=$('cInv'),rec=$('cRec'),cap=$('cCap'),rate=$('cRate');
+const svg=$('cycleSvg');
+const W=960,L=40,R=40;let AX=60;const X=d=>L+(d/AX)*(W-L-R);
+function set(el,v){el.value=Math.max(+el.min,Math.min(+el.max,v));fill(el)}
+document.querySelectorAll('#levers .chip').forEach(b=>b.onclick=()=>{const l=b.dataset.l;
+  if(l==='pay')set(pay,+pay.value+15);if(l==='rec')set(rec,+rec.value-15);if(l==='inv')set(inv,+inv.value-5);
+  if(l==='reset'){set(pay,0);set(inv,10);set(rec,30);set(cap,40000);set(rate,2)}draw()});
+function draw(){
+  const p=+pay.value,f=+inv.value,r=f+(+rec.value),C=+cap.value,i=+rate.value;
+  $('cPayOut').textContent='dia '+p;$('cInvOut').textContent='dia '+f;$('cRecOut').textContent=rec.value+' dias';
+  $('cCapOut').textContent=BRL(C);$('cRateOut').textContent=PCT(i)+' a.m.';
+  AX=Math.max(60,Math.ceil((Math.max(r,p)+8)/15)*15);
+  const gap=r-p, J=Math.max(0,gap)*C*(i/100)/30;
+  const iTxt=PCT(i,i%1?1:0);
+  $('cEq').innerHTML=gap>0?`${BRL(C)} × ${iTxt} × (${gap} ÷ 30) = <em>${BRL(J)}</em>`:`Sem descasamento: <em>R$ 0</em> de juros`;
+  const j30=C*i/100;
+  $('cCmp').innerHTML=gap>0?`Receber 30 dias antes evitaria <strong>${BRL(Math.min(30,gap)/30*j30)}</strong> em juros. Na taxa atual, isso equivale a um desconto de até <strong>${PCT(i*Math.min(30,gap)/30)}</strong> sobre uma venda de ${BRL(C)}.`:`O fornecedor está financiando o ciclo: o dinheiro entra antes de sair.`;
+  const css=n=>cssVar(n);
+  let s='';
+  // eixo
+  const yA=150, step=AX>90?15:10;
+  for(let d=0;d<=AX;d+=step){s+=`<line x1="${X(d)}" x2="${X(d)}" y1="${yA-6}" y2="${yA+6}" stroke="${css('--line2')}"/><text x="${X(d)}" y="${yA+28}" text-anchor="middle">${d}</text>`}
+  s+=`<line x1="${X(0)}" x2="${X(AX)}" y1="${yA}" y2="${yA}" stroke="${css('--line2')}" stroke-width="3" stroke-linecap="round"/>`;
+  s+=`<text x="${X(AX)}" y="${yA+50}" text-anchor="end">dias</text>`;
+  // faixa de descasamento
+  if(gap>0){
+    s+=`<rect x="${X(p)}" y="${yA-16}" width="${X(r)-X(p)}" height="32" rx="16" fill="${css('--accent')}" opacity=".22"/>`;
+    s+=`<rect x="${X(p)}" y="${yA-4}" width="${X(r)-X(p)}" height="8" rx="4" fill="${css('--accent')}"/>`;
+    // dinheiro comprometido
+    const y1=284,h=56;
+    s+=`<rect x="${X(p)}" y="${y1}" width="${X(r)-X(p)}" height="${h}" rx="12" fill="${css('--hidden')}" opacity=".9"/>`;
+    const mid=(X(p)+X(r))/2, wide=X(r)-X(p)>380;
+    s+=`<text x="${wide?mid:X(r)+14}" y="${y1+h/2+6}" text-anchor="${wide?'middle':'start'}" style="fill:${wide?'#fff':css('--ink')};font-weight:700;font-size:17px">${BRL(C)} comprometidos por ${gap} dias</text>`;
+    s+=`<text x="${X(p)}" y="${y1-14}" style="fill:${css('--accent-ink')};font-weight:700;font-size:15px">${gap} dias de descasamento → o caixa financia a operação</text>`;
+  } else {
+    s+=`<text x="${X(0)}" y="${300}" style="fill:${css('--ok')};font-weight:700;font-size:17px">Sem descasamento: você recebe ${-gap} dias antes de pagar.</text>`;
+  }
+  // marcos: entrega e recebimento acima do eixo; pagamento abaixo
+  const lab=(d,n,c,ly,below)=>{const anchor=X(d)<110?'start':X(d)>W-110?'end':'middle';
+    s+=`<line x1="${X(d)}" x2="${X(d)}" y1="${below?yA+12:ly+8}" y2="${below?ly-34:yA-12}" stroke="${c}" stroke-width="1.5" stroke-dasharray="3 4"/>`;
+    s+=`<text x="${X(d)}" y="${ly-10}" text-anchor="${anchor}" style="fill:${css('--ink')};font-weight:700;font-size:16px;letter-spacing:.04em">${n.toUpperCase()}</text><text x="${X(d)}" y="${ly+8}" text-anchor="${anchor}" style="fill:${css('--muted')};font-size:14px">dia ${d}</text>`};
+  const close=Math.abs(X(r)-X(f))<200;
+  lab(f,'Entrega e faturamento',css('--out'),close?yA-100:yA-46);
+  lab(r,'Recebimento',css('--in'),yA-46);
+  lab(p,'Pagamento',css('--accent'),yA+78,true);
+  [[f,css('--out')],[r,css('--in')],[p,css('--accent')]].forEach(([d,c])=>{s+=`<circle cx="${X(d)}" cy="${yA}" r="11" fill="${c}" stroke="${css('--bg')}" stroke-width="3"/>`});
+  svg.innerHTML=s;
+}
+[pay,inv,rec,cap,rate].forEach(el=>el.addEventListener('input',draw));
+DECK.onChange(k=>{if(k==='theme')draw()});draw();
+})();
+</script>
+
+<!-- ============ 4 · estudo de caso ============ -->
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const FAT=100000,PAG=80000;
+const names=['Taxas','Juros de giro','Horas extras','Multas e estornos'];
+let mode='sup';
+const ks=[0,1,2,3].map(i=>$('k'+i)),kRec=$('kRec'),svg=$('wf');
+$('rdSup').onclick=()=>{mode='sup';$('rdSup').setAttribute('aria-pressed','true');$('rdReal').setAttribute('aria-pressed','false');draw()};
+$('rdReal').onclick=()=>{mode='real';$('rdReal').setAttribute('aria-pressed','true');$('rdSup').setAttribute('aria-pressed','false');draw()};
+const bar=$('stackBar'),lbl=$('stackLbl');
+names.forEach((n,i)=>{const d=document.createElement('div');d.style.opacity=String(1-i*.18);bar.appendChild(d);const s=document.createElement('span');lbl.appendChild(s)});
+function draw(){
+  const css=cssVar;
+  const hv=ks.map(k=>+k.value),H=hv.reduce((a,b)=>a+b,0),REC=FAT*kRec.value/100;
+  ks.forEach((k,i)=>$('k'+i+'Out').textContent=BRL(+k.value));$('kRecOut').textContent=kRec.value+'%';
+  $('hidTot').textContent=BRL(H)+' · '+PCT(H/FAT*100)+' do faturado';
+  hv.forEach((v,i)=>{const d=bar.children[i];d.style.flexGrow=String(v||0.0001);d.textContent=H&&v/H>.12?BRL(v):'';
+    lbl.children[i].innerHTML=`<b>${BRL(v)}</b>${names[i]}`});
+  $('stackWrap').classList.toggle('veil',mode==='sup');
+  let bars;
+  if(mode==='sup'){bars=[
+    {n:'Vendas faturadas',a:0,b:FAT,c:css('--in'),v:BRL(FAT)},
+    {n:'Pagamentos conhecidos',a:FAT,b:FAT-PAG,c:css('--out'),v:BRL(-PAG)},
+    {n:'“Sobra” aparente',a:0,b:FAT-PAG,c:css('--warn'),v:MIL(FAT-PAG),dash:true}];}
+  else{const v=REC-PAG-H;bars=[
+    {n:'Recebimentos efetivos',a:0,b:REC,c:css('--in'),v:BRL(REC),ghost:FAT-REC},
+    {n:'Pagamentos conhecidos',a:REC,b:REC-PAG,c:css('--out'),v:BRL(-PAG)},
+    {n:'Custos ocultos pagos',a:REC-PAG,b:REC-PAG-H,c:css('--hidden'),v:BRL(-H)},
+    {n:'Variação de caixa',a:0,b:v,c:v<0?css('--crit'):css('--ok'),v:MIL(v),strong:true}];}
+  const lo=Math.min(-12000,Math.min(...bars.map(x=>Math.min(x.a,x.b)))-6000),hi=110000;
+  const W=960,Hh=470,T=20,B=70,Lp=70,Y=v=>T+(hi-v)/(hi-lo)*(Hh-T-B);
+  let s='';
+  for(let g=Math.ceil(lo/20000)*20000;g<=100000;g+=20000){s+=`<line x1="${Lp}" x2="${W}" y1="${Y(g)}" y2="${Y(g)}" stroke="${css('--line')}"/><text x="${Lp-10}" y="${Y(g)+5}" text-anchor="end">${g/1000}k</text>`}
+  s+=`<line x1="${Lp}" x2="${W}" y1="${Y(0)}" y2="${Y(0)}" stroke="${css('--ink2')}" stroke-width="1.5"/>`;
+  const n=bars.length,slot=(W-Lp-20)/n,bw=Math.min(150,slot*.56);
+  bars.forEach((x,i)=>{const cx=Lp+20+slot*i+slot/2,top=Math.min(Y(x.a),Y(x.b)),h=Math.max(3,Math.abs(Y(x.a)-Y(x.b)));
+    if(x.ghost>0){const gt=Y(x.b+x.ghost);s+=`<rect x="${cx-bw/2}" y="${gt}" width="${bw}" height="${Y(x.b)-gt}" rx="6" fill="none" stroke="${css('--in')}" stroke-width="2" stroke-dasharray="6 5"/>
+      <text x="${cx+bw/2+10}" y="${gt+18}" style="fill:${css('--ink2')};font-size:14px;font-weight:600">${MIL(x.ghost).replace('+ ','')} a receber</text><text x="${cx+bw/2+10}" y="${gt+38}" style="fill:${css('--muted')};font-size:13px">não é custo</text>`}
+    s+=`<rect x="${cx-bw/2}" y="${top}" width="${bw}" height="${h}" rx="6" fill="${x.dash?'none':x.c}" ${x.dash?`stroke="${x.c}" stroke-width="3" stroke-dasharray="8 6"`:''}/>`;
+    if(i<n-1&&!x.strong){const nb=bars[i+1];const yy=Y(x.b);if(!nb.strong&&!nb.dash)s+=`<line x1="${cx+bw/2}" x2="${cx+slot-bw/2}" y1="${yy}" y2="${yy}" stroke="${css('--line2')}" stroke-dasharray="3 4"/>`}
+    const vy=x.b>=x.a?top-12:top+h+24;
+    s+=`<text x="${cx}" y="${vy}" text-anchor="middle" style="fill:${x.strong||x.dash?x.c:css('--ink')};font-family:Outfit,sans-serif;font-weight:600;font-size:${x.strong||x.dash?26:20}px">${x.v}</text>`;
+    s+=`<text x="${cx}" y="${Hh-B+34}" text-anchor="middle" style="fill:${css('--ink2')};font-size:15px;font-weight:600">${x.n}</text>`;
+  });
+  svg.innerHTML=s;
+  const st=$('kStatus');
+  if(mode==='sup'){st.className='status warn';st.textContent='Erro: confundir venda com dinheiro disponível'}
+  else{const v=REC-PAG-H;st.className='status '+(v<0?'crit':'ok');st.textContent=v<0?`O caixa encolheu ${BRL(-v)} no mês`:`O caixa cresceu ${BRL(v)} no mês`}
+}
+[kRec,...ks].forEach(el=>el.addEventListener('input',draw));
+DECK.onChange(k=>{if(k==='theme')draw()});draw();
+})();
+</script>
+
+<!-- ============ 5 · rotina e calculadora ============ -->
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const steps=[...document.querySelectorAll('#chain .step')];let cur=0;
+function set(i){cur=i;steps.forEach((s,k)=>{s.classList.toggle('on',k<=i);s.classList.toggle('cur',k===i)})}
+steps.forEach((s,k)=>s.onclick=()=>set(k));
+$('chainNext').onclick=()=>set(Math.min(steps.length-1,cur+1));$('chainReset').onclick=()=>set(0);set(0);
+const P=[['Tarifa da maquininha',3.2,500],['Horas extras por retrabalho',45,40],['Multa por boleto atrasado',350,4],['Antecipação de recebíveis',600,2],['Desconto sem regra',150,12]];
+const pre=$('presets');
+P.forEach(([n,v,f])=>{const b=document.createElement('button');b.className='chip';b.textContent=n;b.onclick=()=>{$('lName').value=n;$('lVal').value=v;$('lFreq').value=f;calc()};pre.appendChild(b)});
+let list=[['Taxas financeiras',1600],['Juros de capital de giro',1200],['Horas extras por retrabalho',1800],['Multas e estornos',1400]];
+function mon(){return Math.max(0,(+$('lVal').value||0)*(+$('lFreq').value||0))}
+function calc(){const m=mon(),rev=Math.max(1,+$('lRev').value||1);
+  $('lMon').textContent=BRL(m);$('lYear').textContent=BRL(m*12);$('lPct').textContent=PCT(m/rev*100);$('l13').textContent=BRL(m*3);
+  [...pre.children].forEach(b=>b.setAttribute('aria-pressed',String(b.textContent===$('lName').value)))}
+function rank(){const box=$('rank');const sorted=list.map((x,i)=>[...x,i]).sort((a,b)=>b[1]-a[1]);const mx=sorted.length?sorted[0][1]:1;
+  const rev=Math.max(1,+$('lRev').value||1);
+  box.innerHTML=sorted.map(([n,v,i],k)=>`<div class="rrow ${k<3?'top':''}"><span class="pos">${k+1}</span><span class="nm"><span>${n.replace(/</g,'&lt;')}</span><span class="bar" style="width:${(v/mx*100).toFixed(1)}%"></span></span><span class="val">${BRL(v*12)}<small>${BRL(v)}/mês · ${PCT(v/rev*100)}</small></span><button class="x" data-i="${i}" aria-label="Remover">×</button></div>`).join('')||'<p class="note">Adicione um custo pela calculadora.</p>';
+  box.querySelectorAll('.x').forEach(b=>b.onclick=()=>{list.splice(+b.dataset.i,1);rank()});
+  const tot=list.reduce((a,x)=>a+x[1],0);$('rankTot').textContent=list.length?`Total: ${BRL(tot*12)}/ano`:''}
+$('lAdd').onclick=()=>{const m=mon();if(!m)return;const n=($('lName').value||'Custo sem nome').trim();const ex=list.findIndex(x=>x[0]===n);if(ex>=0)list[ex][1]=m;else list.push([n,m]);rank()};
+['lVal','lFreq','lRev','lName'].forEach(id=>$(id).addEventListener('input',()=>{calc();if(id==='lRev')rank()}));
+calc();rank();
+})();
+</script>
+
+<!-- ============ 6 · revisão ============ -->
+<script>
+(function(){
+const qs=[
+ ['Uma empresa pode vender muito, dar lucro e ainda ficar sem dinheiro?','Sim. A venda é reconhecida por competência; recebimentos e pagamentos seguem outra linha do tempo. Lucro não é saldo no banco.'],
+ ['R$ 20 mil a receber são um custo oculto?','Não. São recebíveis, com risco de atraso ou inadimplência. O custo está no financiamento desse prazo (juros) e nas perdas; não conte duas vezes.'],
+ ['Quanto custa financiar R$ 40 mil por 40 dias a 2% ao mês?','R$ 40.000 × 2% × (40 ÷ 30) ≈ R$ 1.067, em juros simples. O prazo é necessidade de caixa; os juros são o custo.'],
+ ['Retrabalho de uma equipe fixa sempre gera saída de caixa?','Não. Com equipe fixa, é custo econômico (perda de produtividade). Vira saída de caixa quando gera horas extras, compras emergenciais ou multas.']
+];
+const q=document.getElementById('quiz');
+qs.forEach(([t,a],i)=>{const b=document.createElement('button');b.className='q';b.innerHTML=`<span class="qn">PERGUNTA ${i+1}</span><span class="qt">${t}</span><span class="qa">${a}</span><span class="qh">clique para revelar a resposta</span>`;b.onclick=()=>b.classList.toggle('open');q.appendChild(b)});
+})();
+</script>
+
+</body>
+</html>
