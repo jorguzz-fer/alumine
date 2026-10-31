@@ -1,0 +1,6 @@
+# Dedicated image for aula.alumine.com.br
+# Serves the interactive lesson in aula/ as the site root.
+FROM nginx:alpine
+COPY aula /usr/share/nginx/html
+COPY nginx-aula.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
