@@ -185,7 +185,7 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
 .plumcard p span{color:var(--copper-light)}
 
 /* ===== 4 · caso ===== */
-.case{position:absolute;inset:0;display:flex;flex-direction:column;padding:36px 56px 28px 48px;gap:16px}
+.case{position:absolute;inset:0;display:flex;flex-direction:column;padding:24px 40px 28px 32px;gap:14px}
 .case svg text{font-family:var(--f-body);font-size:14px;fill:var(--muted)}
 .stackwrap{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 24px;display:flex;flex-direction:column;gap:10px;position:relative}
 .stackwrap .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between}
@@ -238,6 +238,31 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
 .kpi span{font-size:13px;line-height:1.4;color:var(--muted)}
 .takeaway{background:var(--plum);color:#fff;border-radius:0 0 0 40px;padding:18px 22px;font-family:var(--f-display);font-weight:500;font-size:21px;line-height:1.3}
 .takeaway small{display:block;font-family:var(--f-body);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+
+/* ===== 3D ===== */
+.v3d{position:relative;min-height:0;border-radius:16px}
+.v3d canvas{position:absolute;inset:0;width:100%;height:100%;display:block;outline:none;cursor:grab;touch-action:none}
+.v3d canvas:active{cursor:grabbing}
+.lbl-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:2}
+.l3{position:absolute;left:0;top:0;white-space:nowrap;transition:opacity .25s;font-variant-numeric:tabular-nums}
+.l3.c{transform:translate(-50%,-100%)} .l3.cb{transform:translate(-50%,0)} .l3.l{transform:translate(0,-50%)} .l3.r{transform:translate(-100%,-50%)} .l3.lb{transform:translate(0,-100%)}
+.l3.val{font-family:var(--f-display);font-weight:600;font-size:21px;color:var(--ink)}
+.l3.val.big{font-size:28px}
+.l3.nm{font-size:15px;font-weight:600;color:var(--ink2);text-align:center;white-space:normal;width:150px;line-height:1.25}
+.l3.ax{font-size:13px;color:var(--muted)}
+.l3.m{transform:translate(-50%,-50%);text-align:center}
+.l3.gh{font-size:13px;font-weight:600;color:var(--ink2);line-height:1.35}
+.l3.gh small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.l3.rk{font-size:14px;color:var(--ink);display:flex;gap:8px;align-items:center;pointer-events:auto}
+.l3.rk b{font-family:var(--f-display);font-weight:700;color:var(--muted);font-size:16px}
+.l3.rk.top b{color:var(--accent-ink)}
+.l3.rk button{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:17px;padding:0 4px;line-height:1}
+.l3.rk button:hover{color:var(--ink)}
+.l3.rv{font-family:var(--f-display);font-weight:600;font-size:17px;color:var(--ink);line-height:1.15}
+.l3.rv small{display:block;font-family:var(--f-body);font-weight:400;font-size:12px;color:var(--muted)}
+.v3d .hint{position:absolute;right:12px;bottom:8px;font-size:12px;color:var(--muted);pointer-events:none;text-align:right;line-height:1.5;z-index:2}
+.v3d .loading{position:absolute;inset:0;display:grid;place-items:center;font-size:14px;color:var(--muted);pointer-events:none}
+.v3d.ready .loading{display:none}
 
 /* ===== 6 · revisão ===== */
 .quiz{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:56px 64px 40px 48px;align-content:center;height:100%}
@@ -356,7 +381,7 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
   </div>
   <div class="bench">
     <div class="case">
-      <svg id="wf" viewBox="0 0 960 470" style="width:100%;height:auto"></svg>
+      <div class="v3d" id="wf3d" style="flex:1"><div class="lbl-layer" id="wfLabels"></div><div class="hint">arraste para girar · rolar: zoom<br>duplo clique: vista inicial</div><div class="loading">carregando 3D…</div></div>
       <div class="stackwrap" id="stackWrap">
         <div class="k"><span>Pagos sem controle, espalhados em pequenas linhas</span><b id="hidTot">R$ 6.000</b></div>
         <div class="stackbar" id="stackBar"></div>
@@ -404,7 +429,7 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
       <div class="panel">
         <div style="display:flex;justify-content:space-between;align-items:baseline"><h3>Priorizar · maiores vazamentos</h3><span class="credit" id="rankTot" style="white-space:nowrap"></span></div>
         <p class="note" style="font-size:14px;margin:0">Ordenados por R$ por ano. Os 3 primeiros, em cobre, são o foco do mês.</p>
-        <div class="rank" id="rank"></div>
+        <div class="v3d" id="rank3d" style="flex:1"><div class="lbl-layer" id="rankLabels"></div><div class="loading">carregando 3D…</div></div>
       </div>
       <div class="kpis">
         <div class="kpi"><span class="k">Custo financeiro</span><b>÷ faturamento</b><span>Taxas + juros + antecipação, em % da receita.</span></div>
@@ -571,7 +596,7 @@ const $=id=>document.getElementById(id);
 const FAT=100000,PAG=80000;
 const names=['Taxas','Juros de giro','Horas extras','Multas e estornos'];
 let mode='sup';
-const ks=[0,1,2,3].map(i=>$('k'+i)),kRec=$('kRec'),svg=$('wf');
+const ks=[0,1,2,3].map(i=>$('k'+i)),kRec=$('kRec');
 $('rdSup').onclick=()=>{mode='sup';$('rdSup').setAttribute('aria-pressed','true');$('rdReal').setAttribute('aria-pressed','false');draw()};
 $('rdReal').onclick=()=>{mode='real';$('rdReal').setAttribute('aria-pressed','true');$('rdSup').setAttribute('aria-pressed','false');draw()};
 const bar=$('stackBar'),lbl=$('stackLbl');
@@ -584,32 +609,7 @@ function draw(){
   hv.forEach((v,i)=>{const d=bar.children[i];d.style.flexGrow=String(v||0.0001);d.textContent=H&&v/H>.12?BRL(v):'';
     lbl.children[i].innerHTML=`<b>${BRL(v)}</b>${names[i]}`});
   $('stackWrap').classList.toggle('veil',mode==='sup');
-  let bars;
-  if(mode==='sup'){bars=[
-    {n:'Vendas faturadas',a:0,b:FAT,c:css('--in'),v:BRL(FAT)},
-    {n:'Pagamentos conhecidos',a:FAT,b:FAT-PAG,c:css('--out'),v:BRL(-PAG)},
-    {n:'“Sobra” aparente',a:0,b:FAT-PAG,c:css('--warn'),v:MIL(FAT-PAG),dash:true}];}
-  else{const v=REC-PAG-H;bars=[
-    {n:'Recebimentos efetivos',a:0,b:REC,c:css('--in'),v:BRL(REC),ghost:FAT-REC},
-    {n:'Pagamentos conhecidos',a:REC,b:REC-PAG,c:css('--out'),v:BRL(-PAG)},
-    {n:'Custos ocultos pagos',a:REC-PAG,b:REC-PAG-H,c:css('--hidden'),v:BRL(-H)},
-    {n:'Variação de caixa',a:0,b:v,c:v<0?css('--crit'):css('--ok'),v:MIL(v),strong:true}];}
-  const lo=Math.min(-12000,Math.min(...bars.map(x=>Math.min(x.a,x.b)))-6000),hi=110000;
-  const W=960,Hh=470,T=20,B=70,Lp=70,Y=v=>T+(hi-v)/(hi-lo)*(Hh-T-B);
-  let s='';
-  for(let g=Math.ceil(lo/20000)*20000;g<=100000;g+=20000){s+=`<line x1="${Lp}" x2="${W}" y1="${Y(g)}" y2="${Y(g)}" stroke="${css('--line')}"/><text x="${Lp-10}" y="${Y(g)+5}" text-anchor="end">${g/1000}k</text>`}
-  s+=`<line x1="${Lp}" x2="${W}" y1="${Y(0)}" y2="${Y(0)}" stroke="${css('--ink2')}" stroke-width="1.5"/>`;
-  const n=bars.length,slot=(W-Lp-20)/n,bw=Math.min(150,slot*.56);
-  bars.forEach((x,i)=>{const cx=Lp+20+slot*i+slot/2,top=Math.min(Y(x.a),Y(x.b)),h=Math.max(3,Math.abs(Y(x.a)-Y(x.b)));
-    if(x.ghost>0){const gt=Y(x.b+x.ghost);s+=`<rect x="${cx-bw/2}" y="${gt}" width="${bw}" height="${Y(x.b)-gt}" rx="6" fill="none" stroke="${css('--in')}" stroke-width="2" stroke-dasharray="6 5"/>
-      <text x="${cx+bw/2+10}" y="${gt+18}" style="fill:${css('--ink2')};font-size:14px;font-weight:600">${MIL(x.ghost).replace('+ ','')} a receber</text><text x="${cx+bw/2+10}" y="${gt+38}" style="fill:${css('--muted')};font-size:13px">não é custo</text>`}
-    s+=`<rect x="${cx-bw/2}" y="${top}" width="${bw}" height="${h}" rx="6" fill="${x.dash?'none':x.c}" ${x.dash?`stroke="${x.c}" stroke-width="3" stroke-dasharray="8 6"`:''}/>`;
-    if(i<n-1&&!x.strong){const nb=bars[i+1];const yy=Y(x.b);if(!nb.strong&&!nb.dash)s+=`<line x1="${cx+bw/2}" x2="${cx+slot-bw/2}" y1="${yy}" y2="${yy}" stroke="${css('--line2')}" stroke-dasharray="3 4"/>`}
-    const vy=x.b>=x.a?top-12:top+h+24;
-    s+=`<text x="${cx}" y="${vy}" text-anchor="middle" style="fill:${x.strong||x.dash?x.c:css('--ink')};font-family:Outfit,sans-serif;font-weight:600;font-size:${x.strong||x.dash?26:20}px">${x.v}</text>`;
-    s+=`<text x="${cx}" y="${Hh-B+34}" text-anchor="middle" style="fill:${css('--ink2')};font-size:15px;font-weight:600">${x.n}</text>`;
-  });
-  svg.innerHTML=s;
+  window.__caseData={mode,FAT,PAG,REC,H,hv:hv.slice()};if(window.__case3d)window.__case3d();
   const st=$('kStatus');
   if(mode==='sup'){st.className='status warn';st.textContent='Erro: confundir venda com dinheiro disponível'}
   else{const v=REC-PAG-H;st.className='status '+(v<0?'crit':'ok');st.textContent=v<0?`O caixa encolheu ${BRL(-v)} no mês`:`O caixa cresceu ${BRL(v)} no mês`}
@@ -635,11 +635,10 @@ function mon(){return Math.max(0,(+$('lVal').value||0)*(+$('lFreq').value||0))}
 function calc(){const m=mon(),rev=Math.max(1,+$('lRev').value||1);
   $('lMon').textContent=BRL(m);$('lYear').textContent=BRL(m*12);$('lPct').textContent=PCT(m/rev*100);$('l13').textContent=BRL(m*3);
   [...pre.children].forEach(b=>b.setAttribute('aria-pressed',String(b.textContent===$('lName').value)))}
-function rank(){const box=$('rank');const sorted=list.map((x,i)=>[...x,i]).sort((a,b)=>b[1]-a[1]);const mx=sorted.length?sorted[0][1]:1;
-  const rev=Math.max(1,+$('lRev').value||1);
-  box.innerHTML=sorted.map(([n,v,i],k)=>`<div class="rrow ${k<3?'top':''}"><span class="pos">${k+1}</span><span class="nm"><span>${n.replace(/</g,'&lt;')}</span><span class="bar" style="width:${(v/mx*100).toFixed(1)}%"></span></span><span class="val">${BRL(v*12)}<small>${BRL(v)}/mês · ${PCT(v/rev*100)}</small></span><button class="x" data-i="${i}" aria-label="Remover">×</button></div>`).join('')||'<p class="note">Adicione um custo pela calculadora.</p>';
-  box.querySelectorAll('.x').forEach(b=>b.onclick=()=>{list.splice(+b.dataset.i,1);rank()});
+function rank(){const sorted=list.map((x,i)=>[...x,i]).sort((a,b)=>b[1]-a[1]);
+  window.__rankData={sorted,rev:Math.max(1,+$('lRev').value||1)};if(window.__rank3d)window.__rank3d();
   const tot=list.reduce((a,x)=>a+x[1],0);$('rankTot').textContent=list.length?`Total: ${BRL(tot*12)}/ano`:''}
+window.__rankRemove=i=>{list.splice(i,1);rank()};
 $('lAdd').onclick=()=>{const m=mon();if(!m)return;const n=($('lName').value||'Custo sem nome').trim();const ex=list.findIndex(x=>x[0]===n);if(ex>=0)list[ex][1]=m;else list.push([n,m]);rank()};
 ['lVal','lFreq','lRev','lName'].forEach(id=>$(id).addEventListener('input',()=>{calc();if(id==='lRev')rank()}));
 calc();rank();
@@ -658,6 +657,152 @@ const qs=[
 const q=document.getElementById('quiz');
 qs.forEach(([t,a],i)=>{const b=document.createElement('button');b.className='q';b.innerHTML=`<span class="qn">PERGUNTA ${i+1}</span><span class="qt">${t}</span><span class="qa">${a}</span><span class="qh">clique para revelar a resposta</span>`;b.onclick=()=>b.classList.toggle('open');q.appendChild(b)});
 })();
+</script>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}
+</script>
+
+<!-- ============ 3D: gráficos de barras (slides 4 e 5) ============ -->
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+
+const views=[];
+const col=n=>new THREE.Color(cssVar(n)||'#888888');
+function makeView(host,{cam,target,fov=30,az=0.8,pol=[0.35,1.5],dist=[6,24]}){
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});
+  r.toneMapping=THREE.ACESFilmicToneMapping;r.toneMappingExposure=0.9;r.outputColorSpace=THREE.SRGBColorSpace;
+  host.insertBefore(r.domElement,host.firstChild);
+  const scene=new THREE.Scene();
+  const pm=new THREE.PMREMGenerator(r);scene.environment=pm.fromScene(new RoomEnvironment(),0.04).texture;scene.environmentIntensity=0.55;
+  const dl=new THREE.DirectionalLight(0xffffff,1.5);dl.position.set(5,9,7);scene.add(dl);
+  const fl=new THREE.DirectionalLight(0xffffff,0.35);fl.position.set(-6,3,4);scene.add(fl);
+  const camera=new THREE.PerspectiveCamera(fov,1,0.1,200);camera.position.set(...cam);
+  const ctl=new OrbitControls(camera,r.domElement);ctl.target.set(...target);ctl.enableDamping=true;ctl.dampingFactor=0.08;ctl.enablePan=false;
+  ctl.minAzimuthAngle=-az;ctl.maxAzimuthAngle=az;ctl.minPolarAngle=pol[0];ctl.maxPolarAngle=pol[1];ctl.minDistance=dist[0];ctl.maxDistance=dist[1];ctl.update();
+  const v={host,r,scene,camera,ctl,w:0,h:0,tick:null,slide:host.closest('.slide')};
+  function size(){const w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;v.w=w;v.h=h;
+    r.setPixelRatio(Math.min(2.5,(window.devicePixelRatio||1)*(DECK.scale||1)));r.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+  new ResizeObserver(size).observe(host);DECK.onChange(k=>{if(k==='scale'||k==='slide')size()});size();
+  r.domElement.addEventListener('dblclick',()=>{camera.position.set(...cam);ctl.target.set(...target);ctl.update()});
+  host.classList.add('ready');views.push(v);return v;
+}
+function proj(v,x,y,z){const q=new THREE.Vector3(x,y,z).project(v.camera);return[(q.x+1)/2*v.w,(1-q.y)/2*v.h]}
+function place(el,v,x,y,z){const[p,q]=proj(v,x,y,z);el.style.left=p.toFixed(1)+'px';el.style.top=q.toFixed(1)+'px'}
+const ease=dt=>1-Math.exp(-dt*7);
+const unit=new THREE.BoxGeometry(1,1,1);unit.translate(0,0.5,0);
+const unitEdges=new THREE.EdgesGeometry(unit);
+function block(scene){
+  const m=new THREE.MeshStandardMaterial({color:0x888888,roughness:0.5,metalness:0.05,transparent:true,opacity:1});
+  const lm=new THREE.LineBasicMaterial({color:0x888888,transparent:true,opacity:0});
+  const g=new THREE.Group();g.add(new THREE.Mesh(unit,m),new THREE.LineSegments(unitEdges,lm));scene.add(g);
+  return{g,m,lm,c:{x:0,b:0,t:0,a:0,e:0},t:{x:0,b:0,t:0,a:0,e:0},color:'--in',shade:0};
+}
+
+/* ---------- Slide 4: cascata em 3D ---------- */
+(function(){
+  const host=document.getElementById('wf3d'),layer=document.getElementById('wfLabels');
+  const v=makeView(host,{cam:[3.2,2.6,13.5],target:[0,0.9,0],fov:30,az:0.75});
+  const K=4/100000,BW=1.35,D=1.2,GAP=2.35;
+  const B={main:block(v.scene),ghost:block(v.scene),pag:block(v.scene),sobra:block(v.scene),vr:block(v.scene),h:[0,1,2,3].map(()=>block(v.scene))};
+  const all=[B.main,B.ghost,B.pag,B.sobra,B.vr,...B.h];
+  // chão (linha do zero) e grade
+  const floor=new THREE.Mesh(new THREE.PlaneGeometry(1,1),new THREE.MeshBasicMaterial({transparent:true,opacity:0.07,depthWrite:false,side:THREE.DoubleSide}));
+  floor.rotation.x=-Math.PI/2;v.scene.add(floor);
+  const grid=new THREE.Group();v.scene.add(grid);
+  const L={};const mk=(id,cls)=>{if(!L[id]){const d=document.createElement('div');d.className='l3 '+cls;layer.appendChild(d);L[id]={el:d,c:null,t:null,html:''}}return L[id]};
+  let slots=[],gridLo=null,data=null;
+  function buildGrid(lo){if(lo===gridLo)return;gridLo=lo;grid.clear();
+    Object.keys(L).filter(k=>k.startsWith('ax')).forEach(k=>{L[k].el.remove();delete L[k]});
+    const W=GAP*4+1.2,pts=[];for(let g=lo;g<=100000;g+=20000){pts.push(-W/2,g*K,-D/2-0.4,W/2,g*K,-D/2-0.4);
+      const l=mk('ax'+g,'ax r');l.t={x:-W/2-0.15,y:g*K,z:-D/2-0.4};l.html=(g/1000)+'k'}
+    const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(pts,3));
+    grid.add(new THREE.LineSegments(geo,new THREE.LineBasicMaterial({color:col('--line2'),transparent:true,opacity:0.45})));
+    floor.scale.set(W,D+1.6,1);}
+  function set(){data=window.__caseData;if(!data)return;
+    const {mode,FAT,PAG,REC,H,hv}=data,sup=mode==='sup',n=sup?3:4,X=i=>(i-(n-1)/2)*GAP;
+    const T=(b,o)=>Object.assign(b.t,o);
+    if(sup){
+      T(B.main,{x:X(0),b:0,t:FAT,a:1,e:0});B.main.color='--in';
+      T(B.ghost,{x:X(0),b:FAT,t:FAT,a:0,e:0});
+      T(B.pag,{x:X(1),b:FAT-PAG,t:FAT,a:1,e:0});B.pag.color='--out';
+      B.h.forEach(b=>T(b,{x:X(2),b:FAT-PAG,t:FAT-PAG,a:0,e:0}));
+      T(B.sobra,{x:X(2),b:0,t:FAT-PAG,a:0.16,e:1});B.sobra.color='--warn';
+      T(B.vr,{x:X(2),b:0,t:0,a:0,e:0});
+      slots=[{x:X(0),lo:0,hi:FAT,v:BRL(FAT),n:'Vendas faturadas',up:true},{x:X(1),lo:FAT-PAG,hi:FAT,v:BRL(-PAG),n:'Pagamentos conhecidos'},{x:X(2),lo:0,hi:FAT-PAG,v:MIL(FAT-PAG),n:'“Sobra” aparente',up:true,big:true,col:'--warn'}];
+    }else{const vv=REC-PAG-H;
+      T(B.main,{x:X(0),b:0,t:REC,a:1,e:0});B.main.color='--in';
+      T(B.ghost,{x:X(0),b:REC,t:FAT,a:FAT>REC?0.1:0,e:FAT>REC?1:0});B.ghost.color='--in';
+      T(B.pag,{x:X(1),b:REC-PAG,t:REC,a:1,e:0});B.pag.color='--out';
+      let top=REC-PAG;B.h.forEach((b,i)=>{T(b,{x:X(2),b:top-hv[i],t:top,a:1,e:0});b.color='--hidden';b.shade=i;top-=hv[i]});
+      T(B.sobra,{x:X(2),b:0,t:0,a:0,e:0});
+      T(B.vr,{x:X(3),b:Math.min(0,vv),t:Math.max(0,vv),a:1,e:0});B.vr.color=vv<0?'--crit':'--ok';
+      slots=[{x:X(0),lo:0,hi:Math.max(REC,FAT),v:BRL(REC),n:'Recebimentos efetivos',up:true},{x:X(1),lo:REC-PAG,hi:REC,v:BRL(-PAG),n:'Pagamentos conhecidos'},{x:X(2),lo:REC-PAG-H,hi:REC-PAG,v:BRL(-H),n:'Custos ocultos pagos',col:'--accent-ink'},{x:X(3),lo:Math.min(0,vv),hi:Math.max(0,vv),v:MIL(vv),n:'Variação de caixa',big:true,col:vv<0?'--crit':'--ok',up:vv>=0}];
+    }
+    const lo=Math.min(0,...slots.map(s=>s.lo));buildGrid(Math.floor(Math.min(-20000,lo-4000)/20000)*20000);
+    const base=Math.min(0,lo)*K-0.35;
+    for(let i=0;i<4;i++){const s=slots[i],lv=mk('v'+i,'val'),ln=mk('n'+i,'nm cb');
+      if(!s){lv.t=null;ln.t=null;continue}
+      lv.el.className='l3 val c'+(s.big?' big':'');lv.el.style.color=s.col?cssVar(s.col):'';
+      lv.html=s.v;lv.t={x:s.x,y:Math.max(0,s.hi)*K+0.2,z:D/2};
+      ln.html=s.n;ln.t={x:s.x,y:base,z:D/2+0.3};}
+    const gl=mk('gh','gh m');
+    if(!sup&&FAT-REC>=12000){gl.html=`${MIL(FAT-REC).replace('+ ','')}<br>a receber<small>não é custo</small>`;gl.t={x:X(0),y:(REC+FAT)/2*K,z:D/2}}else gl.t=null;
+    recolor();
+  }
+  function recolor(){all.forEach(b=>{const c=col(b.color);if(b.shade)c.offsetHSL(0,-0.05*b.shade,0.07*b.shade);b.m.color.copy(c);b.lm.color.copy(c)});
+    floor.material.color.copy(col('--ink'));grid.children.forEach(o=>o.material.color.copy(col('--line2')))}
+  window.__case3d=set;set();
+  DECK.onChange(k=>{if(k==='theme')recolor()});
+  v.tick=dt=>{const f=ease(dt);
+    all.forEach(b=>{for(const k in b.c)b.c[k]+=(b.t[k]-b.c[k])*f;const c=b.c,h=Math.abs(c.t-c.b);
+      const vis=(c.a>0.01||c.e>0.01)&&h>1;b.g.visible=vis;if(!vis)return;
+      b.g.position.set(c.x,Math.min(c.b,c.t)*K,0);b.g.scale.set(BW,Math.max(0.003,h*K),D);
+      b.m.opacity=c.a;b.m.depthWrite=c.a>0.6;b.lm.opacity=c.e});
+    for(const id in L){const l=L[id];if(!l.t){l.el.style.opacity='0';continue}
+      if(!l.c)l.c={...l.t};for(const k in l.t)l.c[k]+=(l.t[k]-l.c[k])*f;
+      if(l.el.innerHTML!==l.html)l.el.innerHTML=l.html;l.el.style.opacity='1';place(l.el,v,l.c.x,l.c.y,l.c.z)}
+  };
+})();
+
+/* ---------- Slide 5: ranking de vazamentos em 3D (barras horizontais) ---------- */
+(function(){
+  const host=document.getElementById('rank3d'),layer=document.getElementById('rankLabels');
+  const v=makeView(host,{cam:[1.2,1.1,11],target:[0,-0.1,0],fov:30,az:0.7,dist:[6,18]});
+  const LEN=2.8,X0=-2.5,TH=0.42,D=0.7;
+  const rows=[];const back=new THREE.Group();v.scene.add(back);
+  function row(i){if(!rows[i]){const b=block(v.scene);b.g.rotation.z=-Math.PI/2; // barra cresce para a direita
+      const lk=document.createElement('div');lk.className='l3 rk lb';const lv=document.createElement('div');lv.className='l3 rv l';
+      layer.append(lk,lv);rows[i]={b,lk,lv,c:null,t:null}}return rows[i]}
+  function set(){const d=window.__rankData;if(!d)return;const {sorted,rev}=d,n=sorted.length,mx=n?sorted[0][1]:1;
+    const ROW=Math.min(1.05,4.6/Math.max(1,n)),y0=(n-1)*ROW/2;
+    for(let i=0;i<Math.max(n,rows.length);i++){const r=row(i),s=sorted[i];
+      if(!s){r.t={y:r.t?r.t.y:0,len:0,a:0};r.lk.style.display='none';r.lv.style.display='none';continue}
+      const [name,val,idx]=s;r.t={y:y0-i*ROW,len:Math.max(0.04,val/mx*LEN),a:1};
+      r.b.color=i<3?'--accent':'--out';
+      r.lk.style.display='';r.lv.style.display='';r.lk.classList.toggle('top',i<3);
+      r.lk.innerHTML=`<b>${i+1}</b><span>${name.replace(/</g,'&lt;')}</span><button aria-label="Remover ${name.replace(/"/g,'')}">×</button>`;
+      r.lk.querySelector('button').onclick=()=>window.__rankRemove(idx);
+      r.lv.innerHTML=`${BRL(val*12)}/ano<small>${BRL(val)}/mês · ${PCT(val/rev*100)}</small>`;}
+    recolor();}
+  function recolor(){rows.forEach(r=>{const c=col(r.b.color);r.b.m.color.copy(c)});
+    back.clear();const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute([X0,-2.6,-D/2-0.05,X0,2.6,-D/2-0.05],3));
+    back.add(new THREE.LineSegments(geo,new THREE.LineBasicMaterial({color:col('--line2')})))}
+  window.__rank3d=set;set();DECK.onChange(k=>{if(k==='theme')recolor()});
+  v.tick=dt=>{const f=ease(dt);rows.forEach(r=>{if(!r.t)return;if(!r.c)r.c={...r.t,len:0};for(const k in r.t)r.c[k]+=(r.t[k]-r.c[k])*f;
+      const c=r.c,vis=c.a>0.02;r.b.g.visible=vis;if(!vis)return;
+      // grupo girado -90° em z: o "y" local vira +x no mundo
+      r.b.g.position.set(X0,c.y,0);r.b.g.scale.set(TH,c.len,D);r.b.m.opacity=c.a;
+      place(r.lk,v,X0,c.y+TH/2+0.22,0);place(r.lv,v,X0+c.len+0.18,c.y,D/2)})};
+})();
+
+/* ---------- laço único: só renderiza o slide ativo ---------- */
+let last=performance.now();
+(function loop(now){requestAnimationFrame(loop);const dt=Math.min(0.05,(now-last)/1000);last=now;
+  for(const v of views){if(!v.slide.classList.contains('active')||!v.w)continue;v.ctl.update();v.tick&&v.tick(dt);v.r.render(v.scene,v.camera)}
+})(last);
 </script>
 
 </body>
