@@ -1,0 +1,6 @@
+# Dedicated image for the Mesa de Negócios (veterinary) landing page.
+# Ships only that page, served as the site root.
+FROM nginx:alpine
+COPY mesa-de-negocios-vet.html /usr/share/nginx/html/index.html
+COPY nginx-mesa-vet.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
