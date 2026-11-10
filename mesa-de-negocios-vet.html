@@ -791,13 +791,32 @@ function ligarFormulario(bloco, origem) {
     separateDialCode: true, utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23/build/js/utils.js' }) : null;
   const erro = form.querySelector('.erro'), btn = form.querySelector('button[type="submit"]'), rotulo = btn.textContent;
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  function ler() {
     const nome = form.nome.value.trim(), segmento = form.segmento.value.trim();
     const marcado = form.querySelector('input[name="funcionarios"]:checked');
     const whatsapp = iti ? iti.getNumber() : form.whatsapp.value.trim();
     const telInvalido = iti && typeof iti.isValidNumber === 'function' && iti.isValidNumber() === false;
-    if (!nome || !form.whatsapp.value.trim() || telInvalido || !marcado || !segmento) { erro.style.display = 'block'; return; }
+    /* Piso que não depende da biblioteca de telefone ter carregado. */
+    const poucosDigitos = form.whatsapp.value.replace(/\D/g, '').length < 8;
+    if (!nome || poucosDigitos || telInvalido || !marcado || !segmento) return null;
+    return { nome, segmento, marcado, whatsapp };
+  }
+
+  /* Validação na fase de captura, no bloco que envolve o formulário: roda antes de qualquer
+     outro ouvinte de submit. Sem isto, o script de lead do fim da página enviava e redirecionava
+     para o WhatsApp mesmo com campo vazio ou telefone inválido, e o CRM não recebia nada. */
+  bloco.addEventListener('submit', (e) => {
+    if (ler()) return;
+    e.preventDefault(); e.stopPropagation();
+    erro.textContent = 'Preencha todos os campos com um WhatsApp válido para enviar.';
+    erro.style.display = 'block';
+  }, true);
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const dados = ler();
+    if (!dados) return;
+    const { nome, segmento, marcado, whatsapp } = dados;
     erro.style.display = 'none';
     btn.disabled = true; btn.textContent = 'Enviando…';
     try {
