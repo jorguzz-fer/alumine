@@ -357,7 +357,40 @@ n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', "1425076533167377");
-fbq('trackSingle', "1425076533167377", 'PageView');</script></head>
+fbq('trackSingle', "1425076533167377", 'PageView');</script><!-- CRM Lead Capture — tudomudou -->
+<script>
+(function() {
+  var CRM_URL = "https://crm.tudomudou.com.br";
+  var TENANT  = "tudomudou";
+
+  function getUTM(key) {
+    return new URLSearchParams(window.location.search).get(key) || undefined;
+  }
+
+  window.CRMLead = function(data) {
+    return fetch(CRM_URL + "/api/public/leads", {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      /* keepalive: o envio termina mesmo se a página redirecionar para o WhatsApp logo em seguida */
+      keepalive: true,
+      body: JSON.stringify(Object.assign({
+        tenantSlug:   TENANT,
+        source:       "WEBSITE",
+        utm_source:   getUTM("utm_source"),
+        utm_medium:   getUTM("utm_medium"),
+        utm_campaign: getUTM("utm_campaign"),
+        utm_content:  getUTM("utm_content"),
+        fbclid:       getUTM("fbclid"),
+        gclid:        getUTM("gclid"),
+      }, data))
+    }).then(function(r) {
+      if (!r.ok) throw new Error("CRM respondeu " + r.status);
+      return r.json().catch(function() { return {}; });
+    });
+  };
+})();
+</script>
+</head>
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -734,6 +767,17 @@ async function enviar(payload) {
   await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
 }
 
+/* Lead no CRM (tudomudou). O CRM só aceita name, email, phone, company, message e source,
+   então as respostas de qualificação vão dentro de message. */
+function enviarCRM(d) {
+  if (typeof window.CRMLead !== 'function') return Promise.resolve();
+  return window.CRMLead({
+    name: d.nome,
+    phone: d.whatsapp,
+    message: 'LP Mesa de Negócios Veterinários (' + d.origem + ') | Funcionários: ' + d.funcionarios + ' | Segmento: ' + d.segmento
+  });
+}
+
 /* Conversão no pixel. Defensivo: sem pixel instalado, não quebra nada. */
 function rastrear(evento, dados) {
   try { if (typeof fbq === 'function') fbq('track', evento, dados); } catch (err) {}
@@ -757,8 +801,11 @@ function ligarFormulario(bloco, origem) {
     erro.style.display = 'none';
     btn.disabled = true; btn.textContent = 'Enviando…';
     try {
-      await enviar({ etapa: origem, nome, whatsapp, funcionarios: marcado.value, segmento,
-        ...getUTMs(), fonte: FONTE, timestamp: new Date().toISOString(), url: location.href });
+      await Promise.all([
+        enviarCRM({ nome, whatsapp, funcionarios: marcado.value, segmento, origem }),
+        enviar({ etapa: origem, nome, whatsapp, funcionarios: marcado.value, segmento,
+          ...getUTMs(), fonte: FONTE, timestamp: new Date().toISOString(), url: location.href })
+      ]);
       rastrear('Lead', { content_name: FONTE });
       bloco.querySelector('[data-form-etapa]').classList.remove('ativa');
       bloco.querySelector('[data-form-ok]').classList.add('ativa');
