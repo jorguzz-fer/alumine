@@ -633,6 +633,10 @@ fbq('trackSingle', "1425076533167377", 'PageView');</script><!-- CRM Lead Captur
               <label for="f-whatsapp">WhatsApp</label>
               <input id="f-whatsapp" name="whatsapp" type="tel" autocomplete="tel" required>
             </div>
+            <div class="campo">
+              <label for="f-email">E-mail</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+            </div>
             <fieldset class="pergunta">
               <legend>Quantos funcionários você tem?</legend>
               <div class="opcoes">
@@ -643,10 +647,6 @@ fbq('trackSingle', "1425076533167377", 'PageView');</script><!-- CRM Lead Captur
                 <label><input type="radio" name="funcionarios" value="mais de 200"><span>Mais de 200</span></label>
               </div>
             </fieldset>
-            <div class="campo">
-              <label for="f-segmento">Qual o segmento do seu negócio?</label>
-              <input id="f-segmento" name="segmento" type="text" placeholder="Ex.: clínica, hospital 24h, centro de diagnóstico" required>
-            </div>
             <p class="erro" role="alert">Preencha todos os campos para enviar.</p>
             <span class="cta-moldura"><button type="submit" class="cta">Aplicar para a minha cadeira</button></span>
             <p class="micro">Leva menos de 2 minutos. Seus dados ficam só com a equipe GrowthMinds.</p>
@@ -701,6 +701,10 @@ fbq('trackSingle', "1425076533167377", 'PageView');</script><!-- CRM Lead Captur
           <label for="p-whatsapp">WhatsApp</label>
           <input id="p-whatsapp" name="whatsapp" type="tel" autocomplete="tel" required>
         </div>
+        <div class="campo">
+          <label for="p-email">E-mail</label>
+          <input id="p-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+        </div>
         <fieldset class="pergunta">
           <legend>Quantos funcionários você tem?</legend>
           <div class="opcoes">
@@ -711,10 +715,6 @@ fbq('trackSingle', "1425076533167377", 'PageView');</script><!-- CRM Lead Captur
             <label><input type="radio" name="funcionarios" value="mais de 200"><span>Mais de 200</span></label>
           </div>
         </fieldset>
-        <div class="campo">
-          <label for="p-segmento">Qual o segmento do seu negócio?</label>
-          <input id="p-segmento" name="segmento" type="text" placeholder="Ex.: clínica, hospital 24h, centro de diagnóstico" required>
-        </div>
         <p class="erro" role="alert">Preencha todos os campos para enviar.</p>
         <span class="cta-moldura"><button type="submit" class="cta">Aplicar para a minha cadeira</button></span>
         <p class="micro">Leva menos de 2 minutos. Seus dados ficam só com a equipe GrowthMinds.</p>
@@ -774,7 +774,8 @@ function enviarCRM(d) {
   return window.CRMLead({
     name: d.nome,
     phone: d.whatsapp,
-    message: 'LP Mesa de Negócios Veterinários (' + d.origem + ') | Funcionários: ' + d.funcionarios + ' | Segmento: ' + d.segmento
+    email: d.email,
+    message: 'LP Mesa de Negócios Veterinários (' + d.origem + ') | Funcionários: ' + d.funcionarios
   });
 }
 
@@ -792,14 +793,15 @@ function ligarFormulario(bloco, origem) {
   const erro = form.querySelector('.erro'), btn = form.querySelector('button[type="submit"]'), rotulo = btn.textContent;
 
   function ler() {
-    const nome = form.nome.value.trim(), segmento = form.segmento.value.trim();
+    const nome = form.nome.value.trim(), email = form.email.value.trim();
     const marcado = form.querySelector('input[name="funcionarios"]:checked');
     const whatsapp = iti ? iti.getNumber() : form.whatsapp.value.trim();
     const telInvalido = iti && typeof iti.isValidNumber === 'function' && iti.isValidNumber() === false;
     /* Piso que não depende da biblioteca de telefone ter carregado. */
     const poucosDigitos = form.whatsapp.value.replace(/\D/g, '').length < 8;
-    if (!nome || poucosDigitos || telInvalido || !marcado || !segmento) return null;
-    return { nome, segmento, marcado, whatsapp };
+    const emailInvalido = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!nome || poucosDigitos || telInvalido || emailInvalido || !marcado) return null;
+    return { nome, marcado, whatsapp, email };
   }
 
   /* Validação na fase de captura, no bloco que envolve o formulário: roda antes de qualquer
@@ -808,7 +810,7 @@ function ligarFormulario(bloco, origem) {
   bloco.addEventListener('submit', (e) => {
     if (ler()) return;
     e.preventDefault(); e.stopPropagation();
-    erro.textContent = 'Preencha todos os campos com um WhatsApp válido para enviar.';
+    erro.textContent = 'Preencha todos os campos, com WhatsApp e e-mail válidos, para enviar.';
     erro.style.display = 'block';
   }, true);
 
@@ -816,13 +818,13 @@ function ligarFormulario(bloco, origem) {
     e.preventDefault();
     const dados = ler();
     if (!dados) return;
-    const { nome, segmento, marcado, whatsapp } = dados;
+    const { nome, marcado, whatsapp, email } = dados;
     erro.style.display = 'none';
     btn.disabled = true; btn.textContent = 'Enviando…';
     try {
       await Promise.all([
-        enviarCRM({ nome, whatsapp, funcionarios: marcado.value, segmento, origem }),
-        enviar({ etapa: origem, nome, whatsapp, funcionarios: marcado.value, segmento,
+        enviarCRM({ nome, whatsapp, email, funcionarios: marcado.value, origem }),
+        enviar({ etapa: origem, nome, whatsapp, email, funcionarios: marcado.value,
           ...getUTMs(), fonte: FONTE, timestamp: new Date().toISOString(), url: location.href })
       ]);
       rastrear('Lead', { content_name: FONTE });
